@@ -1,8 +1,7 @@
 package sg.nus.edu.shopping.interfacemethods;
 
 import java.util.ArrayList;
-
-import sg.nus.iss.register.model.Customer;
+import sg.nus.edu.shopping.model.Customer;
 
 public interface CustomerInterface {
 	//if the username has been taken

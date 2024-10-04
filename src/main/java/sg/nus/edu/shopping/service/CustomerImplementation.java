@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import sg.nus.iss.register.interfacemethods.CustomerInterface;
-import sg.nus.iss.register.model.Customer;
-import sg.nus.iss.register.repository.CustomerRepository;
+import sg.nus.edu.shopping.interfacemethods.CustomerInterface;
+import sg.nus.edu.shopping.model.Customer;
+import sg.nus.edu.shopping.repository.CustomerRepository;
 
 @Service
 @Transactional
