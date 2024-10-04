@@ -13,7 +13,6 @@ public class Customer {
     @GenericGenerator(name = "customer-id-generator", strategy = "sg.nus.edu.shopping.generator.CustomerIDGenerator")
     private String userId;
 
-    @Column(unique = false)
     private String address;
 
     @Column(unique = true)
