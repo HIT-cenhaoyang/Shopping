@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: rgb(255, 255, 255);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-row > div {
+            flex: 1;
+            min-width: 200px;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .form-row > div:last-child {
+            margin-right: 0;
+        }
+
+        label {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            color: rgb(255, 255, 255);
+            font-size: 17px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            font-size: 17px;
+            border: 1px solid rgb(192, 192, 192);
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: rgb(255, 255, 255);
+            transition: border-color 0.5s;
+        }
+
+        input:focus, select:focus {
+            border-color: #4285f4;
+            outline: none;
+        }
+
+        /* 处理普通输入框和选择框的label浮动效果 */
+        input:focus + label,
+        input:not(:placeholder-shown) + label,
+        select:focus + label,
+        select:not([value=""]) + label {
+            top: 0;
+            left: 12px;
+            font-size: 12px;
+            color: #4285f4;
+            background: #fff;
+            padding: 0 5px;
+        }
+
+        /* 日期选择框：无浮动label，仅保留基础日期选择框 */
+        input[type="date"] + label {
+            display: none;
+        }
+
+        /* Gender选择框默认显示为灰色 */
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%204%205%27%3E%3Cpath%20fill%3D%27%23666%27%20d%3D%27M2%200L0%202h4zM0%203l2%202l2-2z%27/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 10px;
+            color: #aaa;
+        }
+
+        /* 当用户选择后，颜色改变 */
+        select option {
+            color: black;
+        }
+
+        select option[value=""] {
+            color: #aaa; /* Gender显示灰色 */
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: rgb(255, 255, 255);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{/register}" method="post">
+    <h1>Create Account</h1>
+
+    <div th:if="${errorMessage != null}" class="error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <div class="form-row">
+        <div>
+            <input type="text" id="name" name="name" placeholder=" " required/>
+            <label for="name">Name</label>
+        </div>
+        <div>
+            <input type="text" id="userName" name="userName" placeholder=" " required/>
+            <label for="userName">Username</label>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div>
+            <input type="password" id="password" name="password" placeholder=" " required/>
+            <label for="password">Password</label>
+        </div>
+        <div>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder=" " required/>
+            <label for="confirmPassword">Confirm Password</label>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div>
+            <input type="date" id="birthDate" name="birthDate" required/>
+            <label for="birthDate">Birthdate</label> <!-- 不显示 -->
+        </div>
+        <div>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Gender</option> <!-- 默认显示为灰色 -->
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="gender">Gender</label> <!-- 这个label会在选择后上浮 -->
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div>
+            <input type="email" id="email" name="email" placeholder=" " required/>
+            <label for="email">Email</label>
+        </div>
+        <div>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" " required/>
+            <label for="phoneNumber">Phone</label>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div>
+            <input type="text" id="address" name="address" placeholder=" " required/>
+            <label for="address">Address</label>
+        </div>
+    </div>
+
+    <div>
+        <button type="submit">Register</button>
+    </div>
+
+    <div class="form-footer">
+        <p>Already have an account? <a href="login">Log in</a></p>
+    </div>
+</form>
+</body>
+</html>

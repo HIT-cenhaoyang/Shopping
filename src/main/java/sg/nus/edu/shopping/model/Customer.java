@@ -3,6 +3,7 @@ package sg.nus.edu.shopping.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Customer {
 
     private String gender;
 
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @OneToMany(mappedBy = "record_customer")
     private List<PurchaseRecord> purchaseRecord;
@@ -61,19 +62,19 @@ public class Customer {
         return userId;
     }
 
-    private String getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    private void setPhoneNumber(String phoneNum) {
+    public void setPhoneNumber(String phoneNum) {
         this.phoneNumber = phoneNum;
     }
 
-    private String getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    private void setAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -137,5 +138,28 @@ public class Customer {
         this.password = password;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
 }
