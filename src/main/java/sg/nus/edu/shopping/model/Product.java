@@ -22,8 +22,11 @@ public class Product {
     @Column(length = 10)
     private int stockAvailable;
 
-    @Column(length = 10)
-    private String categoryId;
+    @OneToOne(mappedBy = "product_category")
+    private Category categoryId;
+
+    @OneToMany(mappedBy = "product_image")
+    private List<ProductImage> productImage;
 
     @Column(length = 50)
     private String description;
@@ -31,7 +34,7 @@ public class Product {
     @OneToMany(mappedBy = "product_cart")
     private List<ShoppingCart> shoppingCart;
 
-    @OneToMany
+    @OneToMany(mappedBy = "detail_product")
     private List<OrderDetail> detail_product;
 
     //constructor
@@ -40,12 +43,11 @@ public class Product {
     }
 
     public Product(String name, double price, String unitMeasurement,
-                   int stockAvailable, String categoryId, String description) {
+                   int stockAvailable, String description) {
         this.name = name;
         this.price = price;
         this.unitMeasurement = unitMeasurement;
         this.stockAvailable = stockAvailable;
-        this.categoryId = categoryId;
         this.description = description;
     }
 
@@ -57,14 +59,6 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String category) {
-        this.categoryId = category;
     }
 
     public int getStockAvailable() {

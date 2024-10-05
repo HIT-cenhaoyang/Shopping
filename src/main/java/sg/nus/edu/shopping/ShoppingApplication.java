@@ -15,25 +15,19 @@ public class ShoppingApplication {
         SpringApplication.run(ShoppingApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner runMe(OrderDetailRepository orderDetailRepo, CustomerRepository customerRepo,
-                            PaymentDetailRepository paymentDetailRepo, ProductRepository productRepo,
-                            ShoppingCartRepository shoppingCartRepo, PurchaseRecordRepository purchaseRecordRepo,
-                            AdminRepository adminRepo) {
-        return args -> {
-            //Only for test Only
-            customerRepo.save(new Customer("test", "t", "test", "test", "test", "test", "test"));
-
-            orderDetailRepo.findAll();
-            List<Customer> customerList = customerRepo.findAll();
-            customerList.forEach(customer -> {
-                System.out.println(customer.getUserId());
-            });
-            paymentDetailRepo.findAll();
-            productRepo.findAll();
-            shoppingCartRepo.findAll();
-            purchaseRecordRepo.findAll();
-            adminRepo.findAll();
-        };
-    }
+//    @Bean
+//    CommandLineRunner runMe(OrderDetailRepository orderDetailRepo, CustomerRepository customerRepo,
+//                            PaymentDetailRepository paymentDetailRepo, ProductRepository productRepo,
+//                            ShoppingCartRepository shoppingCartRepo, PurchaseRecordRepository purchaseRecordRepo,
+//                            AdminRepository adminRepo) {
+//        return args -> {
+//            //Only for test Only
+//            orderDetailRepo.findAll();
+//            paymentDetailRepo.findAll();
+//            productRepo.findAll();
+//            shoppingCartRepo.findAll();
+//            purchaseRecordRepo.findAll();
+//            adminRepo.findAll();
+//        };
+//    }
 }
