@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @Service
 @Transactional
-public class AdminInplementation implements AdminInterface {
+public class AdminImplementation implements AdminInterface {
 
     @Autowired
     AdminRepository adminRepository;
