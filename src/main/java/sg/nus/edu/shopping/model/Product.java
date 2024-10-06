@@ -37,6 +37,7 @@ public class Product {
     @OneToMany(mappedBy = "detail_product")
     private List<OrderDetail> orders;
 
+
     //constructor
     public Product() {
     }

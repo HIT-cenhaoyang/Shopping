@@ -1,18 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Home</title>
+    <meta charset="UTF-8">
+    <title>Product Page</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-<h1>Welcome to the Home Page!</h1>
-<p>ss</p>
-
-<p>
-    <a href="/login">Login</a>
-</p>
-Pull conflict test (Created by MaxC)
-(Created by Xuziyi)
-Cao!!!!!!!!!
+<header>
+    <h1>Product Page</h1>
+    <form action="/products/search" method="get" style="display:inline;">
+        <input type="text" name="keyword" placeholder="Search products...">
+        <button type="submit">Search</button>
+    </form>
+    <a href="/login" style="float:right;">Login</a>
+    <a href="/cart" style="float:right; margin-right: 10px;">Cart</a>
+    <nav>
+        <a href="/products?category=1">Bedding</a>
+        <a href="/products?category=2">Tables&Chairs</a>
+        <a href="/products?category=3">Cabinets</a>
+        <a href="/products?category=4">Lamps</a>
+        <a href="/products?category=5">Appliances</a>
+    </nav>
+</header>
+<section>
+    <div th:if="${message}" class="message">
+        <p th:text="${message}"></p>
+    </div>
+    <div th:each="product : ${products}">
+        <div class="product">
+            <a th:href="@{/product/{id}(id=${product.productId})}">
+                <img th:src="@{|/images/${product.getImages()}|}" alt="Product Image">
+            </a>
+            <h2 th:text="${product.name}">Product Name</h2>
+            <p th:text="${product.description}">Product Description</p>
+            <p th:text="'$' + ${product.price}">Product Price</p>
+        </div>
+    </div>
+</section>
 </body>
 </html>
