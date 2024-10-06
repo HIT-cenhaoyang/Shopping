@@ -44,6 +44,8 @@ public class Product {
     public Product(String name, double price, String sku) {
         this.name = name;
         this.price = price;
+        //to ensure no duplicate products are saved
+        this.sku = sku;
     }
 
     //get images of product
@@ -132,5 +134,13 @@ public class Product {
 
     public void setSku(String sku) {
         this.sku = sku;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
