@@ -13,12 +13,19 @@ import java.util.ArrayList;
 @Transactional
 public class AdminImplementation implements AdminInterface {
 
-    @Autowired
-    AdminRepository adminRepository;
+	@Autowired
+	AdminRepository adminRepo;
 
-    @Override
-    @Transactional
-    public ArrayList<Admin> findAdminByuserName(String userName) {
-        return null;
-    }
+	@Override
+	public Admin searchUserByUserName(String userName) {
+		// TODO Auto-generated method stub
+		if (userName != null) {
+			ArrayList<Admin> adminList = adminRepo.searchUserByUserName(userName);
+			if (userName != null && adminList.size() > 0) {
+				return adminList.get(0);
+			}
+		}
+
+		return null;
+	}
 }
