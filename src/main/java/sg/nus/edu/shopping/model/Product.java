@@ -14,43 +14,76 @@ public class Product {
     @Column(length = 20)
     private String name;
 
-    private double price;
+    //unique sku code (e.g barcode)
+    private String sku;
 
-    @Column(length = 50)
-    private String unitMeasurement;
+    private double price;
 
     @Column(length = 10)
     private int stockAvailable;
 
-    @OneToOne(mappedBy = "product_category")
-    private Category categoryId;
+    @ManyToOne @JoinColumn(name = "categoryId")
+    private Category category;
 
-    @OneToMany(mappedBy = "product_image")
-    private List<ProductImage> productImage;
+    @OneToMany(mappedBy = "product")
+    private List<ProductImage> images;
 
     @Column(length = 50)
     private String description;
 
     @OneToMany(mappedBy = "product_cart")
-    private List<ShoppingCart> shoppingCart;
+    private List<ShoppingCart> shoppingCarts;
 
     @OneToMany(mappedBy = "detail_product")
-    private List<OrderDetail> detail_product;
+    private List<OrderDetail> orders;
 
     //constructor
     public Product() {
-
     }
 
-    public Product(String name, double price, String unitMeasurement,
-                   int stockAvailable, String description) {
+    public Product(String name, double price, String sku) {
         this.name = name;
         this.price = price;
-        this.unitMeasurement = unitMeasurement;
-        this.stockAvailable = stockAvailable;
-        this.description = description;
     }
 
+    //get images of product
+    public List<ProductImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
+    }
+    //removing a product image
+    public void removeImage(ProductImage image) {
+        //removes image from product image list
+        images.remove(image);
+        // removes relationship between image and product
+        image.setProduct(null);
+    }
+
+    //Add new image to the product
+    public void addImage(ProductImage image) {
+        if (image.isCoverImage()) {
+            // If this image is a cover image, set all other images to not be cover image
+            this.images.forEach(img -> img.setCoverImage(false));
+        } else if (this.images.isEmpty()) {
+            // If this is the first image, automatically set it as the cover
+            image.setCoverImage(true);
+        }
+        // add image to product image list
+        images.add(image);
+        // link image to product
+        image.setProduct(this);
+    }
+
+    //Get the cover image
+    public ProductImage getCoverImage() {
+        return images.stream()
+                .filter(ProductImage::isCoverImage)
+                .findFirst()
+                .orElse(null);
+    }
 
     //setter and getter
     public String getDescription() {
@@ -67,14 +100,6 @@ public class Product {
 
     public void setStockAvailable(int stockAvailbility) {
         this.stockAvailable = stockAvailbility;
-    }
-
-    public String getUnitMeasurement() {
-        return unitMeasurement;
-    }
-
-    public void setUnitMeasurement(String unit) {
-        this.unitMeasurement = unit;
     }
 
     public double getPrice() {
@@ -99,5 +124,13 @@ public class Product {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 }
