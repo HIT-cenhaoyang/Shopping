@@ -8,14 +8,13 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Admin {
-
-    private String userName;
-
     @Id
     @Column(unique = true)
     @GeneratedValue(generator = "admin-id-generator")
     @GenericGenerator(name = "admin-id-generator", strategy = "sg.nus.edu.shopping.generator.AdminIDGenerator")
     private String id;
+
+    private String userName;
 
     private String password;
 
