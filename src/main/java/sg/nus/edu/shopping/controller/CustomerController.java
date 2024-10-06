@@ -140,13 +140,16 @@ public class CustomerController {
 			return "homePage";
 		}
 	}
-
+	//I commented out this method because it's the same as the adminlogin method and you don't need to write it again
 	//Author: xu zhiye
-	@GetMapping("/logout")
+	/*
+		@GetMapping("/logout")
 	public String logout(HttpSession sessionObj, Model model) {
 		sessionObj.removeAttribute("username");
 		return "redirect:/login";
 	}
+	 */
+
 
 	//Author: xu zhiye
 	@GetMapping("/user/resetPassword")

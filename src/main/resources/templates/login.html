@@ -18,7 +18,9 @@
 <button type="submit" style="background-color: rgb(255, 255, 255);">Login</button>
 </form>
 <p><a th:href="@{/user/resetPassword}">Forget/Change Password</a></p>
-<p><a th:href="@{/user/register}">Register Membership</a></p>
+
+<!--I change the href of the register page to the correct one-->
+<p><a th:href="@{/register}">Register Membership</a></p>
 <p><span th:text="${MSG}"/></p>
 <p><span th:text="${errorMsg}"/></p>
 </body>
