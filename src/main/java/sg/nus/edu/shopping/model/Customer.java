@@ -1,10 +1,11 @@
 package sg.nus.edu.shopping.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,8 @@ public class Customer {
     private String userName;
 
     private String phoneNumber;
-
+    
+    @Pattern(regexp = "^[a-zA-Z0-9]{9,20}$", message = "Password must contain at least 9 characters at most 20 characters, including uppercase, lowercase letters, and numbers.")
     private String password;
 
     private String email;

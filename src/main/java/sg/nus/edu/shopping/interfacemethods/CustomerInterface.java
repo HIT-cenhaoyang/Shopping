@@ -10,4 +10,9 @@ public interface CustomerInterface {
 	public void saveCustomer(Customer customer);
 	
 	public ArrayList<Customer> findCustomerByuserName(String userName);
+	
+	//Author: xu zhiye
+	public Customer searchUserByUserName(String userName);
+	public Customer searchUserByUserEmail(String userEmail);
+	public Customer findById(String id);
 }

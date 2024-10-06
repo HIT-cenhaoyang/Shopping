@@ -13,4 +13,12 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 
     @Query("Select c from Customer as c where c.userName = : userName")
     public ArrayList<Customer> findCustomerByuserName(@Param("userName") String keyword);
+    
+    //Author: xu zhiye
+	@Query("Select c from Customer as c where c.userName =:userName")
+	public ArrayList<Customer> searchUserByUserName(@Param("userName") String userName);
+	
+    //Author: xu zhiye
+	@Query("Select c from Customer as c where c.email =:userEmail")
+	public ArrayList<Customer> searchUserByUserEmail(@Param("userEmail") String userEmail);
 }

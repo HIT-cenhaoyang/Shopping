@@ -33,14 +33,14 @@ public class AdminController {
 	public String login(Admin user, HttpSession sessionObj,Model model) {
 		Admin dataU = uservice.searchUserByUserName(user.getUserName());
 		if (dataU == null) {
-			model.addAttribute("errorMessage", "Your user name or password are wrong, please try again!");
+			model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
 			return "login";
 		} else {
 			if (dataU.getPassword().equals(user.getPassword())) {
 				sessionObj.setAttribute("username", user.getUserName());
 				return "redirect:/protected/list-admin";
 			} else {
-				model.addAttribute("errorMessage", "Your user name or password are wrong, please try again!");
+				model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
 				return "login";
 			}
 		}
