@@ -2,21 +2,28 @@ package sg.nus.edu.shopping.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryId;
 
-    private String name;
+    private String categoryName;
+    private String categoryDescription;
 
-    @OneToOne
-    private Product product_category;
+    @OneToMany (mappedBy = "category")
+    private List<Product> products;
 
     public Category() {
     }
 
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
+    //getters and setters
     public int getCategoryId() {
         return categoryId;
     }
@@ -25,11 +32,28 @@ public class Category {
         this.categoryId = categoryId;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getCategoryDescription() {
+        return categoryDescription;
+    }
+    public void setCategoryDescription(String categoryDescription) {
+        this.categoryDescription = categoryDescription;
+    }
+    public List<Product> getProducts() {
+        return products;
+    }
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+    @Override
+    public String toString() {
+        return "Category: " + categoryId +", Name= "+ categoryName;
     }
 }
