@@ -6,7 +6,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class AddToCartController {
+public class ShoppingCartController {
 
     @Autowired
     private ProductService productService; // 产品服务接口，获取产品信息
