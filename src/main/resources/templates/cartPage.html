@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Your Cart</h1>
+    
+    <div class="cart-container">
+        <div class="cart-details" id="cart-details">
+            <!-- Cart items will be loaded here dynamically -->
+        </div>
+
+        <!-- Order summary -->
+        <div class="order-summary">
+            <h2>Order summary</h2>
+            <p>Products (<span id="product-count">0</span>): $<span id="product-total">0.00</span></p>
+            <p><strong>Subtotal: $<span id="subtotal">0.00</span></strong></p>
+            <button class="checkout-btn">Check out</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadCartItems();
+        });
+
+        async function loadCartItems() {
+            try {
+                let response = await fetch("/api/cart/items");
+                if (response.ok) {
+                    let cartItems = await response.json();
+                    cartItems.forEach(item => addItemToCart(item));
+                } else {
+                    console.error("Failed to load cart items.");
+                }
+            } catch (error) {
+                console.error("Error fetching cart items: ", error);
+            }
+        }
+
+        function addItemToCart(item) {
+            const cartDetails = document.getElementById('cart-details');
+
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.dataset.id = item.productId;
+            const coverImage = item.images && item.images.length > 0 ? item.images[0].fileName : 'default.jpg';
+
+            cartItem.innerHTML = `
+                <img src="/images/${coverImage}" alt="${item.name}">
+                <div class="item-info">
+                    <h3>${item.name}</h3>
+                    <p>${item.description}</p>
+                    <p>Price per unit: $${item.price.toFixed(2)}</p>
+                </div>
+                <div class="item-actions">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(this, 0)">
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <p class="item-total-price">$${(item.price * item.quantity).toFixed(2)}</p>
+            `;
+            cartDetails.appendChild(cartItem);
+            updateSummary();
+        }
+
+        function updateQuantity(element, delta) {
+            let itemRow = element.closest('.cart-item');
+            let quantityInput = itemRow.querySelector('input[type="number"]');
+            let currentQuantity = parseInt(quantityInput.value);
+            let newQuantity = delta === 0 ? currentQuantity : currentQuantity + delta;
+
+            if (newQuantity < 1) {
+                removeItem(itemRow);
+            } else {
+                quantityInput.value = newQuantity;
+                let unitPrice = parseFloat(itemRow.querySelector('.item-info p:nth-child(3)').textContent.replace('Price per unit: $', ''));
+                itemRow.querySelector('.item-total-price').textContent = "$" + (newQuantity * unitPrice).toFixed(2);
+                updateSummary();
+            }
+        }
+
+        function removeItem(element) {
+            let itemRow = element.closest('.cart-item');
+            itemRow.remove();
+            updateSummary();
+        }
+
+        function updateSummary() {
+            let totalItems = 0;
+            let totalPrice = 0;
+            let itemRows = document.querySelectorAll('.cart-item');
+
+            itemRows.forEach(function(item) {
+                let quantity = parseInt(item.querySelector('input[type="number"]').value);
+                let priceText = item.querySelector('.item-total-price').textContent;
+                let price = parseFloat(priceText.replace('$', ''));
+
+                totalItems += quantity;
+                totalPrice += price;
+            });
+
+            document.getElementById('product-count').textContent = totalItems;
+            document.getElementById('product-total').textContent = totalPrice.toFixed(2);
+            document.getElementById('subtotal').textContent = totalPrice.toFixed(2);
+        }
+    </script>
+</body>
+</html>
