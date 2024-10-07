@@ -34,14 +34,14 @@ public class AdminController {
 		Admin dataU = uservice.searchUserByUserName(user.getUserName());
 		if (dataU == null) {
 			model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
-			return "login";
+			return "adminLogin";
 		} else {
 			if (dataU.getPassword().equals(user.getPassword())) {
 				sessionObj.setAttribute("username", user.getUserName());
 				return "redirect:/protected/list-admin";
 			} else {
 				model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
-				return "login";
+				return "adminLogin";
 			}
 		}
 	}
@@ -56,10 +56,10 @@ public class AdminController {
 		}
 	}
 	
-	@GetMapping("/logout")
+	@GetMapping("/adminLogout")
 	public String adminLogout(HttpSession sessionObj, Model model) {
 		sessionObj.removeAttribute("username");
-		return "redirect:/login";
+		return "redirect:/adminLogin";
 	}
 	
 	
