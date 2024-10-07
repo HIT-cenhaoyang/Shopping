@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.ShoppingCart;
-import sg.nus.edu.shopping.service.ProductService;
-import sg.nus.edu.shopping.service.ShoppingCartService;
+import sg.nus.edu.shopping.service.ProductImplementation;
+import sg.nus.edu.shopping.service.ShoppingCartImplementation;
+
 
 import java.util.List;
 
@@ -14,15 +15,15 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Autowired
-    private ProductServiceInterface productService; // 产品服务接口，获取产品信息
+    private ProductImplementation productService; // 产品服务接口，获取产品信息
 
     @Autowired
-    private ShoppingCartInterface shoppingCartService; // 购物车服务接口，管理购物车
+    private ShoppingCartImplementation shoppingCartService; // 购物车服务接口，管理购物车
 
     // 获取所有产品的 API
     @GetMapping("/products")
     public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+        return productService.findAllProducts();
     }
 
     // 添加产品到购物车的 API
@@ -38,15 +39,15 @@ public class ShoppingCartController {
 
     // Data Transfer Object 类 接收从客户端传递的数据
     public static class AddToCartRequest {
-        private Long customerId; // 添加 customerId 字段
+        private String customerId; // 添加 customerId 字段
         private int productId;
         private int quantity;
 
-        public Long getCustomerId() {
+        public String getCustomerId() {
             return customerId;
         }
 
-        public void setCustomerId(Long customerId) {
+        public void setCustomerId(String customerId) {
             this.customerId = customerId;
         }
 
