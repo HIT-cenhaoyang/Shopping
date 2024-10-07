@@ -29,7 +29,6 @@ public class AdminImplementation implements AdminInterface {
 
     @Override
     public Admin searchUserByUserName(String userName) {
-        // TODO Auto-generated method stub
         if (userName != null) {
             ArrayList<Admin> adminList = adminRepo.searchUserByUserName(userName);
             if (adminList.size() > 0) {
