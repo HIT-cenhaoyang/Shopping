@@ -95,6 +95,15 @@ public class Customer {
         return purchaseRecords;
     }
 
+    public void removeProductFromCart(ShoppingCart cart) {
+        shoppingCarts.remove(cart);
+        cart.setCustomer(null);
+    }
+
+    public void addProductToCart(ShoppingCart cart) {
+        shoppingCarts.add(cart);
+    }
+
 
     public void setPurchaseRecord(List<PurchaseRecord> purchaseRecord) {
         this.purchaseRecords = purchaseRecord;

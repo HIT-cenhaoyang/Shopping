@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public interface CustomerRepository extends JpaRepository<Customer, String> {
     boolean existsByUserName(String userName);
 
+    Customer findCustomerByCustomerId(String customerId);
+
     @Query("Select c from Customer as c where c.userName = : userName")
     public ArrayList<Customer> findCustomerByuserName(@Param("userName") String keyword);
     

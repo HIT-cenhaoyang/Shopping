@@ -15,7 +15,7 @@ public class OrderDetail {
     private int orderDetailId;
 
     @ManyToOne
-    private Product detail_product;
+    private Product product;
 
     @ManyToOne
     private PurchaseRecord purchaseRecord;

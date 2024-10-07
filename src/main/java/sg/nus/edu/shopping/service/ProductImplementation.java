@@ -35,9 +35,7 @@ public class ProductImplementation implements ProductInterface {
     @Override
     @Transactional
     public Product findByProductId(int productId) {
-        if (productRepo.findByProductId(productId) == null) {
-            throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
-        }
+       c
         return productRepo.findByProductId(productId);
     }
 
