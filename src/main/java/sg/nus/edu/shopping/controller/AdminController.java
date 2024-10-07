@@ -13,8 +13,6 @@ import sg.nus.edu.shopping.model.Admin;
 import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.ProductImage;
-import sg.nus.edu.shopping.repository.CategoryRepository;
-import sg.nus.edu.shopping.repository.ProductImageRepository;
 import sg.nus.edu.shopping.service.AdminImplementation;
 import sg.nus.edu.shopping.service.CategoryImplementation;
 import sg.nus.edu.shopping.service.ProductImageImplementation;
@@ -71,7 +69,10 @@ public class AdminController {
                                 @RequestParam("description") String description,
                                 @RequestParam("sku") String sku,
                                 @RequestParam("cover_image") MultipartFile coverImage,
-                                @RequestParam("images") MultipartFile[] images) {
+                                @RequestParam("images") MultipartFile[] images,
+                                @RequestParam("cover_image_url") String coverImageUrl,
+                                @RequestParam("images_url") String imagesUrl,
+                                @RequestParam("uploadOption") String uploadOption) {
         Product product = new Product();
         product.setName(name);
         product.setCategory(categoryImplementation.findByCategoryId(categoryId));
@@ -84,46 +85,14 @@ public class AdminController {
         uservice.saveProduct(product);
 
         List<ProductImage> productImages = new ArrayList<>();
-
-        if (!coverImage.isEmpty()) {
-            try {
-                String folder = "src/main/resources/static/images/";
-                String originalFilename = coverImage.getOriginalFilename();
-                String extension = getFileExtension(originalFilename);
-                String categoryName = categoryImplementation.findByCategoryId(categoryId).getCategoryName();
-                String newFilename = categoryName + "_" + name + "_cover" + extension;
-                Path path = Paths.get(folder + newFilename);
-
-                // check if the directory exists, if not create it
-                if (!Files.exists(path.getParent())) {
-                    Files.createDirectories(path.getParent());
-                }
-
-                // save file to resources folder
-                byte[] bytes = coverImage.getBytes();
-                Files.write(path, bytes);
-
-                // create ProductImage object and set path
-                ProductImage productImage = new ProductImage();
-                productImage.setFileName("localhost:8080/images/" + newFilename);
-                productImage.setCoverImage(true);
-                productImage.setProduct(product);
-                productImages.add(productImage);
-                productImageImplementation.addProductImage(product.getProductId(),productImage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        int imageIndex = 1;
-        for (MultipartFile image : images) {
-            if (!image.isEmpty()) {
+        if ("file".equals(uploadOption)) {
+            if (!coverImage.isEmpty()) {
                 try {
                     String folder = "src/main/resources/static/images/";
-                    String originalFilename = image.getOriginalFilename();
+                    String originalFilename = coverImage.getOriginalFilename();
                     String extension = getFileExtension(originalFilename);
                     String categoryName = categoryImplementation.findByCategoryId(categoryId).getCategoryName();
-                    String newFilename = categoryName + "_" + name + "_" + imageIndex + extension;
+                    String newFilename = categoryName + "_" + name + "_cover" + extension;
                     Path path = Paths.get(folder + newFilename);
 
                     // check if the directory exists, if not create it
@@ -132,20 +101,73 @@ public class AdminController {
                     }
 
                     // save file to resources folder
-                    byte[] bytes = image.getBytes();
+                    byte[] bytes = coverImage.getBytes();
                     Files.write(path, bytes);
 
                     // create ProductImage object and set path
                     ProductImage productImage = new ProductImage();
-                    productImage.setFileName("/images/" + newFilename);
-                    productImage.setCoverImage(false);
+                    productImage.setFileName("localhost:8080/images/" + newFilename);
+                    productImage.setCoverImage(true);
                     productImage.setProduct(product);
                     productImages.add(productImage);
-                    productImageImplementation.addProductImage(product.getProductId(),productImage);
-
-                    imageIndex++;
+                    productImageImplementation.addProductImage(product.getProductId(), productImage);
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+            }
+
+            int imageIndex = 1;
+            for (MultipartFile image : images) {
+                if (!image.isEmpty()) {
+                    try {
+                        String folder = "src/main/resources/static/images/";
+                        String originalFilename = image.getOriginalFilename();
+                        String extension = getFileExtension(originalFilename);
+                        String categoryName = categoryImplementation.findByCategoryId(categoryId).getCategoryName();
+                        String newFilename = categoryName + "_" + name + "_" + imageIndex + extension;
+                        Path path = Paths.get(folder + newFilename);
+
+                        // check if the directory exists, if not create it
+                        if (!Files.exists(path.getParent())) {
+                            Files.createDirectories(path.getParent());
+                        }
+
+                        // save file to resources folder
+                        byte[] bytes = image.getBytes();
+                        Files.write(path, bytes);
+
+                        // create ProductImage object and set path
+                        ProductImage productImage = new ProductImage();
+                        productImage.setFileName("/images/" + newFilename);
+                        productImage.setCoverImage(false);
+                        productImage.setProduct(product);
+                        productImages.add(productImage);
+                        productImageImplementation.addProductImage(product.getProductId(), productImage);
+
+                        imageIndex++;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } else if ("url".equals(uploadOption)) {// 处理封面图片URL
+            if (coverImageUrl != null && !coverImageUrl.isEmpty()) {
+                ProductImage productImage = new ProductImage();
+                productImage.setFileName(coverImageUrl);
+                productImage.setProduct(product);
+                productImages.add(productImage);
+                productImageImplementation.addProductImage(product.getProductId(), productImage);
+            }
+
+            // 处理其他图片URL
+            if (imagesUrl != null && !imagesUrl.isEmpty()) {
+                String[] imageUrls = imagesUrl.split(",");
+                for (String imageUrl : imageUrls) {
+                    ProductImage productImage = new ProductImage();
+                    productImage.setFileName(imageUrl.trim());
+                    productImage.setProduct(product);
+                    productImages.add(productImage);
+                    productImageImplementation.addProductImage(product.getProductId(), productImage);
                 }
             }
         }
