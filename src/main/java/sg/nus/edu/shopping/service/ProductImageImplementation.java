@@ -1,6 +1,8 @@
 package sg.nus.edu.shopping.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sg.nus.edu.shopping.interfacemethods.ProductImageInterface;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.ProductImage;
@@ -9,6 +11,8 @@ import sg.nus.edu.shopping.repository.ProductRepository;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class ProductImageImplementation implements ProductImageInterface {
     @Autowired
     private ProductImageRepository productImageRepo;
