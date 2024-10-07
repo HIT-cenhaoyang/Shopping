@@ -52,7 +52,7 @@ public class AdminController {
 		if (username == null) {
 			return "redirect:/login";
 		} else {
-			return "homePage";
+			return "adminPanel";
 		}
 	}
 	
