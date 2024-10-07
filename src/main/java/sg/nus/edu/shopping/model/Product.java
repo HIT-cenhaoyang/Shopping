@@ -11,7 +11,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String name;
 
     //unique sku code (e.g barcode)
@@ -28,7 +28,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductImage> images;
 
-    @Column(length = 50)
+    @Column(length = 200)
     private String description;
 
     @OneToMany(mappedBy = "product")
