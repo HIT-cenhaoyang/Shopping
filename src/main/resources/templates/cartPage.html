@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1 style="padding: 20px;">Your Cart</h1>
+    <h1>Your Cart</h1>
     
     <div class="cart-container">
         <div class="cart-details" id="cart-details">
@@ -23,51 +24,49 @@
     </div>
 
     <script>
-     
         document.addEventListener("DOMContentLoaded", function() {
-            loadProducts();
+            loadCartItems();
         });
 
-        async function loadProducts() {
+        async function loadCartItems() {
             try {
-                let response = await fetch("/api/products");
+                let response = await fetch("/api/cart/items");
                 if (response.ok) {
-                    let products = await response.json();
-                    products.forEach(product => addProductToCart(product));
+                    let cartItems = await response.json();
+                    cartItems.forEach(item => addItemToCart(item));
                 } else {
-                    console.error("Failed to load products.");
+                    console.error("Failed to load cart items.");
                 }
             } catch (error) {
-                console.error("Error fetching products: ", error);
+                console.error("Error fetching cart items: ", error);
             }
         }
 
-        function addProductToCart(product) {
+        function addItemToCart(item) {
             const cartDetails = document.getElementById('cart-details');
-            
+
             const cartItem = document.createElement('div');
             cartItem.classList.add('cart-item');
-            cartItem.dataset.id = product.productId;
-            const coverImage = product.images && product.images.length > 0 ? product.images[0].fileName : 'default.jpg';
+            cartItem.dataset.id = item.productId;
+            const coverImage = item.images && item.images.length > 0 ? item.images[0].fileName : 'default.jpg';
 
             cartItem.innerHTML = `
-                <img src="/images/${coverImage}" alt="${product.name}">
+                <img src="/images/${coverImage}" alt="${item.name}">
                 <div class="item-info">
-                    <h3>${product.name}</h3>
-                    <p>${product.description}</p>
-                    <p>Price per unit: $${product.price.toFixed(2)}</p>
+                    <h3>${item.name}</h3>
+                    <p>${item.description}</p>
+                    <p>Price per unit: $${item.price.toFixed(2)}</p>
                 </div>
                 <div class="item-actions">
                     <button onclick="updateQuantity(this, -1)">-</button>
-                    <input type="number" value="1" min="1" onchange="updateQuantity(this, 0)">
+                    <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(this, 0)">
                     <button onclick="updateQuantity(this, 1)">+</button>
                 </div>
-                <p class="item-total-price">$${product.price.toFixed(2)}</p>
+                <p class="item-total-price">$${(item.price * item.quantity).toFixed(2)}</p>
             `;
             cartDetails.appendChild(cartItem);
             updateSummary();
         }
-
 
         function updateQuantity(element, delta) {
             let itemRow = element.closest('.cart-item');
@@ -85,13 +84,11 @@
             }
         }
 
-
         function removeItem(element) {
             let itemRow = element.closest('.cart-item');
             itemRow.remove();
             updateSummary();
         }
-
 
         function updateSummary() {
             let totalItems = 0;
