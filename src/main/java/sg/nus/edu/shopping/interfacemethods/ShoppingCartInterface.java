@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public interface ShoppingCartInterface {
-    List<ShoppingCart> getCartByCustomerId(int customerId);
+    List<ShoppingCart> getCartByCustomerId(String customerId);
     List<ShoppingCart> getCartbyCustomerUsername(String username);
     ShoppingCart updateQuantity(int cartId, int quantity);
     void removeProduct(int cartId);
