@@ -11,6 +11,7 @@ public class ProductImage {
     private boolean isCoverImage;
     @ManyToOne @JoinColumn(name = "productId")
     private Product product;
+    private String imagePath;
 
     public ProductImage() {
     }
@@ -54,6 +55,15 @@ public class ProductImage {
     @Override
     public String toString() {
         return "Image: " + imageId + ", Product= " + product.getProductId();
+    }
+
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
 

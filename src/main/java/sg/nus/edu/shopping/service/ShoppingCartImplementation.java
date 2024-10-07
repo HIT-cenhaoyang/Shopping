@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sg.nus.edu.shopping.interfacemethods.ShoppingCartInterface;
-import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.ShoppingCart;
@@ -24,11 +23,12 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
     @Autowired
     private ProductRepository productRepo;
 
-    public List<ShoppingCart> getCartByCustomerId(int customerId) {
+    public List<ShoppingCart> getCartByCustomerId(String customerId) {
         return shoppingCartRepo.findByCustomerId(customerId);
     }
+
     public List<ShoppingCart> getCartbyCustomerUsername(String username) {
-        return shoppingCartRepo.findByCustomerUsername(username);
+        return shoppingCartRepo.findByCustomerUserName(username);
     }
     public ShoppingCart updateQuantity(int cartId, int quantity) {
         ShoppingCart existingCart = shoppingCartRepo.getByCartId(cartId);
@@ -52,7 +52,7 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
     }
 
     public ShoppingCart addProduct(String customerId, int productId, int quantity) {
-        Customer customer = customerRepo.findCustomerByCustomerId(customerId);
+        Customer customer = customerRepo.findCustomerById(customerId);
         Product product = productRepo.findByProductId(productId);
         ShoppingCart newCart = new ShoppingCart(product, customer, quantity);
         customer.addProductToCart(newCart);
