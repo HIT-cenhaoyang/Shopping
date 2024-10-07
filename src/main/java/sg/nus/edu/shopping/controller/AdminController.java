@@ -15,11 +15,11 @@ import sg.nus.edu.shopping.service.AdminImplementation;
 @Controller
 public class AdminController {
 	@Autowired
-	private AdminInterface uservice;
+	private AdminInterface adminInt;
 
 	@Autowired
 	public void setUserService(AdminImplementation userviceImpl) {
-		this.uservice = userviceImpl;
+		this.adminInt = userviceImpl;
 	}
 
 	@GetMapping ("/adminLogin")
@@ -31,7 +31,7 @@ public class AdminController {
 	
 	@PostMapping("/validate/adminlogin")
 	public String login(Admin user, HttpSession sessionObj,Model model) {
-		Admin dataU = uservice.searchUserByUserName(user.getUserName());
+		Admin dataU = adminInt.searchUserByUserName(user.getUserName());
 		if (dataU == null) {
 			model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
 			return "adminLogin";
