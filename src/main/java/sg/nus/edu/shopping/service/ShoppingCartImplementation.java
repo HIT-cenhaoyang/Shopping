@@ -51,13 +51,13 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
         shoppingCartRepo.delete(existingCart);
     }
 
-    public ShoppingCart addProduct(int customerId, int productId, int quantity) {
+    public ShoppingCart addProduct(String customerId, int productId, int quantity) {
         Customer customer = customerRepo.findCustomerByCustomerId(customerId);
         Product product = productRepo.findByProductId(productId);
         ShoppingCart newCart = new ShoppingCart(product, customer, quantity);
         customer.addProductToCart(newCart);
 
         customerRepo.save(customer);
-        shoppingCartRepo.save(newCart);
+        return shoppingCartRepo.save(newCart);
     }
 }

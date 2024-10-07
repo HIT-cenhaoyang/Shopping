@@ -35,7 +35,6 @@ public class ProductImplementation implements ProductInterface {
     @Override
     @Transactional
     public Product findByProductId(int productId) {
-       c
         return productRepo.findByProductId(productId);
     }
 
