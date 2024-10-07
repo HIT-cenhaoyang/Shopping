@@ -11,19 +11,39 @@
 	<form th:action="@{/update/profile}" th:object="${user}" method="post">
 		<table>
 			<tr>
-			  <th>User Name:</th>
-			  <td><td><input type="text" th:field="*{userName}"
-			  th:value="*{userName}"></td></td>
+			  <th>Real Name:</th>
+			  <td><input type="text" th:field="*{name}"
+			  th:value="*{name}"></td>
 			</tr>
 			<tr>
-			  <th>Real Name:</th>
-			  <td><td><input type="text" th:field="*{name}"
-			  th:value="*{name}"></td></td>
+			  <th>User Name:</th>
+			  <td><input type="text" th:field="*{userName}"
+			  th:value="*{userName}"></td>
+			</tr>
+			<tr>
+			  <th>Birth Date:</th>
+			  <td><input type="date" th:field="*{birthDate}"
+			  th:value="*{birthDate}"></td>
+			</tr>
+			<tr>
+			  <th>Gender:</th>
+			  <td><input type="text" th:field="*{gender}"
+			  th:value="*{gender}"></td>
 			</tr>
 			<tr>
 			  <th>Email: </th>
-			  <td><td><input type="text" th:field="*{email}"
-			  th:value="*{email}"></td></td>
+			  <td><input type="text" th:field="*{email}"
+			  th:value="*{email}"></td>
+			</tr>
+			<tr>
+			  <th>Phone: </th>
+			  <td><input type="text" th:field="*{phoneNumber}"
+			  th:value="*{phoneNumber}"></td>
+			</tr>
+			<tr>
+			  <th>Address: </th>
+			  <td><input type="text" th:field="*{address}"
+			  th:value="*{address}"></td>
 			</tr>
 			<tr>
 				<th><input type="hidden" th:field="*{id}" th:value="*{id}"></th>
@@ -33,6 +53,7 @@
 		</table>
 	<button type="submit" style="background-color: rgb(255, 255, 255);">Update the change</button>
 	</form>
+	<p><a th:href="@{/7haven/purchase/history}">Retrieve Purchase Records </a></p>
 	<p><span th:text="${MSG}"/></p>
 </body>
 </html>

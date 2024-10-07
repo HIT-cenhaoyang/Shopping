@@ -131,23 +131,19 @@ public class CustomerController {
 	}
 
 	//Author: xu zhiye
-	@GetMapping("/protected/list-users")
+	@GetMapping("/7haven/list-users")
 	public String listUsers(HttpSession sessionObj, Model model) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		} else {
-			return "homePage";
-		}
+
+		return "homePage";
+
 	}
 
 	//Author: xu zhiye
-
-//		@GetMapping("/logout")
-//	public String logout(HttpSession sessionObj, Model model) {
-//		sessionObj.removeAttribute("username");
-//		return "redirect:/login";
-//	}
+	@GetMapping("/logout")
+	public String logout(HttpSession sessionObj, Model model) {
+		sessionObj.invalidate();
+		return "redirect:/login";
+	}
 
 
 
@@ -214,7 +210,7 @@ public class CustomerController {
 	}
 
 	//Author: xu zhiye
-	@GetMapping("/display/profile/{username}")
+	@GetMapping("/7haven/display/profile/{username}")
 	public String displayProfile(Model model, @PathVariable String username) {
 		Customer dataU = cusregister.searchUserByUserName(username);
 
@@ -223,7 +219,7 @@ public class CustomerController {
 	}
 
 	//Author: xu zhiye
-	@PostMapping("/update/profile")
+	@PostMapping("/7haven/update/profile")
 	public String updateProfile(Customer user, Model model) {
 		// find by ID from database
 		Customer dataU = cusregister.findById(user.getCustomerId());
@@ -240,4 +236,5 @@ public class CustomerController {
 			return "homePage";
 		}
 	}
+	
 }
