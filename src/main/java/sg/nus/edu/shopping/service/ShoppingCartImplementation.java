@@ -60,4 +60,10 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
         customerRepo.save(customer);
         return shoppingCartRepo.save(newCart);
     }
+
+	@Override
+	public List<ShoppingCart> getCartByCustomerUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

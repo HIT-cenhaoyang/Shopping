@@ -6,7 +6,7 @@ import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.ShoppingCart;
 
 import java.util.List;
-@Repository
+
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Integer> {
     List<ShoppingCart> findByProductId(int productId);
     List<ShoppingCart> findByCustomerId(String customerId);

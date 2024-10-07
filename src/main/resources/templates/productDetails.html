@@ -19,6 +19,7 @@
         <h2 th:text="${product.name}">Product Name</h2>
         <p th:text="${product.description}">Product Description</p>
         <p th:text="'$' + ${product.price}">Product Price</p>
+		<a th:href="@{'/add-to-cart/'+${product.getProductId()}}">AddToCart</a>
     </div>
 </section>
 </body>

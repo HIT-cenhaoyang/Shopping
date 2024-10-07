@@ -6,9 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpSession;
+import sg.nus.edu.shopping.generator.CustomerIDGenerator;
 import sg.nus.edu.shopping.interfacemethods.CategoryInterface;
+import sg.nus.edu.shopping.interfacemethods.CustomerInterface;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
+import sg.nus.edu.shopping.interfacemethods.ShoppingCartInterface;
 import sg.nus.edu.shopping.model.Category;
+import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.service.CategoryImplementation;
 import sg.nus.edu.shopping.service.ProductImplementation;
@@ -23,6 +29,12 @@ public class ProductController{
 
     @Autowired
     private CategoryInterface categoryInt;
+    
+    @Autowired
+    private ShoppingCartInterface shoppingCartInt;
+    
+    @Autowired
+    private CustomerInterface customerInt;
 
     @Autowired
     public void setProductInterface(ProductImplementation productImp) {
@@ -32,6 +44,11 @@ public class ProductController{
     @Autowired
     public void setCategoryInterface(CategoryImplementation categoryImp) {
         this.categoryInt = categoryImp;
+    }
+    
+    @GetMapping("/")
+    public String home(){
+        return "redirect:/products";
     }
 
     @GetMapping("/products")
@@ -73,7 +90,17 @@ public class ProductController{
         return "productDetails"; // 假设有一个名为 productDetails.html 的模板
     }
 
-
+    @GetMapping("/add-to-cart/{id}")
+    public String addToCart(@PathVariable("id")int productId, HttpSession httpSession) {
+        String username = (String) httpSession.getAttribute("username");
+        if(username == null) {
+            return "redirect:/login";
+        }
+        Product product = productInt.findByProductId(productId);
+        Customer customer=customerInt.searchUserByUserName(username);
+        shoppingCartInt.addProduct(customer.getCustomerId(),product.getProductId(),1);
+        return "redirect:/product/" + productId;
+    }
 
 
 
