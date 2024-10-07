@@ -26,7 +26,7 @@ import java.util.List;
 @Controller
 public class AdminController {
 	@Autowired
-	private AdminInterface uservice;
+	private AdminInterface adminInt;
 
     @Autowired
     private ProductImageRepository productImageRepository;
@@ -37,12 +37,12 @@ public class AdminController {
 
     @Autowired
     public void setUserService(AdminImplementation userviceImpl) {
-        this.uservice = userviceImpl;
+        this.adminInt = userviceImpl;
     }
 
     @GetMapping("/adminHomePage/products")
     public String listProducts(Model model) {
-        List<Product> products = uservice.findAllProducts();
+        List<Product> products = adminInt.findAllProducts();
         model.addAttribute("products", products);
         Product product = new Product();
         model.addAttribute("product", product);
@@ -67,7 +67,7 @@ public class AdminController {
         product.setCategory(category);
 
         // Save product first
-        uservice.saveProduct(product);
+        adminInt.saveProduct(product);
 
         // Save images
         List<ProductImage> productImages = new ArrayList<>();
@@ -113,7 +113,7 @@ public class AdminController {
 	
 	@PostMapping("/validate/adminlogin")
 	public String login(Admin user, HttpSession sessionObj,Model model) {
-		Admin dataU = uservice.searchUserByUserName(user.getUserName());
+		Admin dataU = adminInt.searchUserByUserName(user.getUserName());
 		if (dataU == null) {
 			model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
 			return "adminLogin";
