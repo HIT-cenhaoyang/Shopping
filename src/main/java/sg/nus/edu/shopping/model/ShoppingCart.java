@@ -12,10 +12,10 @@ public class ShoppingCart {
     private int cartId;
 
     @ManyToOne
-    private Product product_cart;
+    private Product product;
 
     @ManyToOne
-    private Customer cart_customer;
+    private Customer customer;
 
     private int productQty;
 

@@ -33,11 +33,11 @@ public class Customer {
 
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "record_customer")
-    private List<PurchaseRecord> purchaseRecord;
+    @OneToMany(mappedBy = "customer")
+    private List<PurchaseRecord> purchaseRecords;
 
-    @OneToMany(mappedBy = "cart_customer")
-    private List<ShoppingCart> shoppingCart;
+    @OneToMany(mappedBy = "customer")
+    private List<ShoppingCart> shoppingCarts;
 
     @OneToMany(mappedBy = "payment_customer")
     private List<PaymentDetail> paymentDetails;
@@ -82,22 +82,22 @@ public class Customer {
 
 
     public List<ShoppingCart> getShoppingCart() {
-        return shoppingCart;
+        return shoppingCarts;
     }
 
 
     public void setShoppingCart(List<ShoppingCart> shoppingCart) {
-        this.shoppingCart = shoppingCart;
+        this.shoppingCarts = shoppingCart;
     }
 
 
     public List<PurchaseRecord> getPurchaseRecord() {
-        return purchaseRecord;
+        return purchaseRecords;
     }
 
 
     public void setPurchaseRecord(List<PurchaseRecord> purchaseRecord) {
-        this.purchaseRecord = purchaseRecord;
+        this.purchaseRecords = purchaseRecord;
     }
 
 

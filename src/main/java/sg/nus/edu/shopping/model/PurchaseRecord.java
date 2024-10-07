@@ -12,22 +12,22 @@ public class PurchaseRecord {
     private int orderId;
 
     @ManyToOne
-    private Customer record_customer;
+    private Customer customer;
 
-    @OneToMany(mappedBy = "order_purchaseRecord")
-    private List<OrderDetail> purchaseRecord_orderDetail;
+    @OneToMany(mappedBy = "purchaseRecord")
+    private List<OrderDetail> orderDetails;
 
     public PurchaseRecord() {
 
     }
 
 
-    public Customer getRecord_customer() {
-        return record_customer;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setRecord_customer(Customer record_customer) {
-        this.record_customer = record_customer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public int getOrderId() {

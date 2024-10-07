@@ -31,7 +31,7 @@ public class Product {
     @Column(length = 50)
     private String description;
 
-    @OneToMany(mappedBy = "product_cart")
+    @OneToMany(mappedBy = "product")
     private List<ShoppingCart> shoppingCarts;
 
     @OneToMany(mappedBy = "detail_product")
