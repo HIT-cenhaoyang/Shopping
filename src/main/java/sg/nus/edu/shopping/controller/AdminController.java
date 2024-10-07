@@ -13,6 +13,8 @@ import sg.nus.edu.shopping.model.Admin;
 import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.ProductImage;
+import sg.nus.edu.shopping.repository.CategoryRepository;
+import sg.nus.edu.shopping.repository.ProductImageRepository;
 import sg.nus.edu.shopping.service.AdminImplementation;
 import sg.nus.edu.shopping.service.CategoryImplementation;
 import sg.nus.edu.shopping.service.ProductImageImplementation;
