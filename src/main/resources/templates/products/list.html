@@ -6,6 +6,21 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    function toggleImageInput() {
+      var uploadOption = document.getElementById("uploadOption").value;
+      var fileInput = document.getElementById("fileInput");
+      var urlInput = document.getElementById("urlInput");
+
+      if (uploadOption === "file") {
+        fileInput.style.display = "block";
+        urlInput.style.display = "none";
+      } else {
+        fileInput.style.display = "none";
+        urlInput.style.display = "block";
+      }
+    }
+  </script>
 </head>
 <body>
 <h1>Product List</h1>
@@ -51,12 +66,35 @@
           <input type="text" th:field="*{price}" class="form-control"/><br/>
           <label>Stock:</label>
           <input type="number" th:field="*{stockAvailable}" class="form-control"/><br/>
+          <label>Sku:</label>
+          <input type="number" th:field="*{sku}" class="form-control"/><br/>
           <label>Category:</label>
           <select th:field="*{category}" class="form-control">
             <option th:each="category : ${categoryList}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
           </select><br/>
-          <label>Image:</label>
-          <input type="file" th:field="*{images}" multiple class="form-control"/><br/>
+
+          <label for="uploadOption">Upload Option:</label>
+          <select id="uploadOption" name="uploadOption" onchange="toggleImageInput()" class="form-control">
+            <option value="file">Upload File</option>
+            <option value="url">Enter URL</option>
+          </select><br/>
+
+          <div id="fileInput" style="display: block;">
+            <label for="cover_image">Cover Image:</label>
+            <input type="file" id="cover_image" name="cover_image" class="form-control"><br>
+
+            <label for="images">Product Images:</label>
+            <input type="file" id="images" name="images" multiple class="form-control"><br>
+          </div>
+
+          <div id="urlInput" style="display: none;">
+            <label for="cover_image_url">Cover Image URL:</label>
+            <input type="text" id="cover_image_url" name="cover_image_url" class="form-control"><br>
+
+            <label for="images_url">Product Images URLs (comma separated):</label>
+            <input type="text" id="images_url" name="images_url" class="form-control"><br>
+          </div>
+
           <button type="submit" class="btn btn-primary">Save</button>
         </form>
       </div>

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,25 +13,27 @@ import sg.nus.edu.shopping.model.Admin;
 import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.ProductImage;
-import sg.nus.edu.shopping.repository.CategoryRepository;
-import sg.nus.edu.shopping.repository.ProductImageRepository;
 import sg.nus.edu.shopping.service.AdminImplementation;
+import sg.nus.edu.shopping.service.CategoryImplementation;
+import sg.nus.edu.shopping.service.ProductImageImplementation;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class AdminController {
-	@Autowired
-	private AdminInterface uservice;
+    @Autowired
+    private AdminInterface uservice;
 
     @Autowired
-    private ProductImageRepository productImageRepository;
+    private ProductImageImplementation productImageImplementation;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryImplementation categoryImplementation;
 
 
     @Autowired
@@ -46,103 +47,156 @@ public class AdminController {
         model.addAttribute("products", products);
         Product product = new Product();
         model.addAttribute("product", product);
-        List<Category> categoryList = categoryRepository.findAll();
+        List<Category> categoryList = categoryImplementation.getAllCategories();
         model.addAttribute("categoryList", categoryList);
-        return "products/list";  // 返回到商品列表页面
+        return "products/list";  // return to the product list page
     }
 
     @GetMapping("/products/create")
     public String createProductForm(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
-        List<Category> categoryList = categoryRepository.findAll();
+        List<Category> categoryList = categoryImplementation.getAllCategories();
         model.addAttribute("categoryList", categoryList);
-        return "products/list";  // 返回到商品创建页面
+        return "products/list";  // return to the product list page
     }
 
     @PostMapping("/products/create")
-    public String createProduct(@ModelAttribute Product product, @RequestParam("categoryId") int categoryId,
-                                @RequestParam("images") MultipartFile[] files) {
-        Category category = categoryRepository.findByCategoryId(categoryId);
-        product.setCategory(category);
+    public String createProduct(@RequestParam("name") String name,
+                                @RequestParam("category") int categoryId,
+                                @RequestParam("price") double price,
+                                @RequestParam("stockAvailable") int stockAvailable,
+                                @RequestParam("description") String description,
+                                @RequestParam("sku") String sku,
+                                @RequestParam("cover_image") MultipartFile coverImage,
+                                @RequestParam("images") MultipartFile[] images) {
+        Product product = new Product();
+        product.setName(name);
+        product.setCategory(categoryImplementation.findByCategoryId(categoryId));
+        product.setPrice(price);
+        product.setStockAvailable(stockAvailable);
+        product.setSku(sku);
+        product.setDescription(description);
 
         // Save product first
         uservice.saveProduct(product);
 
-        // Save images
         List<ProductImage> productImages = new ArrayList<>();
-        for (int i = 0; i < files.length; i++) {
-            MultipartFile file = files[i];
-            ProductImage image = new ProductImage();
-            String newFileName = product.getCategory().getCategoryName() + "_" + product.getName() + "_"
-                    + (i + 1) + getFileExtension(file.getOriginalFilename());
-            image.setFileName(newFileName);
-            image.setProduct(product);
 
-            // Save file to filesystem
-            String uploadDir = "src/main/resources/static/images/";
-            File uploadPath = new File(uploadDir);
-            if (!uploadPath.exists()) {
-                uploadPath.mkdirs();
-            }
+        if (!coverImage.isEmpty()) {
             try {
-                file.transferTo(new File(uploadDir + newFileName));
-                image.setImagePath("/images/" + newFileName);
+                String folder = "src/main/resources/static/images/";
+                String originalFilename = coverImage.getOriginalFilename();
+                String extension = getFileExtension(originalFilename);
+                String categoryName = categoryImplementation.findByCategoryId(categoryId).getCategoryName();
+                String newFilename = categoryName + "_" + name + "_cover" + extension;
+                Path path = Paths.get(folder + newFilename);
+
+                // check if the directory exists, if not create it
+                if (!Files.exists(path.getParent())) {
+                    Files.createDirectories(path.getParent());
+                }
+
+                // save file to resources folder
+                byte[] bytes = coverImage.getBytes();
+                Files.write(path, bytes);
+
+                // create ProductImage object and set path
+                ProductImage productImage = new ProductImage();
+                productImage.setFileName("localhost:8080/images/" + newFilename);
+                productImage.setCoverImage(true);
+                productImage.setProduct(product);
+                productImages.add(productImage);
+                productImageImplementation.addProductImage(product.getProductId(),productImage);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
 
-            productImages.add(image);
-            productImageRepository.save(image);
+        int imageIndex = 1;
+        for (MultipartFile image : images) {
+            if (!image.isEmpty()) {
+                try {
+                    String folder = "src/main/resources/static/images/";
+                    String originalFilename = image.getOriginalFilename();
+                    String extension = getFileExtension(originalFilename);
+                    String categoryName = categoryImplementation.findByCategoryId(categoryId).getCategoryName();
+                    String newFilename = categoryName + "_" + name + "_" + imageIndex + extension;
+                    Path path = Paths.get(folder + newFilename);
+
+                    // check if the directory exists, if not create it
+                    if (!Files.exists(path.getParent())) {
+                        Files.createDirectories(path.getParent());
+                    }
+
+                    // save file to resources folder
+                    byte[] bytes = image.getBytes();
+                    Files.write(path, bytes);
+
+                    // create ProductImage object and set path
+                    ProductImage productImage = new ProductImage();
+                    productImage.setFileName("/images/" + newFilename);
+                    productImage.setCoverImage(false);
+                    productImage.setProduct(product);
+                    productImages.add(productImage);
+                    productImageImplementation.addProductImage(product.getProductId(),productImage);
+
+                    imageIndex++;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         product.setImages(productImages);
+        uservice.saveProduct(product);
 
-        return "redirect:/products";
+        return "redirect:/adminHomePage/products";
     }
 
     private String getFileExtension(String fileName) {
         int dotIndex = fileName.lastIndexOf('.');
         return (dotIndex == -1) ? "" : fileName.substring(dotIndex);
     }
-	@GetMapping ("/adminLogin")
-	public String AdminLogin(Model model) {
-		model.addAttribute("admin", new Admin());
-		return "adminLogin";
-		
-	}
-	
-	@PostMapping("/validate/adminlogin")
-	public String login(Admin user, HttpSession sessionObj,Model model) {
-		Admin dataU = uservice.searchUserByUserName(user.getUserName());
-		if (dataU == null) {
-			model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
-			return "adminLogin";
-		} else {
-			if (dataU.getPassword().equals(user.getPassword())) {
-				sessionObj.setAttribute("username", user.getUserName());
-				return "redirect:/protected/list-admin";
-			} else {
-				model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
-				return "adminLogin";
-			}
-		}
-	}
-	
-	@GetMapping("/protected/list-admin")
-	public String listUsers(HttpSession sessionObj, Model model) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		} else {
-			return "adminPanel";
-		}
-	}
-	
-	@GetMapping("/adminLogout")
-	public String adminLogout(HttpSession sessionObj, Model model) {
-		sessionObj.removeAttribute("username");
-		return "redirect:/adminLogin";
-	}
-	
-	
+
+    @GetMapping("/adminLogin")
+    public String AdminLogin(Model model) {
+        model.addAttribute("admin", new Admin());
+        return "adminLogin";
+
+    }
+
+    @PostMapping("/validate/adminlogin")
+    public String login(Admin user, HttpSession sessionObj, Model model) {
+        Admin dataU = uservice.searchUserByUserName(user.getUserName());
+        if (dataU == null) {
+            model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
+            return "adminLogin";
+        } else {
+            if (dataU.getPassword().equals(user.getPassword())) {
+                sessionObj.setAttribute("username", user.getUserName());
+                return "redirect:/protected/list-admin";
+            } else {
+                model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
+                return "adminLogin";
+            }
+        }
+    }
+
+    @GetMapping("/protected/list-admin")
+    public String listUsers(HttpSession sessionObj, Model model) {
+        String username = (String) sessionObj.getAttribute("username");
+        if (username == null) {
+            return "redirect:/login";
+        } else {
+            return "adminPanel";
+        }
+    }
+
+    @GetMapping("/adminLogout")
+    public String adminLogout(HttpSession sessionObj, Model model) {
+        sessionObj.removeAttribute("username");
+        return "redirect:/adminLogin";
+    }
+
+
 }

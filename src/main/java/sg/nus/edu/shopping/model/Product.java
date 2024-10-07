@@ -2,6 +2,7 @@ package sg.nus.edu.shopping.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,7 +12,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
 
-    @Column(length = 20)
     private String name;
 
     //unique sku code (e.g barcode)
@@ -26,9 +26,8 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product")
-    private List<ProductImage> images;
+    private List<ProductImage> images = new ArrayList<>();
 
-    @Column(length = 50)
     private String description;
 
     @OneToMany(mappedBy = "product")
