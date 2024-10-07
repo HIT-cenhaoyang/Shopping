@@ -13,7 +13,7 @@ public class Customer {
     @Id
     @GeneratedValue(generator = "customer-id-generator")
     @GenericGenerator(name = "customer-id-generator", strategy = "sg.nus.edu.shopping.generator.CustomerIDGenerator")
-    private String userId;
+    private String id;
 
     private String address;
 
@@ -60,8 +60,8 @@ public class Customer {
         this.gender = gender;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getCustomerId() {
+        return id;
     }
 
     public String getPhoneNumber() {

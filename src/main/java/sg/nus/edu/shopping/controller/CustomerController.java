@@ -140,13 +140,15 @@ public class CustomerController {
 			return "homePage";
 		}
 	}
-	
+
 	//Author: xu zhiye
-		@GetMapping("/logout")
-	public String logout(HttpSession sessionObj, Model model) {
-		sessionObj.removeAttribute("username");
-		return "redirect:/login";
-	}
+
+//		@GetMapping("/logout")
+//	public String logout(HttpSession sessionObj, Model model) {
+//		sessionObj.removeAttribute("username");
+//		return "redirect:/login";
+//	}
+
 
 
 	//Author: xu zhiye
@@ -171,7 +173,7 @@ public class CustomerController {
 				Customer c = new Customer();
 				c.setUserName(dataU.getUserName());
 				model.addAttribute("user", c);
-				obj.setAttribute("userId", dataU.getUserId());
+				obj.setAttribute("userId", dataU.getCustomerId());
 				return "resetPassword";
 			} else {
 				model.addAttribute("MSG", "Your Verifivation failed, please try again!");
@@ -224,7 +226,7 @@ public class CustomerController {
 	@PostMapping("/update/profile")
 	public String updateProfile(Customer user, Model model) {
 		// find by ID from database
-		Customer dataU = cusregister.findById(user.getUserId());
+		Customer dataU = cusregister.findById(user.getCustomerId());
 
 		// ensure no duplicate userName
 		if (!dataU.getUserName().equalsIgnoreCase(user.getUserName())
