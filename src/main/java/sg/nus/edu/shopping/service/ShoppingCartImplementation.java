@@ -24,7 +24,7 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
     @Autowired
     private ProductRepository productRepo;
 
-    public List<ShoppingCart> getCartByCustomerId(int customerId) {
+    public List<ShoppingCart> getCartByCustomerId(String customerId) {
         return shoppingCartRepo.findByCustomerId(customerId);
     }
     public List<ShoppingCart> getCartbyCustomerUsername(String username) {
