@@ -1,9 +1,6 @@
 package sg.nus.edu.shopping.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -14,10 +11,10 @@ public class OrderDetail {
     @Id
     private int orderDetailId;
 
-    @ManyToOne
+    @ManyToOne @JoinColumn (name = "productId")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne @JoinColumn(name = "orderId")
     private PurchaseRecord purchaseRecord;
 
     private int productQty;

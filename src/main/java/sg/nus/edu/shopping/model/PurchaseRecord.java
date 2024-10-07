@@ -11,7 +11,7 @@ public class PurchaseRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
 
-    @ManyToOne
+    @ManyToOne @JoinColumn (name = "productId")
     private Customer customer;
 
     @OneToMany(mappedBy = "purchaseRecord")

@@ -9,10 +9,10 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartId;
 
-    @ManyToOne
+    @ManyToOne @JoinColumn (name = "productId")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne @JoinColumn(name = "customerId")
     private Customer customer;
 
     private int productQty;
