@@ -15,26 +15,26 @@ import sg.nus.edu.shopping.repository.CustomerRepository;
 @Transactional
 public class CustomerImplementation implements CustomerInterface{
 	@Autowired
-	CustomerRepository precu;
+	CustomerRepository customerRepo;
 	
 	@Override
 	@Transactional
     public boolean isUsernameTaken(String userName) {
-        return precu.existsByUserName(userName);
+        return customerRepo.existsByUserName(userName);
     }
 	
 	@Override
 	@Transactional
 	public void saveCustomer(Customer customer) {
 
-		precu.save(customer);
+		customerRepo.save(customer);
 
 	}
 	
 	@Override
 	@Transactional
 	public ArrayList<Customer> findCustomerByuserName(String userName) {
-		return precu.findCustomerByuserName(userName);
+		return customerRepo.findCustomerByuserName(userName);
 	}
 
 	//Author: xu zhiye
@@ -42,7 +42,7 @@ public class CustomerImplementation implements CustomerInterface{
 	public Customer searchUserByUserName(String userName) {
 		// TODO Auto-generated method stub
 		if(userName!=null) {
-			ArrayList<Customer> userList = precu.searchUserByUserName(userName);
+			ArrayList<Customer> userList = customerRepo.searchUserByUserName(userName);
 			if(userList!=null && userList.size() > 0) {
 				return userList.get(0);
 			}
@@ -56,7 +56,7 @@ public class CustomerImplementation implements CustomerInterface{
 	public Customer searchUserByUserEmail(String userEmail) {
 		// TODO Auto-generated method stub
 		if(userEmail!=null) {
-			ArrayList<Customer> emailList=precu.searchUserByUserEmail(userEmail);
+			ArrayList<Customer> emailList=customerRepo.searchUserByUserEmail(userEmail);
 			if(emailList !=null && emailList.size()>0) {
 				return emailList.get(0);
 			}
@@ -68,7 +68,7 @@ public class CustomerImplementation implements CustomerInterface{
 	@Override
 	public Customer findById(String id) {
 		// TODO Auto-generated method stub
-		Optional<Customer> result = precu.findById(id);
+		Optional<Customer> result = customerRepo.findById(id);
 		if(result.isPresent()) {
 			return result.get();
 		}else {
