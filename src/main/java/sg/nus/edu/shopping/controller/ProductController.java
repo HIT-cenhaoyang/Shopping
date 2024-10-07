@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import sg.nus.edu.shopping.interfacemethods.CategoryInterface;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
@@ -65,7 +64,7 @@ public class ProductController{
 
     @GetMapping("/product/{id}")
     public String showProductDetails(@PathVariable("id") int productId, Model model) {
-        Product product = productInt.findById(productId);
+        Product product = productInt.getProductById(productId);
         if (product == null) {
             model.addAttribute("errorMessage", "Product not found");
             return "errorPage"; // 假设有一个名为 errorPage.html 的模板

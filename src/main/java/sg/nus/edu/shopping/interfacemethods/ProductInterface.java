@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface ProductInterface {
 
-    public List<Product> findAll();
-    public List<Product> getProductByCategory(Category category);
-    public List<Product> searchProductsByKeyword(String keyword);
+    List<Product> findAllProducts();
+    List<Product> getProductByCategory(Category category);
+    List<Product> searchProductsByKeyword(String keyword);
+    Product findByProductId(int productId);
+    Product createProduct(Product product);
+    Product updateProduct(Product product);
+    void deleteProduct(Product product);
+    Product getProductBySku(String sku)
 
-    Product findById(int productId);
 }
