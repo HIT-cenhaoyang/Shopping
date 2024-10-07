@@ -12,8 +12,8 @@ public interface ProductInterface {
     List<Product> searchProductsByKeyword(String keyword);
     Product findByProductId(int productId);
     Product createProduct(Product product);
-    Product updateProduct(Product product);
-    void deleteProduct(Product product);
-    Product getProductBySku(String sku)
+    Product updateProduct(int productId, Product updatedProduct);
+    void deleteProduct(int productId);
+    Product getProductBySku(String sku);
 
 }

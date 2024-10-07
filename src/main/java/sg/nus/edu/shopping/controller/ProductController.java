@@ -41,7 +41,7 @@ public class ProductController{
             Category category = categoryInt.findByCategoryId(categoryId);
             products = productInt.getProductByCategory(category);
         } else {
-            products = productInt.findAll(); // 假设你有一个方法来获取所有产品
+            products = productInt.findAllProducts(); // 假设你有一个方法来获取所有产品
         }
         model.addAttribute("products", products);
         return "homePage";
@@ -64,7 +64,7 @@ public class ProductController{
 
     @GetMapping("/product/{id}")
     public String showProductDetails(@PathVariable("id") int productId, Model model) {
-        Product product = productInt.getProductById(productId);
+        Product product = productInt.findByProductId(productId);
         if (product == null) {
             model.addAttribute("errorMessage", "Product not found");
             return "errorPage"; // 假设有一个名为 errorPage.html 的模板

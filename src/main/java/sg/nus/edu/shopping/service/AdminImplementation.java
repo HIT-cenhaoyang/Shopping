@@ -6,9 +6,6 @@ import org.springframework.stereotype.Service;
 import sg.nus.edu.shopping.interfacemethods.AdminInterface;
 import sg.nus.edu.shopping.model.Admin;
 import sg.nus.edu.shopping.repository.AdminRepository;
-import sg.nus.edu.shopping.repository.CategoryRepository;
-import sg.nus.edu.shopping.repository.ProductImageRepository;
-import sg.nus.edu.shopping.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
