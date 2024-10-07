@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .cart-container {
+            display: flex;
+            padding: 20px;
+            justify-content: space-between;
+        }
+        .cart-details {
+            width: 70%;
+        }
+        .order-summary {
+            width: 25%;
+            border-left: 2px solid #e0e0e0;
+            padding-left: 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+        }
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+        }
+        .item-info {
+            width: 60%;
+        }
+        .item-info h3 {
+            margin: 0;
+        }
+        .item-actions {
+            display: flex;
+            align-items: center;
+        }
+        .item-actions input {
+            width: 50px;
+            text-align: center;
+        }
+        .item-actions button {
+            background-color: transparent;
+            border: 1px solid #000;
+            font-size: 16px;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .order-summary h2, .order-summary p {
+            margin: 0 0 20px 0;
+        }
+        .checkout-btn {
+            background-color: #0074D9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .checkout-btn:hover {
+            background-color: #0056a3;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="padding: 20px;">Your Cart</h1>
+    
+    <div class="cart-container">
+        <div class="cart-details" id="cart-details">
+            <!-- Cart items will be loaded here dynamically -->
+        </div>
+
+        <!-- Order summary -->
+        <div class="order-summary">
+            <h2>Order summary</h2>
+            <p>Products (<span id="product-count">0</span>): $<span id="product-total">0.00</span></p>
+            <p><strong>Subtotal: $<span id="subtotal">0.00</span></strong></p>
+            <button class="checkout-btn">Check out</button>
+        </div>
+    </div>
+
+    <script>
+     
+        document.addEventListener("DOMContentLoaded", function() {
+            loadProducts();
+        });
+
+        async function loadProducts() {
+            try {
+                let response = await fetch("/api/products");
+                if (response.ok) {
+                    let products = await response.json();
+                    products.forEach(product => addProductToCart(product));
+                } else {
+                    console.error("Failed to load products.");
+                }
+            } catch (error) {
+                console.error("Error fetching products: ", error);
+            }
+        }
+
+        function addProductToCart(product) {
+            const cartDetails = document.getElementById('cart-details');
+            
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.dataset.id = product.productId;
+            const coverImage = product.images && product.images.length > 0 ? product.images[0].fileName : 'default.jpg';
+
+            cartItem.innerHTML = `
+                <img src="/images/${coverImage}" alt="${product.name}">
+                <div class="item-info">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <p>Price per unit: $${product.price.toFixed(2)}</p>
+                </div>
+                <div class="item-actions">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" value="1" min="1" onchange="updateQuantity(this, 0)">
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <p class="item-total-price">$${product.price.toFixed(2)}</p>
+            `;
+            cartDetails.appendChild(cartItem);
+            updateSummary();
+        }
+
+
+        function updateQuantity(element, delta) {
+            let itemRow = element.closest('.cart-item');
+            let quantityInput = itemRow.querySelector('input[type="number"]');
+            let currentQuantity = parseInt(quantityInput.value);
+            let newQuantity = delta === 0 ? currentQuantity : currentQuantity + delta;
+
+            if (newQuantity < 1) {
+                removeItem(itemRow);
+            } else {
+                quantityInput.value = newQuantity;
+                let unitPrice = parseFloat(itemRow.querySelector('.item-info p:nth-child(3)').textContent.replace('Price per unit: $', ''));
+                itemRow.querySelector('.item-total-price').textContent = "$" + (newQuantity * unitPrice).toFixed(2);
+                updateSummary();
+            }
+        }
+
+
+        function removeItem(element) {
+            let itemRow = element.closest('.cart-item');
+            itemRow.remove();
+            updateSummary();
+        }
+
+
+        function updateSummary() {
+            let totalItems = 0;
+            let totalPrice = 0;
+            let itemRows = document.querySelectorAll('.cart-item');
+
+            itemRows.forEach(function(item) {
+                let quantity = parseInt(item.querySelector('input[type="number"]').value);
+                let priceText = item.querySelector('.item-total-price').textContent;
+                let price = parseFloat(priceText.replace('$', ''));
+
+                totalItems += quantity;
+                totalPrice += price;
+            });
+
+            document.getElementById('product-count').textContent = totalItems;
+            document.getElementById('product-total').textContent = totalPrice.toFixed(2);
+            document.getElementById('subtotal').textContent = totalPrice.toFixed(2);
+        }
+    </script>
+</body>
+</html>
