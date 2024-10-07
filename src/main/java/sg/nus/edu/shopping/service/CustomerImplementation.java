@@ -48,7 +48,6 @@ public class CustomerImplementation implements CustomerInterface{
 			}
 		}
 		return null;
-
 	}
 
 	//Author: xu zhiye
