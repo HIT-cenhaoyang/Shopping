@@ -14,10 +14,10 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Autowired
-    private ProductService productService; // 产品服务接口，获取产品信息
+    private ProductServiceInterface productService; // 产品服务接口，获取产品信息
 
     @Autowired
-    private ShoppingCartService shoppingCartService; // 购物车服务接口，管理购物车
+    private ShoppingCartInterface shoppingCartService; // 购物车服务接口，管理购物车
 
     // 获取所有产品的 API
     @GetMapping("/products")
