@@ -2,6 +2,8 @@ package sg.nus.edu.shopping.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sg.nus.edu.shopping.interfacemethods.ProductInterface;
+import sg.nus.edu.shopping.interfacemethods.ShoppingCartInterface;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.ShoppingCart;
 import sg.nus.edu.shopping.service.ProductImplementation;
@@ -15,22 +17,29 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Autowired
-    private ProductImplementation productService; // 产品服务接口，获取产品信息
+    private ProductInterface productInt; // 产品服务接口，获取产品信息
 
     @Autowired
-    private ShoppingCartImplementation shoppingCartService; // 购物车服务接口，管理购物车
+    private ShoppingCartInterface shoppingCartInt; // 购物车服务接口，管理购物车
+
+    public void setProductInterface(ProductImplementation productImp) {
+        this.productInt = productImp;
+    }
+    public void setShoppingCartInterface(ShoppingCartImplementation shoppingCartImp) {
+        this.shoppingCartInt = shoppingCartImp;
+    }
 
     // 获取所有产品的 API
     @GetMapping("/products")
     public List<Product> getAllProducts() {
-        return productService.findAllProducts();
+        return productInt.findAllProducts();
     }
 
     // 添加产品到购物车的 API
     @PostMapping("/cart/add")
     public String addProductToCart(@RequestBody AddToCartRequest request) {
         try {
-            ShoppingCart cart = shoppingCartService.addProduct(request.getCustomerId(), request.getProductId(), request.getQuantity());
+            ShoppingCart cart = shoppingCartInt.addProduct(request.getCustomerId(), request.getProductId(), request.getQuantity());
             return "Product added to cart successfully. Cart ID: " + cart.getCartId();
         } catch (Exception e) {
             return "Error adding product to cart: " + e.getMessage();
