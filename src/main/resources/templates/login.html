@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<title>7haven Login</title>
-<!-- This html author is Xu Zhiye -->
-</head>
-<body>
-<p>
-<h2 style="text-align: center;">Welcome to 7haven</h2>
-<h3 style="text-align: center;">Member Login</h3>
-
-<form th:action="@{/validate/login}" th:object="${user}" method="post">
+	<title>7haven Login</title>	
+	<link th:href="@{/styles/account.css}" rel="stylesheet" />
+	<!-- This html author is Xu Zhiye -->
 	
-<input type="text" id="userName" th:field="*{userName}" placeholder="User name"required/>
-<br/>
-<input type="text" id="password" th:field="*{password}"  placeholder="Password" required/>
-<br/>
-<button type="submit" style="background-color: rgb(255, 255, 255);">Login</button>
-</form>
-<p><a th:href="@{/user/resetPassword}">Forget/Change Password</a></p>
+	<style>
 
-<!--I change the href of the register page to the correct one-->
-<p><a th:href="@{/register}">Register Membership</a></p>
-<p><span th:text="${MSG}"/></p>
-<p><span th:text="${errorMsg}"/></p>
+	</style>
+</head>
+
+<body>
+	<header>
+		<h2 >Welcome to Ultra 7haven Furniture</h2>
+	</header>
+	<section>
+	<form th:action="@{/validate/login}" th:object="${user}" method="post">
+		<h2 style="text-align: center;">Member Login</h2>
+		<div class="form-row">
+			<input type="text" id="userName" th:field="*{userName}" placeholder="User name" required />
+		</div>
+		<div class="form-row">
+			<input type="text" id="password" th:field="*{password}" placeholder="Password" required />
+		</div>
+		<div>
+			<button type="submit">Login</button>
+		</div>
+		
+		<div class="form-footer"><a th:href="@{/user/resetPassword}">Forget/Change Password</a></div>
+		<div class="form-footer"><a th:href="@{/register}">Register Membership</a></div>
+		<div class="form-footer"><span th:text="${MSG}" /></div>
+		<div class="error-message"><p><span th:text="${errorMsg}" /></p></div>
+	</form>
+	</section>
 </body>
+
 </html>

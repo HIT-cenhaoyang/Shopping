@@ -1,59 +1,66 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>BookStore Reset</title>
-<!-- This html author is Xu Zhiye -->
-</head>
-<body>
-	<h2 style="text-align: center;">Welcome to Ultra 7 Furniture</h2>
-	<h3 style="text-align: center;">Member Profile</h3>
 
-	<form th:action="@{/update/profile}" th:object="${user}" method="post">
-		<table>
-			<tr>
-			  <th>Real Name:</th>
-			  <td><input type="text" th:field="*{name}"
-			  th:value="*{name}"></td>
-			</tr>
-			<tr>
-			  <th>User Name:</th>
-			  <td><input type="text" th:field="*{userName}"
-			  th:value="*{userName}"></td>
-			</tr>
-			<tr>
-			  <th>Birth Date:</th>
-			  <td><input type="date" th:field="*{birthDate}"
-			  th:value="*{birthDate}"></td>
-			</tr>
-			<tr>
-			  <th>Gender:</th>
-			  <td><input type="text" th:field="*{gender}"
-			  th:value="*{gender}"></td>
-			</tr>
-			<tr>
-			  <th>Email: </th>
-			  <td><input type="text" th:field="*{email}"
-			  th:value="*{email}"></td>
-			</tr>
-			<tr>
-			  <th>Phone: </th>
-			  <td><input type="text" th:field="*{phoneNumber}"
-			  th:value="*{phoneNumber}"></td>
-			</tr>
-			<tr>
-			  <th>Address: </th>
-			  <td><input type="text" th:field="*{address}"
-			  th:value="*{address}"></td>
-			</tr>
-			<tr>
-				<th><input type="hidden" th:field="*{id}" th:value="*{id}"></th>
-				<th><input type="hidden" th:field="*{password}" th:value="*{password}"></th>
-			</tr>
-			<tr>
-		</table>
-	<button type="submit" style="background-color: rgb(255, 255, 255);">Update the change</button>
-	</form>
-	<p><a th:href="@{/7haven/purchase/history}">Retrieve Purchase Records </a></p>
-	<p><span th:text="${MSG}"/></p>
+<head>
+	<title>7haven Profile</title>
+	<link th:href="@{/styles/account.css}" rel="stylesheet" />
+	<!-- This html author is Xu Zhiye -->
+</head>
+
+<body>
+	<header>
+		<h2>Welcome to Ultra 7haven Furniture</h2>
+	</header>
+	<section>
+		<form th:action="@{/7haven/update/profile}" th:object="${user}" method="post">
+			<h2 style="text-align: center;">Member Profile</h2>
+			<table>
+				<tr>
+					<th>Real Name:</th>
+					<td><input type="text" th:field="*{name}" ></td>
+				</tr>
+				<tr>
+					<th>User Name:</th>
+					<td><input type="text" th:field="*{userName}"></td>
+				</tr>
+				<tr>
+					<th>Birth Date:</th>
+					<td><input type="text"  th:field="*{birthDate}"></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td>Date format: MM-dd-yy</td>
+				</tr>
+				<tr>
+					<th>Gender:</th>
+					<td><input type="text" th:field="*{gender}" ></td>
+				</tr>
+				<tr>
+					<th>Email: </th>
+					<td><input type="text" th:field="*{email}" ></td>
+				</tr>
+				<tr>
+					<th>Phone: </th>
+					<td><input type="text" th:field="*{phoneNumber}" ></td>
+				</tr>
+				<tr>
+					<th>Address: </th>
+					<td><input type="text" th:field="*{address}" ></td>
+				</tr>
+				<tr>
+					<th><input type="hidden" th:field="*{customerId}" ></th>
+					<th><input type="hidden" th:field="*{password}" ></th>
+				</tr>
+				<tr>
+			</table>
+			<div>
+				<button type="submit">Update the change</button>
+			</div>
+			<div class="form-footer"><a th:href="@{/7haven/purchase/history}">Retrieve Purchase Records </a></div>
+			<div class="form-footer"><span th:text="${MSG}" /></div>
+		</form>
+	</section>
+
 </body>
+
 </html>
