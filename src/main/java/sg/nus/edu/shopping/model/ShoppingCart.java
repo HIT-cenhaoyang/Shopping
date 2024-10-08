@@ -40,4 +40,12 @@ public class ShoppingCart {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
 }

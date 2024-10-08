@@ -2,6 +2,7 @@ package sg.nus.edu.shopping.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,7 +12,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
 
-    @Column(length = 60)
     private String name;
 
     //unique sku code (e.g barcode)
@@ -26,9 +26,8 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product")
-    private List<ProductImage> images;
+    private List<ProductImage> images = new ArrayList<>();
 
-    @Column(length = 200)
     private String description;
 
     @OneToMany(mappedBy = "product")
@@ -86,6 +85,14 @@ public class Product {
                 .filter(ProductImage::isCoverImage)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public String getCoverImagePath() {
+        return images.stream()
+                .filter(ProductImage::isCoverImage)
+                .map(ProductImage::getFileName)
+                .findFirst()
+                .orElse("https://res.cloudinary.com/castlery/image/private/f_auto,q_auto/b_rgb:F3F3F3,c_fit/v1677755266/crusader/variants/T50441097-CA4001-WA/Owen-Left-Chaise-Sectional-Sofa-Haze-Walnut-Square-Set_1-1677755263.jpg"); // 如果没有封面图片，则使用默认图片
     }
 
     //setter and getter

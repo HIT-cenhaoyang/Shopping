@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Details</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/statics/style.css">
 </head>
 <body>
 <header>
@@ -15,7 +15,9 @@
 </header>
 <section>
     <div class="product-details">
-        <img th:src="@{|/images/${product.getImages()}|}" alt="Product Image">
+        <a th:href="@{/product/{id}(id=${product.productId})}">
+            <img th:src="@{|${product.coverImagePath}|}" alt="Product Image">
+        </a>
         <h2 th:text="${product.name}">Product Name</h2>
         <p th:text="${product.description}">Product Description</p>
         <p th:text="'$' + ${product.price}">Product Price</p>

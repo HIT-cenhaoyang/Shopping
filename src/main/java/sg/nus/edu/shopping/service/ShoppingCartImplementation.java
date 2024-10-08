@@ -27,7 +27,7 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
         return shoppingCartRepo.findByCustomerId(customerId);
     }
 
-    public List<ShoppingCart> getCartbyCustomerUsername(String username) {
+    public List<ShoppingCart> getCartByCustomerUsername(String username) {
         return shoppingCartRepo.findByCustomerUserName(username);
     }
     public ShoppingCart updateQuantity(int cartId, int quantity) {
