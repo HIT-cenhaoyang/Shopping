@@ -46,6 +46,9 @@ public class PurchaseRecord {
         this.orderId = orderId;
     }
 
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
     public Date getPurchaseDate() {
         return date;
     }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>7haven Account Verify</title>
+	<link th:href="@{/styles/account.css}" rel="stylesheet" />
+	<!-- This html author is Xu Zhiye -->
+</head>
+
+<body>
+	<header>
+		<h2>Welcome to Ultra 7haven Furniture</h2>
+	</header>
+
+	<section>
+		<form th:action="@{/validateAccount}" th:object="${user}" method="post">
+			<h2 style="text-align: center;">Member Validate</h2>
+			<div class="form-row">
+				<input type="text" id="name" th:field="*{name}" placeholder="Registered Real Name" required />
+			</div>
+			<div class="form-row">
+				<input type="text" id="email" th:field="*{email}" placeholder="Registered Email" required />
+			</div>
+			<div>
+				<button type="submit">Submit</button>
+			</div>
+			<div class="form-footer"><span th:text="${MSG}" /></div>
+		</form>
+
+	</section>
+</body>
+
+</html>

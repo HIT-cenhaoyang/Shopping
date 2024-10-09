@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -85,6 +86,19 @@ public class Product {
                 .filter(ProductImage::isCoverImage)
                 .findFirst()
                 .orElse(null);
+    }
+    
+    //BPC
+    public void addImageToProduct(Product product, String fileName, boolean isCoverImage) {
+        ProductImage image = new ProductImage(product, fileName, isCoverImage);
+        product.addImage(image); // Assuming this method is defined in Product to manage the images list
+    }
+    
+    //BPC
+    public List<ProductImage> getAdditionalImages() {
+        return images.stream()
+                     .filter(img -> !img.isCoverImage())
+                     .collect(Collectors.toList());
     }
 
     public String getCoverImagePath() {
