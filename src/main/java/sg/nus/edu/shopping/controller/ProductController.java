@@ -14,6 +14,7 @@ import sg.nus.edu.shopping.service.CategoryImplementation;
 import sg.nus.edu.shopping.service.ProductImplementation;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductController{
@@ -64,11 +65,12 @@ public class ProductController{
 
     @GetMapping("/product/{id}")
     public String showProductDetails(@PathVariable("id") int productId, Model model) {
-        Product product = productInt.findByProductId(productId);
-        if (product == null) {
+        Optional<Product> optProduct = productInt.findByProductId(productId);
+        if (optProduct.isEmpty()) {
             model.addAttribute("errorMessage", "Product not found");
             return "errorPage"; // 假设有一个名为 errorPage.html 的模板
         }
+        Product product = optProduct.get();
         model.addAttribute("product", product);
         return "productDetails"; // 假设有一个名为 productDetails.html 的模板
     }

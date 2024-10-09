@@ -29,11 +29,12 @@ public class ShoppingCartController {
         this.shoppingCartInt = shoppingCartImp;
     }
 
-    // 获取所有产品的 API
+    /* 获取所有产品的 API Hannah: this method is in product rest controller.
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return productInt.findAllProducts();
     }
+    */
 
     // 添加产品到购物车的 API
     @PostMapping("/cart/add")
