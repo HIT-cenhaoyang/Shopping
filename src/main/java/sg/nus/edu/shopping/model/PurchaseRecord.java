@@ -2,6 +2,7 @@ package sg.nus.edu.shopping.model;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -11,16 +12,20 @@ public class PurchaseRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
 
-    @ManyToOne @JoinColumn (name = "productId")
+    @ManyToOne @JoinColumn (name = "customerId")
     private Customer customer;
 
     @OneToMany(mappedBy = "purchaseRecord")
     private List<OrderDetail> orderDetails;
 
-    public PurchaseRecord() {
+    private Date purchaseDate;
 
+    public PurchaseRecord() {}
+
+    public PurchaseRecord(Customer customer, List<OrderDetail> orderDetails) {
+        this.customer = customer;
+        this.orderDetails = orderDetails;
     }
-
 
     public Customer getCustomer() {
         return customer;
@@ -38,5 +43,17 @@ public class PurchaseRecord {
         this.orderId = orderId;
     }
 
-
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+    public double getOrderTotal() {
+        double total = 0;
+        for (OrderDetail orderDetail : orderDetails) {
+            total+= orderDetail.getOrderSubTotal();
+        }
+        return total;
+    }
 }

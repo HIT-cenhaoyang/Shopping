@@ -16,18 +16,19 @@ public class OrderDetail {
 
     @ManyToOne @JoinColumn(name = "orderId")
     private PurchaseRecord purchaseRecord;
-
     private int productQty;
 
     public OrderDetail() {
-
     }
 
     public int getProductQty() {
         return productQty;
     }
 
-    public void setProductQty(int productQty) {
-        this.productQty = productQty;
+    public double getProductPrice() {
+        return product.getPrice();
+    }
+    public double getOrderSubTotal() {
+        return product.getPrice() * productQty;
     }
 }

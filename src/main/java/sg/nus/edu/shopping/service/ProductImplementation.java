@@ -44,10 +44,9 @@ public class ProductImplementation implements ProductInterface {
     public Product createProduct(Product product) {
         // search if product already exists using sku attribute
         Optional<Product> optExistingProduct = productRepo.findBySku(product.getSku());
-        if (optExistingProduct.isEmpty()) {
+        if (optExistingProduct.isPresent()) {
             throw new IllegalArgumentException("Product with SKU " + product.getSku() + " already exists.");
         }
-        Product existingProduct = optExistingProduct.get();
         return productRepo.save(product);
     }
 
