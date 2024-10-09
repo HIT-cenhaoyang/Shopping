@@ -22,13 +22,6 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartInterface shoppingCartInt; // 购物车服务接口，管理购物车
 
-    public void setProductInterface(ProductImplementation productImp) {
-        this.productInt = productImp;
-    }
-    public void setShoppingCartInterface(ShoppingCartImplementation shoppingCartImp) {
-        this.shoppingCartInt = shoppingCartImp;
-    }
-
     /* 获取所有产品的 API Hannah: this method is in product rest controller.
     @GetMapping("/products")
     public List<Product> getAllProducts() {
