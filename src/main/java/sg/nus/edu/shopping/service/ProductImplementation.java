@@ -2,11 +2,13 @@ package sg.nus.edu.shopping.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
 import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.repository.ProductRepository;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 @Service
 @Transactional
@@ -76,5 +78,15 @@ public class ProductImplementation implements ProductInterface {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
         productRepo.delete(product);
+    }
+
+    @Override
+    public Page<Product> getProducts(Pageable pageable) {
+        return productRepo.findAll(pageable);
+    }
+
+    @Override
+    public Page<Product> getProductByCategory(Category category, Pageable pageable) {
+        return productRepo.getProductByCategory(category, pageable);
     }
 }

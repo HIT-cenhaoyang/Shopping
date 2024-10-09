@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Product Page</title>
     <link rel="stylesheet" href="/statics/homepage style.css">
+
     <style>
         /* 通用样式 */
         body {
@@ -65,6 +66,14 @@
 
         .top-bar button:hover {
             background-color: #555; /* 悬停时颜色 */
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            padding: 20px; /* Add padding on all sides */
+            font-size: 2em;
+            font-weight: 700;
+            text-align: left; /* Ensure text is aligned to the left */
         }
 
         /* 登录和购物车按钮 */
@@ -168,6 +177,97 @@
             font-weight: bold;
         }
 
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination a, .pagination span {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 0 3px;
+            background-color: #f4f4f4; /* Set to page background color */
+            color: #999; /* Default text color */
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background-color 0.3s, color 0.3s, border 0.3s;
+        }
+
+        .pagination a:hover {
+            background-color: #333; /* Hover background color */
+            color: #fff; /* Hover text color */
+        }
+
+        .pagination .active {
+            background-color: #333; /* Active background color */
+            color: #fff; /* Active text color */
+            border: 2px solid #000; /* Active border color */
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%; /* Full width */
+            max-width: 1200px; /* Maximum width */
+            margin: 40px auto; /* Centered with margin */
+            overflow: hidden; /* Hide overflow */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            height: 800px; /* Increase height */
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out; /* Smooth transition */
+        }
+
+        .carousel-slide div {
+            min-width: 100%; /* Each slide takes full width */
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+
+        .carousel-slide img {
+            width: 100%; /* Image takes full width */
+            height: auto;
+            max-height: 800px; /* Increase maximum height */
+            border-radius: 10px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .information h2 {
+            margin-bottom: 10px;
+        }
+
+        .information ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .information li {
+            margin: 5px 0;
+        }
+
+        .information a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .information a:hover {
+            color: #ccc;
+        }
+
+        .logo span {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
         /* 响应式布局，宽度变化时调整列数 */
         @media (max-width: 1200px) {
             .product {
@@ -185,10 +285,12 @@
 <body>
 
 <header>
-    <h1>7Haven</h1>
-
+    <!--
+     <h1>7Haven</h1>
+     -->
     <!-- 顶部栏，包含搜索框和登录/购物车 -->
     <div class="top-bar">
+        <h1>7Haven</h1>
         <form action="/products/search" method="get">
             <input type="text" name="keyword" placeholder="Search products...">
             <button type="submit">Search</button>
@@ -201,6 +303,7 @@
 
     <!-- 分类导航 -->
     <nav>
+        <a href="/products">Main Page</a>
         <a href="/products?category=1">Sofa</a>
         <a href="/products?category=2">Table</a>
         <a href="/products?category=3">Chair</a>
@@ -214,19 +317,77 @@
     <div th:if="${message}" class="message">
         <p th:text="${message}"></p>
     </div>
-
+    <!-- 热销商品滚动框 -->
+    <div th:if="${#strings.equals(pageName, 'mainPage')}"class="carousel-container">
+        <div class="carousel-slide">
+            <!-- Thymeleaf 循环显示热销商品图片 -->
+            <div th:each="imageUrl : ${hotProducts}">
+                <img th:src="@{|${imageUrl}|}" alt="Hot Product">
+            </div>
+        </div>
+    </div>
     <!-- 产品展示 -->
     <div class="products-container">
+
         <div th:each="product : ${products}" class="product">
             <a th:href="@{/product/{id}(id=${product.productId})}">
                 <img th:src="@{|${product.coverImagePath}|}" alt="Product Image">
             </a>
             <h2 th:text="${product.name}">Product Name</h2>
+            <!--
             <p th:text="${product.description}">Product Description</p>
-            <p class="price" th:text="'$' + ${product.price}">Product Price</p>
+            -->
+            <p class="price" th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">Product Price</p>
         </div>
+
     </div>
+    <div class="pagination">
+        <a th:if="${currentPage > 1}" th:href="@{/products(page=${currentPage - 1}, size=10)}"
+           th:hrefappend="${categoryId != null} ? '(category=' + ${categoryId} + ')' : ''">&laquo; Previous</a>
+
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
+        <a th:href="@{/products(page=${i}, size=10)}"
+           th:hrefappend="${categoryId != null} ? '(category=' + ${categoryId} + ')' : ''"
+           th:text="${i}"></a>
+        </span>
+
+        <a th:if="${currentPage < totalPages}" th:href="@{/products(page=${currentPage + 1}, size=10)}"
+           th:hrefappend="${categoryId != null} ? '(category=' + ${categoryId} + ')' : ''">Next &raquo;</a>
+
+    </div>
+
 </section>
 
+<footer>
+    <div class="information">
+        <h2>Information</h2>
+        <ul>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/delivery">Delivery</a></li>
+            <li><a href="/returns">Returns</a></li>
+            <li><a href="/faqs">FAQs</a></li>
+        </ul>
+    </div>
+    <div class="logo">
+        <span>7Haven</span>
+    </div>
+</footer>
+
+<script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide div');
+    const totalSlides = slides.length;
+
+    function showNextSlide() {
+        const carouselSlide = document.querySelector('.carousel-slide');
+        currentIndex = (currentIndex + 1) % totalSlides; // 循环播放
+        const slideWidth = carouselSlide.clientWidth; // 获取滚动框的宽度
+        carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`; // 移动到下一张图片
+    }
+
+    // 每8秒切换一次图片
+    setInterval(showNextSlide, 8000);
+</script>
 </body>
 </html>

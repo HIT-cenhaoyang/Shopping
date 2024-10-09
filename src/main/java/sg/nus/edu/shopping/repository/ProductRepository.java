@@ -1,5 +1,7 @@
 package sg.nus.edu.shopping.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     public List<Product> findByNameContainingIgnoreCase(String keyword);
 
-
+    @Query("SELECT p FROM Product p WHERE p.category = :category")
+    Page<Product> getProductByCategory(@Param("category") Category category, Pageable pageable);
 }
