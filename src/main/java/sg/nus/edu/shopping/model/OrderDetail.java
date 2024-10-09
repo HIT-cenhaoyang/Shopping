@@ -32,9 +32,6 @@ public class OrderDetail {
         return subTotal;
     }
 
-    public PurchaseRecord getPurchaseRecord() {
-        return purchaseRecord;
-    }
 
     public int getOrderDetailId() {
         return orderDetailId;
