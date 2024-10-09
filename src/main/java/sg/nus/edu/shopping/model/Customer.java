@@ -1,5 +1,6 @@
 package sg.nus.edu.shopping.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 
@@ -33,7 +34,7 @@ public class Customer {
 
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer") @JsonIgnore
     private List<PurchaseRecord> purchaseRecords;
 
     @OneToMany(mappedBy = "customer")

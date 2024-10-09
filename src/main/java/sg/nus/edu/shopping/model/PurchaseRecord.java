@@ -1,5 +1,6 @@
 package sg.nus.edu.shopping.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -13,18 +14,19 @@ public class PurchaseRecord {
     private int orderId;
 
     @ManyToOne @JoinColumn (name = "customerId")
+    @JsonIgnore
     private Customer customer;
 
     @OneToMany(mappedBy = "purchaseRecord")
     private List<OrderDetail> orderDetails;
 
     private Date date;
-    private double orderTotal;
 
     public PurchaseRecord() {}
 
-    public PurchaseRecord(Customer customer, List<OrderDetail> orderDetails) {
+    public PurchaseRecord(Customer customer, Date date, List<OrderDetail> orderDetails) {
         this.customer = customer;
+        this.date = date;
         this.orderDetails = orderDetails;
     }
 
@@ -51,6 +53,7 @@ public class PurchaseRecord {
         return orderDetails;
     }
     public double getOrderTotal() {
+        double orderTotal = 0;
         for (OrderDetail orderDetail : orderDetails) {
             orderTotal+= orderDetail.getOrderSubTotal();
         }

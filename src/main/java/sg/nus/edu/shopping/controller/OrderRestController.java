@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sg.nus.edu.shopping.interfacemethods.OrderDetailInterface;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
 import sg.nus.edu.shopping.interfacemethods.PurchaseRecordInterface;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.PurchaseRecord;
-import sg.nus.edu.shopping.repository.PurchaseRecordRepository;
 
 import java.util.Date;
 import java.util.List;

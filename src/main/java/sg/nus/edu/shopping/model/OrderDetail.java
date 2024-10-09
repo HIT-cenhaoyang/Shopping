@@ -1,5 +1,6 @@
 package sg.nus.edu.shopping.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,9 +16,9 @@ public class OrderDetail {
     private Product product;
 
     @ManyToOne @JoinColumn(name = "orderId")
+    @JsonIgnore
     private PurchaseRecord purchaseRecord;
     private int productQty;
-    private double subTotal;;
 
     public OrderDetail() {
     }
@@ -30,7 +31,7 @@ public class OrderDetail {
         return product.getPrice();
     }
     public double getOrderSubTotal() {
-        subTotal = product.getPrice() * productQty;
+        double subTotal = product.getPrice() * productQty;
         return subTotal;
     }
 
