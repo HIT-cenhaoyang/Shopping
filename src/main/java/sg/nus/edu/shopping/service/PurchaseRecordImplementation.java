@@ -4,18 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sg.nus.edu.shopping.interfacemethods.PurchaseRecordInterface;
+import sg.nus.edu.shopping.model.OrderDetail;
+import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.PurchaseRecord;
+import sg.nus.edu.shopping.repository.OrderDetailRepository;
 import sg.nus.edu.shopping.repository.PurchaseRecordRepository;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class PurchaseRecordImplementation implements PurchaseRecordInterface {
     @Autowired
     private PurchaseRecordRepository purchaseRecordRepo;
+    @Autowired
+    private OrderDetailRepository orderDetailRepo;
 
     public List<PurchaseRecord> findAllOrders(){
         return purchaseRecordRepo.findAll();
@@ -38,5 +44,11 @@ public class PurchaseRecordImplementation implements PurchaseRecordInterface {
             throw new IllegalArgumentException("No purchase records found for date" + date);
         }
         else return purchaseRecordRepo.findByDate(date);
+    }
+
+    public List<PurchaseRecord> findByProduct(Product product) {
+        List<OrderDetail> orderDetails = orderDetailRepo.findByProduct(product);
+        List<PurchaseRecord> orderListByProduct = orderDetails.stream().map(OrderDetail::getPurchaseRecord).distinct().collect(Collectors.toList());
+        return orderListByProduct;
     }
  }

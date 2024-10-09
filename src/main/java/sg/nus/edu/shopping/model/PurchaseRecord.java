@@ -12,7 +12,7 @@ public class PurchaseRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
 
-    @ManyToOne @JoinColumn (name = "customerId")
+    @ManyToOne
     private Customer customer;
 
     @OneToMany(mappedBy = "purchaseRecord")
@@ -44,6 +44,9 @@ public class PurchaseRecord {
         this.orderId = orderId;
     }
 
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
     public Date getPurchaseDate() {
         return date;
     }

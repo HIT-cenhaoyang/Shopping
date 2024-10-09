@@ -21,6 +21,7 @@ import sg.nus.edu.shopping.service.CustomerImplementation;
 import sg.nus.edu.shopping.service.CustomerValidator;
 
 import java.time.LocalDate;
+import  sg.nus.edu.shopping.repository.CustomerRepository;
 @Controller
 public class CustomerController {
 
@@ -235,5 +236,12 @@ public class CustomerController {
 			return "redirect:/home";
 		}
 	}
-	
-}
+	//Author:zhao yiran
+		@Autowired
+		private CustomerRepository customerrepository;
+		@GetMapping("/customer")
+		public String getCustomer(Model model) {
+			model.addAttribute("customer", customerrepository.findAll());
+			return"purchesRecord";
+		}
+	}

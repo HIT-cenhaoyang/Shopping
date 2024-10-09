@@ -35,7 +35,6 @@ public class AdminController {
     @Autowired
     private CategoryImplementation categoryImplementation;
 
-
     @Autowired
     public void setUserService(AdminImplementation userviceImpl) {
         this.uservice = userviceImpl;

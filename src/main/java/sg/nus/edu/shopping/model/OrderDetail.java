@@ -2,8 +2,6 @@ package sg.nus.edu.shopping.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 
 @Entity
 public class OrderDetail {
@@ -11,10 +9,10 @@ public class OrderDetail {
     @Id
     private int orderDetailId;
 
-    @ManyToOne @JoinColumn (name = "productId")
+    @ManyToOne
     private Product product;
 
-    @ManyToOne @JoinColumn(name = "orderId")
+    @ManyToOne
     private PurchaseRecord purchaseRecord;
     private int productQty;
     private double subTotal;;
@@ -32,5 +30,30 @@ public class OrderDetail {
     public double getOrderSubTotal() {
         subTotal = product.getPrice() * productQty;
         return subTotal;
+    }
+
+
+    public int getOrderDetailId() {
+        return orderDetailId;
+    }
+
+    public void setOrderDetailId(int orderDetailId) {
+        this.orderDetailId = orderDetailId;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public PurchaseRecord getPurchaseRecord() {
+        return purchaseRecord;
+    }
+
+    public void setPurchaseRecord(PurchaseRecord purchaseRecord) {
+        this.purchaseRecord = purchaseRecord;
     }
 }
