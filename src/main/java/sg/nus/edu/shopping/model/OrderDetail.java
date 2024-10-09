@@ -33,4 +33,8 @@ public class OrderDetail {
         subTotal = product.getPrice() * productQty;
         return subTotal;
     }
+
+    public PurchaseRecord getPurchaseRecord() {
+        return purchaseRecord;
+    }
 }
