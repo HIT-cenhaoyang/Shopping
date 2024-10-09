@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Admin Login</title>
+<!-- This html author is Xu Zhiye -->
+</head>
+<body>
+<p>
+<h2 style="text-align: center;">Welcome to 7haven</h2>
+<h3 style="text-align: center;">Admin Login</h3>
+
+<form th:action="@{/validate/AdminLogin}" th:object="${admin}" method="post">
+	
+<input type="text" id="userName" th:field="*{userName}" placeholder="User name" required/>
+<br/>
+<input type="text" id="password" th:field="*{password}"  placeholder="Password" required/>
+<br/>
+<button type="submit" style="background-color: rgb(255, 255, 255);">Login</button>
+</form>
+<p><span th:text="${errorMsg}"/></p>
+</body>
+</html>
