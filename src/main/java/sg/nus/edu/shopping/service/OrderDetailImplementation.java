@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sg.nus.edu.shopping.interfacemethods.OrderDetailInterface;
 import sg.nus.edu.shopping.model.OrderDetail;
+import sg.nus.edu.shopping.model.Product;
+import sg.nus.edu.shopping.model.PurchaseRecord;
 import sg.nus.edu.shopping.repository.OrderDetailRepository;
 
 import java.util.List;
@@ -28,18 +30,18 @@ public class OrderDetailImplementation implements OrderDetailInterface {
         return optOrderDetail;
     }
 
-    public List<OrderDetail> findByProductId(int id) {
-        if(orderDetailRepo.findByProductId(id) == null) {
-            throw new IllegalArgumentException("No order detail records found for Product with ID " + id);
+    public List<OrderDetail> findByProduct(Product product) {
+        if(orderDetailRepo.findByProduct(product) == null) {
+            throw new IllegalArgumentException("No order detail records found for Product with ID " + product.getProductId());
         }
-        return orderDetailRepo.findByProductId(id);
+        return orderDetailRepo.findByProduct(product);
     }
 
-    public List<OrderDetail> findByOrderId(int purchaseRecordId) {
-        if(orderDetailRepo.findByOrderId(purchaseRecordId) == null) {
-            throw new IllegalArgumentException("Order Detail with Id " + purchaseRecordId + " does not exist.");
+    public List<OrderDetail> findByPurchaseRecord(PurchaseRecord order) {
+        if(orderDetailRepo.findByPurchaseRecord(order) == null) {
+            throw new IllegalArgumentException("Order Detail with Id " + order.getOrderId() + " does not exist.");
         }
-        return orderDetailRepo.findByOrderId(purchaseRecordId);
+        return orderDetailRepo.findByPurchaseRecord(order);
     }
 
 }

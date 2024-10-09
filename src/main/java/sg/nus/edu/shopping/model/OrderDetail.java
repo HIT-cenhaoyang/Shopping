@@ -17,6 +17,7 @@ public class OrderDetail {
     @ManyToOne @JoinColumn(name = "orderId")
     private PurchaseRecord purchaseRecord;
     private int productQty;
+    private double subTotal;;
 
     public OrderDetail() {
     }
@@ -29,6 +30,7 @@ public class OrderDetail {
         return product.getPrice();
     }
     public double getOrderSubTotal() {
-        return product.getPrice() * productQty;
+        subTotal = product.getPrice() * productQty;
+        return subTotal;
     }
 }

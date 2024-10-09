@@ -18,7 +18,8 @@ public class PurchaseRecord {
     @OneToMany(mappedBy = "purchaseRecord")
     private List<OrderDetail> orderDetails;
 
-    private Date purchaseDate;
+    private Date date;
+    private double orderTotal;
 
     public PurchaseRecord() {}
 
@@ -44,16 +45,15 @@ public class PurchaseRecord {
     }
 
     public Date getPurchaseDate() {
-        return purchaseDate;
+        return date;
     }
     public List<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
     public double getOrderTotal() {
-        double total = 0;
         for (OrderDetail orderDetail : orderDetails) {
-            total+= orderDetail.getOrderSubTotal();
+            orderTotal+= orderDetail.getOrderSubTotal();
         }
-        return total;
+        return orderTotal;
     }
 }

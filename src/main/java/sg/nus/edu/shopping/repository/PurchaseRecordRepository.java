@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, Integer> {
     List<PurchaseRecord> findAll();
-    Optional<PurchaseRecord> findByPurchaseRecordId(int purchaseRecordId);
+    Optional<PurchaseRecord> findByOrderId(int orderId);
     List<PurchaseRecord> findByCustomerId(String customerId);
     List<PurchaseRecord> findByDate(Date date);
 

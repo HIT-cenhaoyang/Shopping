@@ -21,7 +21,7 @@ public class PurchaseRecordImplementation implements PurchaseRecordInterface {
         return purchaseRecordRepo.findAll();
     }
     public Optional<PurchaseRecord> findByPurchaseRecordId(int id){
-        Optional<PurchaseRecord> optOrder = purchaseRecordRepo.findByPurchaseRecordId(id);
+        Optional<PurchaseRecord> optOrder = purchaseRecordRepo.findByOrderId(id);
         if (optOrder.isEmpty()) {
             throw new IllegalArgumentException("Order with ID " + id + " does not exist.");
         }
