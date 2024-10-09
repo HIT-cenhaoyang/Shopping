@@ -1,27 +1,85 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Product Details</title>
-    <link rel="stylesheet" href="/statics/style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Product Details</title>
 </head>
-<body>
-<header>
-    <h1>Product Details</h1>
-    <nav>
-        <a href="/home">Home</a>
-        <a href="/cart" style="float:right;">Cart</a>
-    </nav>
-</header>
-<section>
-    <div class="product-details">
-        <a th:href="@{/product/{id}(id=${product.productId})}">
-            <img th:src="@{|${product.coverImagePath}|}" alt="Product Image">
-        </a>
-        <h2 th:text="${product.name}">Product Name</h2>
-        <p th:text="${product.description}">Product Description</p>
-        <p th:text="'$' + ${product.price}">Product Price</p>
-    </div>
-</section>
+
+<body style="font-family: Arial, sans-serif;">
+
+	<!-- Header stays centered -->
+	<header
+		style="padding: 20px; background-color: #f8f8f8; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;">
+		<div>
+			<a href="/products?category=1" style="text-decoration: none; color: #333; font-size: 18px;">Home</a>
+		</div>
+		<div>
+			<a href="/cart" style="text-decoration: none; color: #333; font-size: 18px;">Cart</a>
+		</div>
+	</header>
+
+	<!-- Main content section moved slightly left -->
+	<section style="padding: 20px; max-width: 1000px; margin: 0 auto; margin-left: 30px;">
+		<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+			<!-- Flexbox for responsiveness -->
+
+			<!-- Cover Image -->
+			<div style="flex: 1; margin-right: 20px; margin-bottom: 20px;">
+				<div
+					style="width: 400px; height: 300px; background-color: rgb(255, 255, 255); display: flex; justify-content: center; align-items: center;">
+					<!-- Fixed frame for cover image -->
+					<img th:src="@{|${coverImage}|}" alt="Product Cover Image" id="coverImage"
+						style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 5px;">
+					<!-- Image centered inside fixed frame -->
+				</div>
+			</div>
+
+			<!-- Product Info -->
+			<div style="flex: 2; min-width: 300px;">
+				<h2 th:text="${product.name}" style="font-size: 24px; margin-bottom: 10px;">Product Name</h2>
+				<p style="color: green; font-size: 20px; margin-bottom: 10px;" th:text="'$' + ${product.price}">Product
+					Price</p>
+				<p style="line-height: 1.5; margin-bottom: 20px;" th:text="${product.description}">Product Description
+				</p>
+
+				<!-- Stock Availability and Add to Cart Button -->
+				<div style="margin-top: 20px; display: flex; align-items: center;">
+					<p style="margin-right: 20px; color: #333;">In Stock: <span
+							th:text="${product.stockAvailable}">0</span></p>
+					<!-- Stock availability beside the button -->
+					<form th:action="@{/cart/add}" method="post">
+						<input type="hidden" name="productId" th:value="${product.productId}" />
+						<button type="submit"
+							style="padding: 10px 20px; background-color: #ff4500; color: white; border: none; border-radius: 5px; cursor: pointer; width: auto;">Add
+							to Cart</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Additional Images Section, ensuring spacing is consistent -->
+		<div style="margin-top: 30px;">
+			<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+				<!-- Flex-wrap keeps images horizontal and properly spaced -->
+				<div th:each="image : ${additionalImages}" style="flex: 0 1 100px;">
+					<!-- Ensures each image takes 100px space -->
+					<img th:src="@{|${image.fileName}|}" alt="Product Additional Image"
+						style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px; cursor: pointer;"
+						onclick="changeCoverImage(this.src)">
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// Function to change the cover image when an additional image is clicked
+			function changeCoverImage(newSrc) {
+				document.getElementById("coverImage").src = newSrc;
+			}
+		</script>
+	</section>
+
 </body>
+
 </html>

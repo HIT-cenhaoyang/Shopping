@@ -10,6 +10,7 @@ import sg.nus.edu.shopping.repository.ProductImageRepository;
 import sg.nus.edu.shopping.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,10 +23,11 @@ public class ProductImageImplementation implements ProductImageInterface {
     //CRUD for ProductImage
     public void addProductImage(int productId, ProductImage productImage) {
         // check if product exists
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product existingProduct = optExistingProduct.get();
         //link image to product
         productImage.setProduct(existingProduct);
         //add image to product
@@ -35,17 +37,19 @@ public class ProductImageImplementation implements ProductImageInterface {
         productImageRepo.save(productImage);
     }
     public ProductImage getCoverImage(int productId) {
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product existingProduct = optExistingProduct.get();
         return existingProduct.getCoverImage();
     }
     public List<ProductImage> getImagesByProduct(int productId) {
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product existingProduct = optExistingProduct.get();
         return productImageRepo.findByProduct(existingProduct);
     }
 
@@ -60,10 +64,11 @@ public class ProductImageImplementation implements ProductImageInterface {
     }
 
     public void deleteProductImage(int productId, int imageId) {
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product existingProduct = optExistingProduct.get();
         ProductImage productImage = productImageRepo.findByImageId(imageId);
         if (productImage == null) {
             throw new IllegalArgumentException("Image with ID " + imageId + " does not exist.");

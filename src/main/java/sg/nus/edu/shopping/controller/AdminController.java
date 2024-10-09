@@ -35,7 +35,6 @@ public class AdminController {
     @Autowired
     private CategoryImplementation categoryImplementation;
 
-
     @Autowired
     public void setUserService(AdminImplementation userviceImpl) {
         this.uservice = userviceImpl;
@@ -198,7 +197,7 @@ public class AdminController {
         } else {
             if (dataU.getPassword().equals(user.getPassword())) {
                 sessionObj.setAttribute("username", user.getUserName());
-                return "redirect:/protected/list-admin";
+                return "redirect:/7haven/list-admin";
             } else {
                 model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
                 return "adminLogin";
@@ -206,7 +205,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/protected/list-admin")
+    @GetMapping("/7haven/list-admin")
     public String listUsers(HttpSession sessionObj, Model model) {
         String username = (String) sessionObj.getAttribute("username");
         if (username == null) {

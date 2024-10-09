@@ -1,5 +1,6 @@
 package sg.nus.edu.shopping.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -17,7 +18,7 @@ public class PaymentDetail {
 
     private String bankName;
 
-    @ManyToOne
+    @ManyToOne @JsonIgnore
     private Customer payment_customer;
 
 

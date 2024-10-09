@@ -1,5 +1,6 @@
 package sg.nus.edu.shopping.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 
@@ -33,7 +34,7 @@ public class Customer {
 
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer") @JsonIgnore
     private List<PurchaseRecord> purchaseRecords;
 
     @OneToMany(mappedBy = "customer")
@@ -91,7 +92,7 @@ public class Customer {
     }
 
 
-    public List<PurchaseRecord> getPurchaseRecord() {
+    public List<PurchaseRecord> getPurchaseRecords() {
         return purchaseRecords;
     }
 
@@ -105,7 +106,7 @@ public class Customer {
     }
 
 
-    public void setPurchaseRecord(List<PurchaseRecord> purchaseRecord) {
+    public void setPurchaseRecords(List<PurchaseRecord> purchaseRecord) {
         this.purchaseRecords = purchaseRecord;
     }
 
@@ -171,6 +172,10 @@ public class Customer {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+    
+    public void setCustomerId(String id) {
+        this.id = id;
     }
 
 }

@@ -1,5 +1,6 @@
 package sg.nus.edu.shopping.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,7 @@ public class ProductImage {
     private String fileName;
     private boolean isCoverImage;
     @ManyToOne @JoinColumn(name = "productId")
+    @JsonIgnore
     private Product product;
 
     public ProductImage() {

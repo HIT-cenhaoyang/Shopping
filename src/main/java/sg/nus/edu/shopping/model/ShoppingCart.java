@@ -1,5 +1,7 @@
 package sg.nus.edu.shopping.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,7 +14,7 @@ public class ShoppingCart {
     @ManyToOne @JoinColumn (name = "productId")
     private Product product;
 
-    @ManyToOne @JoinColumn(name = "customerId")
+    @ManyToOne @JoinColumn(name = "customerId") @JsonIgnore
     private Customer customer;
 
     private int productQty;

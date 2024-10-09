@@ -1,7 +1,5 @@
 package sg.nus.edu.shopping.controller;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import sg.nus.edu.shopping.interfacemethods.CategoryInterface;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
@@ -20,7 +19,9 @@ import sg.nus.edu.shopping.service.CategoryImplementation;
 import sg.nus.edu.shopping.service.ProductImplementation;
 
 import java.util.Arrays;
+import sg.nus.edu.shopping.repository.ProductRepository;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductController{
@@ -121,12 +122,15 @@ public class ProductController{
 
     @GetMapping("/product/{id}")
     public String showProductDetails(@PathVariable("id") int productId, Model model) {
-        Product product = productInt.findByProductId(productId);
-        if (product == null) {
+        Optional<Product> optProduct = productInt.findByProductId(productId);
+        if (optProduct.isEmpty()) {
             model.addAttribute("errorMessage", "Product not found");
             return "errorPage"; // 假设有一个名为 errorPage.html 的模板
         }
+        Product product = optProduct.get();
         model.addAttribute("product", product);
+        model.addAttribute("coverImage", product.getCoverImagePath()); // For cover image
+	    model.addAttribute("additionalImages", product.getAdditionalImages()); // For additional images
         return "productDetails"; // 假设有一个名为 productDetails.html 的模板
     }
 
@@ -155,6 +159,13 @@ public class ProductController{
         return "faqsPage"; // Ensure you have a faqsPage.html template
     }
 
+        @Autowired
+        private ProductRepository productrepository;
+        @RequestMapping("/product")
+        public String getProduct(Model model) {
+            model.addAttribute("product",productrepository.findAll());
+            return"purchesRecord";
+        }
 
 
 
