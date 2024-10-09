@@ -73,6 +73,8 @@ public class ProductController{
         }
         Product product = optProduct.get();
         model.addAttribute("product", product);
+        model.addAttribute("coverImage", product.getCoverImagePath()); // For cover image
+	    model.addAttribute("additionalImages", product.getAdditionalImages()); // For additional images
         return "productDetails"; // 假设有一个名为 productDetails.html 的模板
     }
         @Autowired
