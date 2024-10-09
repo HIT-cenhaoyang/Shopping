@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import sg.nus.edu.shopping.interfacemethods.CategoryInterface;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
@@ -12,7 +13,7 @@ import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.service.CategoryImplementation;
 import sg.nus.edu.shopping.service.ProductImplementation;
-
+import sg.nus.edu.shopping.repository.ProductRepository;
 import java.util.List;
 
 @Controller
@@ -72,10 +73,17 @@ public class ProductController{
         model.addAttribute("product", product);
         return "productDetails"; // 假设有一个名为 productDetails.html 的模板
     }
+        @Autowired
+        private ProductRepository productrepository;
+        @RequestMapping("/product")
+        public String getProduct(Model model) {
+            model.addAttribute("product",productrepository.findAll());
+            return"purchesRecord";
+        }
+
+    }
 
 
 
 
 
-
-}

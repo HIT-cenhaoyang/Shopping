@@ -91,7 +91,7 @@ public class Customer {
     }
 
 
-    public List<PurchaseRecord> getPurchaseRecord() {
+    public List<PurchaseRecord> getPurchaseRecords() {
         return purchaseRecords;
     }
 
@@ -105,7 +105,7 @@ public class Customer {
     }
 
 
-    public void setPurchaseRecord(List<PurchaseRecord> purchaseRecord) {
+    public void setPurchaseRecords(List<PurchaseRecord> purchaseRecord) {
         this.purchaseRecords = purchaseRecord;
     }
 
