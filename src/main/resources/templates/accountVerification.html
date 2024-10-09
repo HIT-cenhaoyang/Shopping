@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>BookStore Reset</title>
-<!-- This html author is Xu Zhiye -->
-</head>
-<body>
-	<h2 style="text-align: center;">Welcome to Ultra 7 BookStore</h2>
-	<h3 style="text-align: center;">Member Validate</h3>
 
-	<form th:action="@{/validateAccount}" th:object="${user}" method="post">
-		
-	Registered Real Name: <input type="text" id="name" th:field="*{name}" placeholder="Your Real Name" required/>
-	<br/>
-	Registered Email: <input type="text" id="email" th:field="*{email}"  placeholder="User Email" required/>
-	<br/>
-	<button type="submit" style="background-color: rgb(255, 255, 255);">Submit</button>
-	</form>
-	<p><span th:text="${MSG}"/></p>
+<head>
+	<title>7haven Account Verify</title>
+	<link th:href="@{/styles/account.css}" rel="stylesheet" />
+	<!-- This html author is Xu Zhiye -->
+</head>
+
+<body>
+	<header>
+		<h2>Welcome to Ultra 7haven Furniture</h2>
+	</header>
+
+	<section>
+		<form th:action="@{/validateAccount}" th:object="${user}" method="post">
+			<h2 style="text-align: center;">Member Validate</h2>
+			<div class="form-row">
+				<input type="text" id="name" th:field="*{name}" placeholder="Registered Real Name" required />
+			</div>
+			<div class="form-row">
+				<input type="text" id="email" th:field="*{email}" placeholder="Registered Email" required />
+			</div>
+			<div>
+				<button type="submit">Submit</button>
+			</div>
+			<div class="form-footer"><span th:text="${MSG}" /></div>
+		</form>
+
+	</section>
 </body>
+
 </html>

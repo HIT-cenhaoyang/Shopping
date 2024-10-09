@@ -7,14 +7,16 @@ import org.springframework.data.repository.query.Param;
 import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 import java.util.List;
+import java.util.Optional;
+
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    Product findBySku (String sku);
-    Product findByProductId(int productId);
+    Optional<Product> findBySku (String sku);
+    Optional<Product> findByProductId(int productId);
 
     @Query("SELECT p FROM Product p WHERE p.category = :category")
-    public List<Product> getProductByCategory(@Param("category") Category category);
+    List<Product> getProductByCategory(@Param("category") Category category);
 
-    public List<Product> findByNameContainingIgnoreCase(String keyword);
+    List<Product> findByNameContainingIgnoreCase(String keyword);
 
 
 }

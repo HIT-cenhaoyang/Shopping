@@ -8,6 +8,8 @@ import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.repository.ProductRepository;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional
 public class ProductImplementation implements ProductInterface {
@@ -34,31 +36,30 @@ public class ProductImplementation implements ProductInterface {
 
     @Override
     @Transactional
-    public Product findByProductId(int productId) {
+    public Optional<Product> findByProductId(int productId) {
         return productRepo.findByProductId(productId);
     }
 
     //CRUD for Product
     public Product createProduct(Product product) {
         // search if product already exists using sku attribute
-        Product existingProduct = productRepo.findBySku(product.getSku());
-        if (existingProduct != null) {
+        Optional<Product> optExistingProduct = productRepo.findBySku(product.getSku());
+        if (optExistingProduct.isPresent()) {
             throw new IllegalArgumentException("Product with SKU " + product.getSku() + " already exists.");
         }
         return productRepo.save(product);
     }
 
-    public Product getProductBySku(String sku) {
-        if (productRepo.findBySku(sku) == null) {
-            throw new IllegalArgumentException("Product with SKU " + sku + " does not exist.");
-        }
+    public Optional<Product> getProductBySku(String sku) {
         return productRepo.findBySku(sku);
     }
+
     public Product updateProduct(int productId, Product updatedProduct) {
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exists.");
         }
+        Product existingProduct = optExistingProduct.get();
         existingProduct.setSku(updatedProduct.getSku());
         existingProduct.setPrice(updatedProduct.getPrice());
         existingProduct.setName(updatedProduct.getName());
@@ -71,10 +72,11 @@ public class ProductImplementation implements ProductInterface {
     }
 
     public void deleteProduct(int productId) {
-        Product product = productRepo.findByProductId(productId);
-        if (product == null) {
+        Optional<Product> optProduct = productRepo.findByProductId(productId);
+        if (optProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product product = optProduct.get();
         productRepo.delete(product);
     }
 }

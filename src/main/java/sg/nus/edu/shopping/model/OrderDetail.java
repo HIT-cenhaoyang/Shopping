@@ -14,19 +14,26 @@ public class OrderDetail {
 
     @ManyToOne
     private PurchaseRecord purchaseRecord;
-
     private int productQty;
+    private double subTotal;;
 
     public OrderDetail() {
-
     }
 
     public int getProductQty() {
         return productQty;
     }
 
-    public void setProductQty(int productQty) {
-        this.productQty = productQty;
+    public double getProductPrice() {
+        return product.getPrice();
+    }
+    public double getOrderSubTotal() {
+        subTotal = product.getPrice() * productQty;
+        return subTotal;
+    }
+
+    public PurchaseRecord getPurchaseRecord() {
+        return purchaseRecord;
     }
 
     public int getOrderDetailId() {

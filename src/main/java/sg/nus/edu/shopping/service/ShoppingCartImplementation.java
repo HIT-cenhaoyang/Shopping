@@ -12,6 +12,7 @@ import sg.nus.edu.shopping.repository.ProductRepository;
 import sg.nus.edu.shopping.repository.ShoppingCartRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -53,7 +54,8 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
 
     public ShoppingCart addProduct(String customerId, int productId, int quantity) {
         Customer customer = customerRepo.findCustomerById(customerId);
-        Product product = productRepo.findByProductId(productId);
+        Optional<Product> optProduct = productRepo.findByProductId(productId);
+        Product product = optProduct.orElseThrow(() -> new IllegalArgumentException("Product not found!"));
         ShoppingCart newCart = new ShoppingCart(product, customer, quantity);
         customer.addProductToCart(newCart);
 

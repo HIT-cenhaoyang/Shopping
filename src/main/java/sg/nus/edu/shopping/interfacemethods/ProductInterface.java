@@ -4,16 +4,17 @@ import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductInterface {
 
     List<Product> findAllProducts();
     List<Product> getProductByCategory(Category category);
     List<Product> searchProductsByKeyword(String keyword);
-    Product findByProductId(int productId);
+    Optional<Product> findByProductId(int productId);
     Product createProduct(Product product);
     Product updateProduct(int productId, Product updatedProduct);
     void deleteProduct(int productId);
-    Product getProductBySku(String sku);
+    Optional<Product> getProductBySku(String sku);
 
 }

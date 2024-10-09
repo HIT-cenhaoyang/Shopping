@@ -13,6 +13,7 @@ import sg.nus.edu.shopping.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -43,19 +44,19 @@ public class AdminImplementation implements AdminInterface {
     //CRUD for Product
     public Product createProduct(Product product) {
         // search if product already exists using sku attribute
-        Product existingProduct = productRepo.findBySku(product.getSku());
+        Optional<Product> existingProduct = productRepo.findBySku(product.getSku());
         if (existingProduct != null) {
             throw new IllegalArgumentException("Product with SKU " + product.getSku() + " already exists.");
         }
         return productRepo.save(product);
     }
-    public Product getProductById(int productId) {
+    public Optional<Product> getProductById(int productId) {
         if (productRepo.findByProductId(productId) == null) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
         return productRepo.findByProductId(productId);
     }
-    public Product getProductBySku(String sku) {
+    public Optional<Product> getProductBySku(String sku) {
         if (productRepo.findBySku(sku) == null) {
             throw new IllegalArgumentException("Product with SKU " + sku + " does not exist.");
         }
@@ -65,10 +66,11 @@ public class AdminImplementation implements AdminInterface {
         return productRepo.findAll();
     }
     public Product updateProduct(int productId, Product updatedProduct) {
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exists.");
         }
+        Product existingProduct = optExistingProduct.get();
         existingProduct.setSku(updatedProduct.getSku());
         existingProduct.setPrice(updatedProduct.getPrice());
         existingProduct.setName(updatedProduct.getName());
@@ -79,10 +81,11 @@ public class AdminImplementation implements AdminInterface {
         return productRepo.save(existingProduct);
     }
     public void deleteProduct(int productId) {
-        Product product = productRepo.findByProductId(productId);
-        if (product == null) {
+        Optional<Product> optProduct = productRepo.findByProductId(productId);
+        if (optProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product product = optProduct.get();
         productRepo.delete(product);
     }
     //CRUD for category
@@ -122,10 +125,11 @@ public class AdminImplementation implements AdminInterface {
     //CRUD for ProductImage
     public void addProductImage(int productId, ProductImage productImage) {
         // check if product exists
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product existingProduct = optExistingProduct.get();
         //link image to product
         productImage.setProduct(existingProduct);
         //add image to product
@@ -135,17 +139,19 @@ public class AdminImplementation implements AdminInterface {
         productImageRepo.save(productImage);
     }
     public ProductImage getCoverImage(int productId) {
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product existingProduct = optExistingProduct.get();
         return existingProduct.getCoverImage();
     }
     public List<ProductImage> getImagesByProduct(int productId) {
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product existingProduct = optExistingProduct.get();
         return productImageRepo.findByProduct(existingProduct);
     }
     public ProductImage updateProductImage(int imageId, ProductImage productImage) {
@@ -158,10 +164,11 @@ public class AdminImplementation implements AdminInterface {
         return productImageRepo.save(existingImage);
     }
     public void deleteProductImage(int productId, int imageId) {
-        Product existingProduct = productRepo.findByProductId(productId);
-        if (existingProduct == null) {
+        Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
+        if (optExistingProduct.isEmpty()) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
+        Product existingProduct = optExistingProduct.get();
         ProductImage productImage = productImageRepo.findByImageId(imageId);
         if (productImage == null) {
             throw new IllegalArgumentException("Image with ID " + imageId + " does not exist.");

@@ -172,5 +172,9 @@ public class Customer {
     public void setGender(String gender) {
         this.gender = gender;
     }
+    
+    public void setCustomerId(String id) {
+        this.id = id;
+    }
 
 }

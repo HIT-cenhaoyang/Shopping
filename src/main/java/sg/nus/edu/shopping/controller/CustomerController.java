@@ -122,7 +122,7 @@ public class CustomerController {
 		} else {
 			if (dataU.getPassword().equals(user.getPassword())) {
 				sessionObj.setAttribute("username", user.getUserName());
-				return "redirect:/protected/list-users";
+				return "redirect:/7haven/list-users";
 			} else {
 				model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
 				model.addAttribute("user", new Customer());
@@ -204,7 +204,7 @@ public class CustomerController {
 		dataU.setPassword(user.getPassword());
 		if(user.getUserName()!=null)
 			dataU.setUserName(user.getUserName());
-
+		cusregister.saveCustomer(dataU);
 		model.addAttribute("MSG", "You have updated your details.");
 		model.addAttribute("user", new Customer());
 		return "login";
@@ -229,12 +229,11 @@ public class CustomerController {
 		if (!dataU.getUserName().equalsIgnoreCase(user.getUserName())
 				&& cusregister.searchUserByUserName(user.getUserName()) != null) {
 			model.addAttribute("MSG", "User Name exist, please try again!");
-			model.addAttribute("user", new Customer());
+			model.addAttribute("user", user);
 			return "profilePage";
 		} else {
-
-			model.addAttribute("MSG", "You have updated your details.");
-			return "homePage";
+			cusregister.saveCustomer(user);
+			return "redirect:/home";
 		}
 	}
 	//Author:zhao yiran
