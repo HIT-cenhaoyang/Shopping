@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import sg.nus.edu.shopping.interfacemethods.CustomerInterface;
 import sg.nus.edu.shopping.interfacemethods.OrderDetailInterface;
 import sg.nus.edu.shopping.interfacemethods.PurchaseRecordInterface;
@@ -57,7 +58,7 @@ public class CheckoutController {
 
     @GetMapping("/checkout")
     public String checkout(HttpSession sessionObj, Model model) {
-        String customerName = (String) sessionObj.getAttribute("userName");
+        String customerName = (String) sessionObj.getAttribute("username");
 
         Customer customer = cService.searchUserByUserName(customerName);
         List<ShoppingCart> cartList = cartService.getCartByCustomerUsername(customerName);
@@ -71,17 +72,25 @@ public class CheckoutController {
     }
 
     @PostMapping("/submitOrder")
-    public String save(HttpSession sessionObj, Model model) {
+    public String save(@RequestParam("recipientName") String recipientName,
+                       @RequestParam("recipientAddress") String recipientAddress,
+                       @RequestParam("recipientPhone") String recipientPhone,
+                       @RequestParam("cardNumber") String cardNumber,
+                       HttpSession sessionObj, Model model) {
 
         //generate orderDate
         Date orderDate = new Date();
 
         //purchaseRecord
-        String customerName = (String) sessionObj.getAttribute("userName");
+        String customerName = (String) sessionObj.getAttribute("username");
         Customer customer = cService.searchUserByUserName(customerName);
         PurchaseRecord purchaseRecord = new PurchaseRecord();
         purchaseRecord.setCustomer(customer);
         purchaseRecord.setOrderDate(orderDate);
+        purchaseRecord.setRecipientName(recipientName);
+        purchaseRecord.setRecipientAddress(recipientAddress);
+        purchaseRecord.setRecipientPhone(recipientPhone);
+        purchaseRecord.setPaymentMethod(cardNumber);
         pRService.savePurchaseRecord(purchaseRecord);
 
         //orderDetail

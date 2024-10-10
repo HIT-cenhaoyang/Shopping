@@ -22,7 +22,7 @@ public class PurchaseRecord {
 
     private String paymentMethod;
 
-    @ManyToOne @JoinColumn (name = "productId")
+    @ManyToOne @JoinColumn (name = "customerId")
     private Customer customer;
 
     @OneToMany(mappedBy = "purchaseRecord" , fetch = FetchType.EAGER)
