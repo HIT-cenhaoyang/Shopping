@@ -14,10 +14,9 @@ public class PurchaseRecord {
     private int orderId;
 
     @ManyToOne @JoinColumn (name = "customerId")
-    @JsonIgnore
     private Customer customer;
 
-    @OneToMany(mappedBy = "purchaseRecord")
+    @OneToMany(mappedBy = "purchaseRecord" , fetch = FetchType.EAGER)
     private List<OrderDetail> orderDetails;
 
     private Date date;
@@ -29,13 +28,18 @@ public class PurchaseRecord {
         this.date = date;
         this.orderDetails = orderDetails;
     }
-
     public Customer getCustomer() {
         return customer;
     }
 
+    @JsonIgnore
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public String getCustId() {
+        String customerId = customer.getCustomerId();
+        return customerId;
     }
 
     public int getOrderId() {

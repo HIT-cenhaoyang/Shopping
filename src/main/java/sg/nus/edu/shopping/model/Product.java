@@ -1,5 +1,6 @@
 package sg.nus.edu.shopping.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class Product {
     private List<ShoppingCart> shoppingCarts;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<OrderDetail> orders;
 
 

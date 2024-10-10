@@ -22,6 +22,11 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
+    public int getProductId() {
+        int productId = product.getProductId();
+        return productId;
+    }
+
     public int getProductQty() {
         return productQty;
     }
@@ -47,6 +52,7 @@ public class OrderDetail {
         return product;
     }
 
+    @JsonIgnore
     public void setProduct(Product product) {
         this.product = product;
     }
