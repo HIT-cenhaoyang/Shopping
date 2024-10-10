@@ -6,6 +6,7 @@ import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.PurchaseRecord;
 import sg.nus.edu.shopping.repository.PurchaseRecordRepository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,7 @@ public interface PurchaseRecordInterface {
     List<PurchaseRecord> findAllOrders();
     Optional<PurchaseRecord> findByPurchaseRecordId(int id);
     List<PurchaseRecord> findByCustomerId(String id);
-    List<PurchaseRecord> findByDate(Date date);
+    List<PurchaseRecord> findByDate(LocalDate date);
     List<PurchaseRecord> findByProduct(Product product);
     List<PurchaseRecord> searchPurchaseRecordByCustomer(Customer customer);
     void savePurchaseRecord(PurchaseRecord purchaseRecord);

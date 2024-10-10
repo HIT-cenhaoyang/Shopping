@@ -28,11 +28,15 @@ public class PurchaseRecord {
     @OneToMany(mappedBy = "purchaseRecord" , fetch = FetchType.EAGER)
     private List<OrderDetail> orderDetails;
 
-    public PurchaseRecord() {
+    private Date date;
 
+    public PurchaseRecord() {}
+
+    public PurchaseRecord(Customer customer, Date date, List<OrderDetail> orderDetails) {
+        this.customer = customer;
+        this.date = date;
+        this.orderDetails = orderDetails;
     }
-
-
     public Customer getCustomer() {
         return customer;
     }

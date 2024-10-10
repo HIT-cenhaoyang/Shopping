@@ -1,0 +1,82 @@
+/* General Body Styling */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1c1c1c;  /* 深黑色背景 */
+    color: #e6e6e6;  /* 白色字体 */
+}
+
+/* Main Container Styling */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #333333;  /* 深灰色背景容器 */
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);  /* 深色阴影 */
+}
+
+/* Page Header Styling */
+h1, h4 {
+    text-align: center;
+    font-weight: 300;
+    color: #b8b08d;  /* 棕色文本 */
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+table, th, td {
+    border: 1px solid #4d4d4d;  /* 表格边框为深灰色 */
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #5a4834;  /* 棕色表头 */
+    color: #ffffff;  /* 表头字体颜色为白色 */
+    font-weight: 600;
+}
+
+td {
+    background-color: #262626;  /* 深黑色背景 */
+}
+
+/* Alternate Row Background Color */
+tr:nth-child(even) td {
+    background-color: #333333;  /* 交替行使用深灰色 */
+}
+
+/* Inner Table Styling */
+.table-sm th {
+    background-color: #3e2d21;  /* 棕色内表格表头 */
+    color: #ffffff;
+}
+
+/* Hover Effect for Rows */
+tbody tr:hover {
+    background-color: #3a3a3a;  /* 鼠标悬浮时的行颜色 */
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    table, th, td {
+        display: block;
+        width: 100%;
+    }
+    th, td {
+        box-sizing: border-box;
+    }
+}
