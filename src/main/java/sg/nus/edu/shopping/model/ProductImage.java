@@ -17,9 +17,9 @@ public class ProductImage {
     public ProductImage() {
     }
     public ProductImage(Product product, String fileName, boolean isCoverImage) {
-        this.product = product;
-        this.fileName = fileName;
-        this.isCoverImage = isCoverImage;
+        this.setProduct(product);
+        this.setFileName(fileName);
+        this.setCoverImage(isCoverImage);
     }
 
     public int getImageId() {
@@ -55,7 +55,7 @@ public class ProductImage {
     }
     @Override
     public String toString() {
-        return "Image: " + imageId + ", Product= " + product.getProductId();
+        return "Image: " + getImageId() + ", Product= " + getProduct().getProductId();
     }
 
 }

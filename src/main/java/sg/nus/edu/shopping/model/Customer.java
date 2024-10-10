@@ -52,17 +52,17 @@ public class Customer {
                     String phoneNumber, String password,
                     String email, String name,
                     String gender) {
-        this.address = address;
-        this.userName = userName;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-        this.gender = gender;
+        this.setAddress(address);
+        this.setUserName(userName);
+        this.setPhoneNumber(phoneNumber);
+        this.setPassword(password);
+        this.setEmail(email);
+        this.setName(name);
+        this.setGender(gender);
     }
 
     public String getCustomerId() {
-        return id;
+        return getId();
     }
 
     public String getPhoneNumber() {
@@ -91,11 +91,6 @@ public class Customer {
         this.shoppingCarts = shoppingCart;
     }
 
-
-    public List<PurchaseRecord> getPurchaseRecords() {
-        return purchaseRecords;
-    }
-
     public void removeProductFromCart(ShoppingCart cart) {
         shoppingCarts.remove(cart);
         cart.setCustomer(null);
@@ -104,12 +99,6 @@ public class Customer {
     public void addProductToCart(ShoppingCart cart) {
         shoppingCarts.add(cart);
     }
-
-
-    public void setPurchaseRecords(List<PurchaseRecord> purchaseRecord) {
-        this.purchaseRecords = purchaseRecord;
-    }
-
 
     public List<PaymentDetail> getPaymentDetails() {
         return paymentDetails;
@@ -173,9 +162,32 @@ public class Customer {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    
+
     public void setCustomerId(String id) {
         this.id = id;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<PurchaseRecord> getPurchaseRecords() {
+        return purchaseRecords;
+    }
+
+    public void setPurchaseRecords(List<PurchaseRecord> purchaseRecords) {
+        this.purchaseRecords = purchaseRecords;
+    }
+
+    public List<ShoppingCart> getShoppingCarts() {
+        return shoppingCarts;
+    }
+
+    public void setShoppingCarts(List<ShoppingCart> shoppingCarts) {
+        this.shoppingCarts = shoppingCarts;
+    }
 }

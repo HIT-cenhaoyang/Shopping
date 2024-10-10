@@ -3,12 +3,14 @@ package sg.nus.edu.shopping.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
 
 
 @Entity
 public class OrderDetail {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderDetailId;
 
     @ManyToOne @JoinColumn (name = "productId")
@@ -33,6 +35,10 @@ public class OrderDetail {
 
     public int getProductQty() {
         return productQty;
+    }
+
+    public void setProductQty(int productQty) {
+        this.productQty = productQty;
     }
 
     public double getProductPrice() {

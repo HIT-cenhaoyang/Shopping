@@ -15,4 +15,5 @@ public interface CustomerInterface {
 	public Customer searchUserByUserName(String userName);
 	public Customer searchUserByUserEmail(String userEmail);
 	public Customer findById(String id);
+
 }

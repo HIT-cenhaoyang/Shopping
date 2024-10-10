@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout Page</title>
+    <script>
+        // 显示所有支付方式
+        function showAllPaymentDetails() {
+            document.getElementById("allPaymentDetails").style.display = "block";
+            document.getElementById("showButton").style.display = "none";
+        }
+
+        // 更新选中的银行卡号
+        function selectPaymentDetail(cardNumber) {
+            console.log(cardNumber); // 检查是否获取到了正确的银行卡号
+            document.getElementById("selectedCardNumber").textContent = cardNumber;
+        }
+
+        // 切换编辑状态的函数
+        function editField(field) {
+            document.getElementById(field + "Display").style.display = "none";
+            document.getElementById(field + "Edit").style.display = "block";
+        }
+
+        // 保存编辑内容并显示新的值
+        function saveField(field) {
+            const inputElement = document.getElementById(field + "Input");
+            const newValue = inputElement.value;
+            document.getElementById(field + "Text").textContent = newValue;
+            cancelEdit(field);
+        }
+
+        // 取消编辑
+        function cancelEdit(field) {
+            document.getElementById(field + "Edit").style.display = "none";
+            document.getElementById(field + "Display").style.display = "block";
+        }
+    </script>
+</head>
+
+<body>
+<form th:action="@{/cartPage}" method="post">
+    <input type="submit" value="return to cart"/>
+</form>
+<h3>Recipient's Information</h3>
+
+<div>
+    <p id="userNameDisplay">
+        Username: <span id="userNameText" th:text="${customer.userName}"></span>
+        <button onclick="editField('userName')">Edit</button>
+    </p>
+    <div id="userNameEdit" style="display: none;">
+        <input type="text" id="userNameInput" th:value="${customer.userName}"/>
+        <button onclick="saveField('userName')">Save</button>
+        <button onclick="cancelEdit('userName')">Cancel</button>
+    </div>
+</div>
+<div>
+    <p id="addressDisplay">
+        Address: <span id="addressText" th:text="${customer.address}"></span>
+        <button onclick="editField('address')">Edit</button>
+    </p>
+    <div id="addressEdit" style="display: none;">
+        <input type="text" id="addressInput" th:value="${customer.address}"/>
+        <button onclick="saveField('address')">Save</button>
+        <button onclick="cancelEdit('address')">Cancel</button>
+    </div>
+</div>
+<div>
+    <p id="phoneNumberDisplay">
+        Phone: <span id="phoneNumberText" th:text="${customer.phoneNumber}"></span>
+        <button onclick="editField('phoneNumber')">Edit</button>
+    </p>
+    <div id="phoneNumberEdit" style="display: none;">
+        <input type="text" id="phoneNumberInput" th:value="${customer.phoneNumber}" />
+        <button onclick="saveField('phoneNumber')">Save</button>
+        <button onclick="cancelEdit('phoneNumber')">Cancel</button>
+    </div>
+</div>
+<br>
+<h3>Shopping Cart</h3>
+
+<table>
+    <tr>
+        <th>Img</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+    <tr th:each="c : ${cart}">
+        <td>
+            <img th:src="${c.product.coverImagePath}" class="product-image" alt="Product Image"/>
+        </td>
+        <td th:text="${c.product.name}"></td>
+        <td th:text="${c.product.price}"></td>
+        <td th:text="${c.productQty}"></td>
+    </tr>
+    <tr>
+        <td colspan="3"><b>Total Price of All Products</b></td>
+        <td th:text="${totalPrice}"></td>
+    </tr>
+</table>
+<br>
+<!-- 初始展示第一个 PaymentDetail 的银行卡号 -->
+<div th:if="${customer.paymentDetails.size() > 0}">
+    <h2>Selected Payment Method</h2>
+    <p>Card Number: <span id="selectedCardNumber" th:text="${customer.paymentDetails[0].cardNumber}"></span></p>
+</div>
+
+<!-- 展示按钮，点击展示所有 PaymentDetail -->
+<button id="showButton" onclick="showAllPaymentDetails()">Show All Payment Methods</button>
+
+<!-- 隐藏的所有 PaymentDetail 列表，只展示银行卡号 -->
+<div id="allPaymentDetails" style="display: none;">
+    <h2>All Payment Methods</h2>
+    <ul>
+        <li th:each="paymentDetail : ${customer.paymentDetails}">
+            <p>Card Number: <span th:text="${paymentDetail.cardNumber}"></span></p>
+            <!-- 使用 data-* 属性传递银行卡号 -->
+            <button th:attr="data-cardNumber=${paymentDetail.cardNumber}"
+                    onclick="selectPaymentDetail(this.getAttribute('data-cardNumber'))">
+                Select This Card
+            </button>
+        </li>
+    </ul>
+</div>
+<form th:action="@{/submitOrder}" method="post">
+    <input type="submit" value="payment"/>
+</form>
+</body>
+
+</html>

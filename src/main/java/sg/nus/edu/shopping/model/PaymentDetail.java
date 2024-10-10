@@ -27,9 +27,9 @@ public class PaymentDetail {
     }
 
     public PaymentDetail(String cardNumber, String expiryDate, String bankName) {
-        this.cardNumber = cardNumber;
-        this.expiryDate = expiryDate;
-        this.bankName = bankName;
+        this.setCardNumber(cardNumber);
+        this.setExpiryDate(expiryDate);
+        this.setBankName(bankName);
     }
 
     public String getBankName() {
@@ -64,4 +64,11 @@ public class PaymentDetail {
         this.cardNumber = cardNum;
     }
 
+    public Customer getPayment_customer() {
+        return payment_customer;
+    }
+
+    public void setPayment_customer(Customer payment_customer) {
+        this.payment_customer = payment_customer;
+    }
 }

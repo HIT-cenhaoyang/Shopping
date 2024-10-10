@@ -1,8 +1,8 @@
 package sg.nus.edu.shopping.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import sg.nus.edu.shopping.interfacemethods.OrderDetailInterface;
 import sg.nus.edu.shopping.model.OrderDetail;
 import sg.nus.edu.shopping.model.Product;
@@ -28,6 +28,10 @@ public class OrderDetailImplementation implements OrderDetailInterface {
             throw new IllegalArgumentException("Order detail with ID " + id + " does not exist.");
         }
         return optOrderDetail;
+    }
+    @Transactional
+    public void saveAllOrderDetail(List<OrderDetail> Details) {
+        orderDetailRepo.saveAll(Details);
     }
 
     public List<OrderDetail> findByProduct(Product product) {

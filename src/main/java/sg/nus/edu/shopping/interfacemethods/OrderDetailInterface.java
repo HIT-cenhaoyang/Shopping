@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface OrderDetailInterface{
 
+    void saveAllOrderDetail(List<OrderDetail> detail);
     List<OrderDetail> findAll();
     Optional<OrderDetail> findByOrderDetailId(int id);
     List<OrderDetail> findByProduct(Product product);

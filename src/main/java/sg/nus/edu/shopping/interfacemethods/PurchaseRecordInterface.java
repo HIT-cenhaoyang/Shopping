@@ -1,5 +1,6 @@
 package sg.nus.edu.shopping.interfacemethods;
 
+import sg.nus.edu.shopping.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.PurchaseRecord;
@@ -16,4 +17,6 @@ public interface PurchaseRecordInterface {
     List<PurchaseRecord> findByCustomerId(String id);
     List<PurchaseRecord> findByDate(Date date);
     List<PurchaseRecord> findByProduct(Product product);
+    List<PurchaseRecord> searchPurchaseRecordByCustomer(Customer customer);
+    void savePurchaseRecord(PurchaseRecord purchaseRecord);
 }

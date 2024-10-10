@@ -62,4 +62,8 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
         customerRepo.save(customer);
         return shoppingCartRepo.save(newCart);
     }
+
+    public void clearCartByCustomer(Customer customer) {
+        shoppingCartRepo.deleteByCustomer(customer);
+    }
 }

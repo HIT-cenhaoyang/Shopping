@@ -45,10 +45,10 @@ public class Product {
     }
 
     public Product(String name, double price, String sku) {
-        this.name = name;
-        this.price = price;
+        this.setName(name);
+        this.setPrice(price);
         //to ensure no duplicate products are saved
-        this.sku = sku;
+        this.setSku(sku);
     }
 
     //get images of product
@@ -62,7 +62,7 @@ public class Product {
     //removing a product image
     public void removeImage(ProductImage image) {
         //removes image from product image list
-        images.remove(image);
+        getImages().remove(image);
         // removes relationship between image and product
         image.setProduct(null);
     }
@@ -71,20 +71,20 @@ public class Product {
     public void addImage(ProductImage image) {
         if (image.isCoverImage()) {
             // If this image is a cover image, set all other images to not be cover image
-            this.images.forEach(img -> img.setCoverImage(false));
-        } else if (this.images.isEmpty()) {
+            this.getImages().forEach(img -> img.setCoverImage(false));
+        } else if (this.getImages().isEmpty()) {
             // If this is the first image, automatically set it as the cover
             image.setCoverImage(true);
         }
         // add image to product image list
-        images.add(image);
+        getImages().add(image);
         // link image to product
         image.setProduct(this);
     }
 
     //Get the cover image
     public ProductImage getCoverImage() {
-        return images.stream()
+        return getImages().stream()
                 .filter(ProductImage::isCoverImage)
                 .findFirst()
                 .orElse(null);
@@ -104,7 +104,7 @@ public class Product {
     }
 
     public String getCoverImagePath() {
-        return images.stream()
+        return getImages().stream()
                 .filter(ProductImage::isCoverImage)
                 .map(ProductImage::getFileName)
                 .findFirst()
@@ -166,5 +166,21 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<ShoppingCart> getShoppingCarts() {
+        return shoppingCarts;
+    }
+
+    public void setShoppingCarts(List<ShoppingCart> shoppingCarts) {
+        this.shoppingCarts = shoppingCarts;
+    }
+
+    public List<OrderDetail> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderDetail> orders) {
+        this.orders = orders;
     }
 }
