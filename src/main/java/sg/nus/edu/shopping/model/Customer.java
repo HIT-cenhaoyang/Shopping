@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 @Entity
@@ -104,7 +105,6 @@ public class Customer {
     public void addProductToCart(ShoppingCart cart) {
         shoppingCarts.add(cart);
     }
-
 
     public void setPurchaseRecords(List<PurchaseRecord> purchaseRecord) {
         this.purchaseRecords = purchaseRecord;
