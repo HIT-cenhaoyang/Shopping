@@ -32,6 +32,8 @@ public class Product {
 
     private String description;
 
+    private String dimensions;
+
     @OneToMany(mappedBy = "product")
     private List<ShoppingCart> shoppingCarts;
 
@@ -166,5 +168,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getDimensions() {
+        return dimensions;
+    }
+
+    public void setDimensions(String dimensions) {
+        this.dimensions = dimensions;
     }
 }

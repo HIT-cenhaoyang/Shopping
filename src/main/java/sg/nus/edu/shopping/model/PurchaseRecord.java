@@ -3,6 +3,7 @@ package sg.nus.edu.shopping.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class PurchaseRecord {
     @OneToMany(mappedBy = "purchaseRecord" , fetch = FetchType.EAGER)
     private List<OrderDetail> orderDetails;
 
-    private Date date;
+    private LocalDate date;
 
     public PurchaseRecord() {}
 
-    public PurchaseRecord(Customer customer, Date date, List<OrderDetail> orderDetails) {
+    public PurchaseRecord(Customer customer, LocalDate date, List<OrderDetail> orderDetails) {
         this.customer = customer;
         this.date = date;
         this.orderDetails = orderDetails;
@@ -53,7 +54,7 @@ public class PurchaseRecord {
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
     }
-    public Date getPurchaseDate() {
+    public LocalDate getPurchaseDate() {
         return date;
     }
     public List<OrderDetail> getOrderDetails() {
