@@ -59,9 +59,8 @@ public class CheckoutController {
     public String checkout(HttpSession sessionObj, Model model) {
         String customerName = (String) sessionObj.getAttribute("userName");
 
-        //Customer customer = cService.searchUserByUserName(customerName);
-        Customer customer = cService.searchUserByUserName("Wioner");
-        List<ShoppingCart> cartList = cartService.getCartByCustomerUsername("Wioner");
+        Customer customer = cService.searchUserByUserName(customerName);
+        List<ShoppingCart> cartList = cartService.getCartByCustomerUsername(customerName);
         double totalPrice = cartList.stream()
                 .mapToDouble(cart -> cart.getProduct().getPrice() * cart.getProductQty())
                 .sum();
@@ -79,16 +78,14 @@ public class CheckoutController {
 
         //purchaseRecord
         String customerName = (String) sessionObj.getAttribute("userName");
-        //Customer customer = cService.searchUserByUserName(customerName);
-        Customer customer = cService.searchUserByUserName("Wioner");
+        Customer customer = cService.searchUserByUserName(customerName);
         PurchaseRecord purchaseRecord = new PurchaseRecord();
         purchaseRecord.setCustomer(customer);
         purchaseRecord.setOrderDate(orderDate);
         pRService.savePurchaseRecord(purchaseRecord);
 
         //orderDetail
-        //List<ShoppingCart> carts = cartService.getCartByCustomerUsername(customerName);
-        List<ShoppingCart> carts = cartService.getCartByCustomerUsername("Wioner");
+        List<ShoppingCart> carts = cartService.getCartByCustomerUsername(customerName);
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (ShoppingCart item : carts) {
             OrderDetail details = new OrderDetail();
