@@ -26,6 +26,10 @@ public class OrderDetail {
         int productId = product.getProductId();
         return productId;
     }
+    public String getProductName() {
+        String productName = product.getName();
+        return productName;
+    }
 
     public int getProductQty() {
         return productQty;
