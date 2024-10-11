@@ -10,6 +10,7 @@ import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.PurchaseRecord;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import java.util.Date;
@@ -21,7 +22,7 @@ public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, 
     List<PurchaseRecord> findAll();
     Optional<PurchaseRecord> findByOrderId(int orderId);
     List<PurchaseRecord> findByCustomerId(String customerId);
-    List<PurchaseRecord> findByOrderDate(Date date);
+    List<PurchaseRecord> findByOrderDate(LocalDate date);
 
     @Query("SELECT p FROM PurchaseRecord p WHERE p.customer = :customer")
     public List<PurchaseRecord> findPurchaseRecordByCustomer(@Param("customer") Customer customer);

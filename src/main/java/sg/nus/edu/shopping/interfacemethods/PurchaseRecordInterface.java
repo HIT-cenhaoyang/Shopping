@@ -7,7 +7,6 @@ import sg.nus.edu.shopping.model.PurchaseRecord;
 import sg.nus.edu.shopping.repository.PurchaseRecordRepository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 

@@ -17,6 +17,7 @@ import sg.nus.edu.shopping.model.ShoppingCart;
 import sg.nus.edu.shopping.model.OrderDetail;
 import sg.nus.edu.shopping.service.CustomerImplementation;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,7 +80,7 @@ public class CheckoutController {
                        HttpSession sessionObj, Model model) {
 
         //generate orderDate
-        Date orderDate = new Date();
+        LocalDate orderDate = LocalDate.now();
 
         //purchaseRecord
         String customerName = (String) sessionObj.getAttribute("username");

@@ -11,6 +11,7 @@ import sg.nus.edu.shopping.model.PurchaseRecord;
 import sg.nus.edu.shopping.repository.OrderDetailRepository;
 import sg.nus.edu.shopping.repository.PurchaseRecordRepository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +46,7 @@ public class PurchaseRecordImplementation implements PurchaseRecordInterface {
         }
         else return purchaseRecordRepo.findByCustomerId(id);
     }
-    public List<PurchaseRecord> findByDate(Date date) {
+    public List<PurchaseRecord> findByDate(LocalDate date) {
         if (purchaseRecordRepo.findByOrderDate(date) == null) {
             throw new IllegalArgumentException("No purchase records found for date" + date);
         }
