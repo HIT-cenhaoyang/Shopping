@@ -7,14 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import sg.nus.edu.shopping.interfacemethods.CustomerInterface;
-import sg.nus.edu.shopping.interfacemethods.OrderDetailInterface;
-import sg.nus.edu.shopping.interfacemethods.PurchaseRecordInterface;
-import sg.nus.edu.shopping.interfacemethods.ShoppingCartInterface;
-import sg.nus.edu.shopping.model.Customer;
-import sg.nus.edu.shopping.model.PurchaseRecord;
-import sg.nus.edu.shopping.model.ShoppingCart;
-import sg.nus.edu.shopping.model.OrderDetail;
+import sg.nus.edu.shopping.interfacemethods.*;
+import sg.nus.edu.shopping.model.*;
 import sg.nus.edu.shopping.service.CustomerImplementation;
 
 import java.time.LocalDate;
@@ -35,6 +29,8 @@ public class CheckoutController {
     private OrderDetailInterface oService;
     @Autowired
     private ShoppingCartInterface scService;
+    @Autowired
+    private ProductInterface pService;
 
     @Autowired
     public void setCustomerService(CustomerImplementation cServiceImpl) {
@@ -56,8 +52,10 @@ public class CheckoutController {
     public void setShoppingCartService(ShoppingCartInterface scServiceImpl) {
         this.scService = scServiceImpl;
     }
+    @Autowired
+    public void setProductService(ProductInterface pServiceImpl) {this.pService = pServiceImpl;}
 
-    @GetMapping("/checkout")
+    @GetMapping("/7haven/checkout")
     public String checkout(HttpSession sessionObj, Model model) {
         String customerName = (String) sessionObj.getAttribute("username");
 
@@ -79,6 +77,25 @@ public class CheckoutController {
                        @RequestParam("cardNumber") String cardNumber,
                        HttpSession sessionObj, Model model) {
 
+        // 获取当前用户的购物车信息
+        String username = (String) sessionObj.getAttribute("username");
+        List<ShoppingCart> carts = cartService.getCartByCustomerUsername(username);
+
+        // 检查每个商品的数量是否小于等于库存数量
+        for (ShoppingCart cart : carts) {
+            Product product = cart.getProduct();
+
+            // 检查库存是否足够
+            if (cart.getProductQty() > product.getStockAvailable()) {
+                model.addAttribute("productName", product.getName());
+                model.addAttribute("requiredQty", cart.getProductQty());
+                model.addAttribute("availableStock", product.getStockAvailable());
+
+                // 如果库存不足，跳转到库存错误页面
+                return "stockError";
+            }
+        }
+
         //generate orderDate
         LocalDate orderDate = LocalDate.now();
 
@@ -95,7 +112,6 @@ public class CheckoutController {
         pRService.savePurchaseRecord(purchaseRecord);
 
         //orderDetail
-        List<ShoppingCart> carts = cartService.getCartByCustomerUsername(customerName);
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (ShoppingCart item : carts) {
             OrderDetail details = new OrderDetail();
@@ -105,6 +121,13 @@ public class CheckoutController {
             orderDetails.add(details);
         }
         oService.saveAllOrderDetail(orderDetails);
+
+        // 扣减库存数量
+        for (ShoppingCart cart : carts) {
+            Product product = cart.getProduct();
+            product.setStockAvailable(product.getStockAvailable() - cart.getProductQty());
+            pService.saveProduct(product);  // 更新产品库存
+        }
 
         //delete cart
         scService.clearCartByCustomer(customer);

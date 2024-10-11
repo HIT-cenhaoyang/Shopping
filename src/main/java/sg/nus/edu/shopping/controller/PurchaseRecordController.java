@@ -8,10 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import sg.nus.edu.shopping.interfacemethods.OrderDetailInterface;
+import sg.nus.edu.shopping.model.OrderDetail;
 import sg.nus.edu.shopping.repository.CustomerRepository;
 import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.repository.PurchaseRecordRepository;
 import sg.nus.edu.shopping.model.PurchaseRecord;
+import sg.nus.edu.shopping.service.OrderDetailImplementation;
 
 @Controller
 public class PurchaseRecordController {
@@ -19,6 +22,13 @@ public class PurchaseRecordController {
     private PurchaseRecordRepository purchaseRecordRepository;
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private OrderDetailInterface oService;
+    @Autowired
+    public void setOrderService(OrderDetailInterface oServiceImpl) {
+        this.oService = oServiceImpl;
+    }
 
     @RequestMapping("/purchase_record")
     public String getpurchase_record(Model model) {
@@ -30,6 +40,7 @@ public class PurchaseRecordController {
             customer.setPurchaseRecords(purchaseRecords);
         }
         model.addAttribute("customer",customer);
+
         return"PurchaseRecord";
     }
 

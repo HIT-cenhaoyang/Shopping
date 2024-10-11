@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 @Entity
@@ -43,6 +42,9 @@ public class Customer {
 
     @OneToMany(mappedBy = "payment_customer")
     private List<PaymentDetail> paymentDetails;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Review> reviews;
 
 
     public Customer() {
@@ -190,5 +192,13 @@ public class Customer {
 
     public void setShoppingCarts(List<ShoppingCart> shoppingCarts) {
         this.shoppingCarts = shoppingCarts;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

@@ -41,6 +41,9 @@ public class Product {
     @JsonIgnore
     private List<OrderDetail> orders;
 
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
+
 
     //constructor
     public Product() {
@@ -192,5 +195,13 @@ public class Product {
 
     public void setOrders(List<OrderDetail> orders) {
         this.orders = orders;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

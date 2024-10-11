@@ -91,4 +91,9 @@ public class ProductImplementation implements ProductInterface {
     public Page<Product> getProductByCategory(Category category, Pageable pageable) {
         return productRepo.getProductByCategory(category, pageable);
     }
+
+    @Override
+    public void saveProduct(Product product) {
+        productRepo.save(product);
+    }
 }
