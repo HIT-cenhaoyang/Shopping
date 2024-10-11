@@ -4,22 +4,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sg.nus.edu.shopping.interfacemethods.CategoryInterface;
 import sg.nus.edu.shopping.model.Category;
+import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.repository.CategoryRepository;
+import sg.nus.edu.shopping.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class CategoryImplementation implements CategoryInterface {
     @Autowired
     private CategoryRepository categoryRepo;
+    @Autowired
+    private ProductRepository productRepo;
 
     @Override
     public Category findByCategoryId(Integer categoryId) {
-        if (categoryRepo.findByCategoryId(categoryId) == null) {
-            throw new IllegalArgumentException("Category with ID " + categoryId + " does not exist.");
-        }
         return categoryRepo.findByCategoryId(categoryId);
+    }
+
+    public Category findByCategoryName(String categoryName) {
+        if (categoryRepo.findByCategoryName(categoryName) == null) {
+            throw new IllegalArgumentException("Category does not exist");
+        }
+        return categoryRepo.findByCategoryName(categoryName);
+    }
+    public Category findByProductsContaining(Product product) {
+        if(productRepo.findByProductId(product.getProductId()).isEmpty()) {
+            throw new IllegalArgumentException("Product does not exist");
+        }
+        return categoryRepo.findByProductsContaining(product);
+    }
+
+    public  List<Category> findAll() {
+        return categoryRepo.findAll();
     }
 
     //CRUD for category

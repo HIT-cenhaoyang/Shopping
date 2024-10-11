@@ -29,15 +29,8 @@ public class AdminImplementation implements AdminInterface {
     ProductImageRepository productImageRepo;
 
     @Override
-    public Admin searchUserByUserName(String userName) {
-        if (userName != null) {
-            ArrayList<Admin> adminList = adminRepo.searchUserByUserName(userName);
-            if (adminList.size() > 0) {
-                return adminList.get(0);
-            }
-        }
-
-		return null;
+    public Optional<Admin> findAdminByUserName(String userName) {
+        return adminRepo.findAdminByUserName(userName);
 	}
 
 
