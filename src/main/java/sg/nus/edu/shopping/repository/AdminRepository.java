@@ -1,6 +1,7 @@
 package sg.nus.edu.shopping.repository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +13,5 @@ import sg.nus.edu.shopping.model.Admin;
 
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, String> {
-	@Query("Select u from Admin as u where u.userName =:userName")
-	public ArrayList<Admin> searchUserByUserName(@Param("userName") String userName);
+	Optional<Admin> findAdminByUserName(String userName);
 }
