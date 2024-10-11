@@ -11,8 +11,6 @@ import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.PurchaseRecord;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +66,7 @@ public class OrderRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-*/
+
     @GetMapping("/orders/customer/{customerId}")
     public ResponseEntity<List<PurchaseRecord>> findOrdersByCustomerId(@PathVariable("customerId") String id){
         List<PurchaseRecord> orderListByCust = orderInt.findByCustomerId(id);
@@ -103,6 +101,5 @@ public class OrderRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
+    */
 }

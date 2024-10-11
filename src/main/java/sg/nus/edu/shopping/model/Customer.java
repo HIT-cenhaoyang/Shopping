@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 @Entity
@@ -52,17 +53,17 @@ public class Customer {
                     String phoneNumber, String password,
                     String email, String name,
                     String gender) {
-        this.setAddress(address);
-        this.setUserName(userName);
-        this.setPhoneNumber(phoneNumber);
-        this.setPassword(password);
-        this.setEmail(email);
-        this.setName(name);
-        this.setGender(gender);
+        this.address = address;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.email = email;
+        this.name = name;
+        this.gender = gender;
     }
 
     public String getCustomerId() {
-        return getId();
+        return id;
     }
 
     public String getPhoneNumber() {

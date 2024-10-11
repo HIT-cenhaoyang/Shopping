@@ -7,11 +7,20 @@ import org.springframework.data.repository.query.Param;
 import sg.nus.edu.shopping.model.Customer;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public interface CustomerRepository extends JpaRepository<Customer, String> {
     boolean existsByUserName(String userName);
 
-    Customer findCustomerById(String customerId);
+    Optional<Customer> findCustomerById(String customerId);
+
+    List<Customer> findAll();
+
+    @Query("SELECT c FROM Customer c WHERE MONTH(c.birthDate) = ?1")
+    List<Customer> findByBirthDateMonth(int month);
+
+    Optional<Customer> findByUserName(String userName);
 
     @Query("Select c from Customer as c where c.userName = : userName")
     public ArrayList<Customer> findCustomerByuserName(@Param("userName") String keyword);

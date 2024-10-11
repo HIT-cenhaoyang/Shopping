@@ -53,7 +53,8 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
     }
 
     public ShoppingCart addProduct(String customerId, int productId, int quantity) {
-        Customer customer = customerRepo.findCustomerById(customerId);
+        Optional<Customer> optCustomer = customerRepo.findCustomerById(customerId);
+        Customer customer = optCustomer.orElseThrow(() -> new IllegalArgumentException("Customer not found"));
         Optional<Product> optProduct = productRepo.findByProductId(productId);
         Product product = optProduct.orElseThrow(() -> new IllegalArgumentException("Product not found!"));
         ShoppingCart newCart = new ShoppingCart(product, customer, quantity);

@@ -1,6 +1,7 @@
 package sg.nus.edu.shopping.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,19 @@ public class CustomerImplementation implements CustomerInterface{
 		}else {
 			return null;
 		}
+	}
+
+	//Author: Hannah
+	public List<Customer> findAllCustomers() {
+		return customerRepo.findAll();
+	}
+	public Optional<Customer> findCustomerById(String customerId) {
+		return customerRepo.findCustomerById(customerId);
+	}
+	public Optional<Customer> findByUserName(String userName) {
+		return customerRepo.findByUserName(userName);
+	}
+	public List<Customer> findByBirthDateMonth(int month) {
+		return customerRepo.findByBirthDateMonth(month);
 	}
 }
