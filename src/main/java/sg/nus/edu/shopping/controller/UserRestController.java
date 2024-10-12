@@ -4,20 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sg.nus.edu.shopping.interfacemethods.AdminInterface;
 import sg.nus.edu.shopping.interfacemethods.CustomerInterface;
-import sg.nus.edu.shopping.interfacemethods.PurchaseRecordInterface;
+import sg.nus.edu.shopping.model.Admin;
 import sg.nus.edu.shopping.model.Customer;
 
-import java.time.Month;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
-public class CustomerRestController {
+public class UserRestController {
     @Autowired
     private CustomerInterface custInt;
+    @Autowired
+    private AdminInterface adminInt;
 
     @GetMapping("/customers")
     public ResponseEntity<List<Customer>> getCustomers(
@@ -46,6 +49,23 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(customerResult, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Map<String, String> loginData) {
+        String userName = loginData.get("userName");
+        String password = loginData.get("password");
+        Optional<Admin> optAdmin = adminInt.findAdminByUserName(userName);
+        if (optAdmin.isEmpty()) {
+            return new ResponseEntity<>("Username not found.", HttpStatus.NOT_FOUND);
+        } else {
+            Admin admin = optAdmin.get();
+            if (admin.getPassword().equals(password)) {
+                return new ResponseEntity<>("Successfully logged in.", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Incorrect password.", HttpStatus.UNAUTHORIZED);
+            }
         }
     }
 }

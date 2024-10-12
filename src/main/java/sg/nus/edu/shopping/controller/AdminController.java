@@ -180,7 +180,7 @@ public class AdminController {
         int dotIndex = fileName.lastIndexOf('.');
         return (dotIndex == -1) ? "" : fileName.substring(dotIndex);
     }
-
+/*
     @GetMapping("/adminLogin")
     public String AdminLogin(Model model) {
         model.addAttribute("admin", new Admin());
@@ -220,6 +220,6 @@ public class AdminController {
         sessionObj.removeAttribute("username");
         return "redirect:/adminLogin";
     }
-
+*/
 
 }

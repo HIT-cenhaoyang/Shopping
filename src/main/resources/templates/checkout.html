@@ -14,10 +14,34 @@
         // 更新选中的银行卡号
         function selectPaymentDetail(cardNumber) {
             console.log(cardNumber); // 检查是否获取到了正确的银行卡号
-            document.getElementById("selectedCardNumber").textContent = cardNumber;
+            // 使用掩码后的版本更新页面上选中的卡号，只显示最后四位
+            const maskedNumber = "**** **** **** " + cardNumber.slice(-4);
+            document.getElementById("selectedCardNumber").textContent = maskedNumber;
             // 更新隐藏的 input 字段值
             document.getElementById("selectedCardNumberInput").value = cardNumber;
         }
+
+        // 使用 JavaScript 处理银行卡号，只显示最后四个字符
+        function maskCardNumber(cardNumber) {
+            return "**** **** **** " + cardNumber.slice(-4);
+        }
+
+        // 页面加载完成后，将所有卡号显示为最后四位
+        document.addEventListener("DOMContentLoaded", function () {
+            // 初始展示第一个银行卡号
+            const firstCardNumberElement = document.getElementById("selectedCardNumber");
+            if (firstCardNumberElement) {
+                const originalCardNumber = firstCardNumberElement.getAttribute("data-cardnumber");
+                firstCardNumberElement.textContent = maskCardNumber(originalCardNumber);
+            }
+
+            // 处理所有银行卡号列表
+            const cardElements = document.querySelectorAll(".maskedCardNumber");
+            cardElements.forEach(function (cardElement) {
+                const originalCardNumber = cardElement.getAttribute("data-cardnumber");
+                cardElement.textContent = maskCardNumber(originalCardNumber);
+            });
+        });
 
         // 切换编辑状态的函数
         function editField(field) {
@@ -123,7 +147,7 @@
     <!-- 初始展示第一个 PaymentDetail 的银行卡号 -->
     <div th:if="${customer.paymentDetails.size() > 0}">
         <h2>Selected Payment Method</h2>
-        <p>Card Number: <span id="selectedCardNumber" th:text="${customer.paymentDetails[0].cardNumber}"></span></p>
+        <p>Card Number: <span id="selectedCardNumber" th:attr="data-cardnumber=${customer.paymentDetails[0].cardNumber}"></span></p>
     </div>
 
     <!-- 展示按钮，点击展示所有 PaymentDetail -->
@@ -134,7 +158,7 @@
         <h2>All Payment Methods</h2>
         <ul>
             <li th:each="paymentDetail : ${customer.paymentDetails}">
-                <p>Card Number: <span th:text="${paymentDetail.cardNumber}"></span></p>
+                <p>Card Number: <span class="maskedCardNumber" th:attr="data-cardnumber=${paymentDetail.cardNumber}"></span></p>
                 <!-- 使用 data-* 属性传递银行卡号 -->
                 <button type="button" th:attr="data-cardNumber=${paymentDetail.cardNumber}"
                         onclick="selectPaymentDetail(this.getAttribute('data-cardNumber'))">
@@ -143,6 +167,7 @@
             </li>
         </ul>
     </div>
+
     <!-- 隐藏字段，用于存储选中的银行卡号 -->
     <input type="hidden" id="selectedCardNumberInput" name="cardNumber" th:value="${customer.paymentDetails[0].cardNumber}" />
 

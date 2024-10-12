@@ -6,10 +6,11 @@ import sg.nus.edu.shopping.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public interface AdminInterface {
 
-	public Admin searchUserByUserName(String userName);
+	Optional<Admin> findAdminByUserName(String userName);
     public void saveProduct(Product product);
     public List<Product> findAllProducts();
 }

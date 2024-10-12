@@ -21,5 +21,6 @@ public interface ProductInterface {
     Page<Product> getProducts(Pageable pageable);
     Page<Product> getProductByCategory(Category category, Pageable pageable);
     Optional<Product> getProductBySku(String sku);
+    void saveProduct(Product product);
 
 }
