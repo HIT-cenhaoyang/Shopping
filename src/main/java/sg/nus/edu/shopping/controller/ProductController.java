@@ -49,12 +49,7 @@ public class ProductController {
 	@Autowired
 	private ProductImageRepository productImageRepository;
 
-<<<<<<< HEAD
-	@Autowired
-	public void setProductInterface(ProductImplementation productImp) {
-		this.productInt = productImp;
-	}
-=======
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -62,7 +57,6 @@ public class ProductController {
     public void setProductInterface(ProductImplementation productImp) {
         this.productInt = productImp;
     }
->>>>>>> ac4c38cc3f81458ea688541c04e0a0eb1051bd36
 
 	@Autowired
 	public void setCategoryInterface(CategoryImplementation categoryImp) {
@@ -100,31 +94,6 @@ public class ProductController {
 //        return "homePage";
 //    }
 
-<<<<<<< HEAD
-	@GetMapping("/products")
-	public String showProducts(@RequestParam(value = "category", required = false) Integer categoryId,
-			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, Model model) {
-		Pageable pageable = PageRequest.of(page - 1, size);
-		Page<Product> productPage;
-		if (categoryId != null) {
-			Category category = categoryInt.findByCategoryId(categoryId);
-			productPage = productInt.getProductByCategory(category, pageable);
-			model.addAttribute("categoryId", categoryId); // 添加 categoryId 到模型
-		} else {
-			productPage = productInt.getProducts(pageable);
-			model.addAttribute("pageName", "mainPage"); // 添加 pageName 属性
-		}
-
-		// 获取指定 imageid 的图片（热销商品的图片）
-		List<Integer> hotImageIds = Arrays.asList(20, 30, 50);
-		List<String> hotProductImages = productImageRepository.findFilenamesByIds(hotImageIds);
-		// 获取热销商品数据
-		model.addAttribute("products", productPage.getContent()); // 当前页的产品
-		model.addAttribute("currentPage", page); // 当前页码
-		model.addAttribute("totalPages", productPage.getTotalPages()); // 总页数
-		model.addAttribute("totalItems", productPage.getTotalElements()); // 总产品数量
-		model.addAttribute("hotProducts", hotProductImages); // 热销商品图片
-=======
     @GetMapping("/7haven/products")
     public String showProducts(@RequestParam(value = "category", required = false) Integer categoryId,
                                @RequestParam(defaultValue = "1") int page,
@@ -157,46 +126,8 @@ public class ProductController {
         int totalPages = productPage.getTotalPages() > 0 ? productPage.getTotalPages() : 1;
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalItems", productPage.getTotalElements()); // 总产品数量
->>>>>>> ac4c38cc3f81458ea688541c04e0a0eb1051bd36
-
 		return "homePage";
 	}
-
-<<<<<<< HEAD
-	@GetMapping("/products/search")
-	public String searchProducts(@RequestParam("keyword") String keyword, Model model) {
-		List<Product> products = productInt.searchProductsByKeyword(keyword);
-		if (products.isEmpty()) {
-			model.addAttribute("message", "No products found");
-		}
-		model.addAttribute("products", products);
-		return "homePage";
-	}
-
-	@GetMapping("/cart")
-	public String cart() {
-		return "cartPage"; // 假设你有一个名为 cartPage.html 的模板
-	}
-
-	// BPC ခဏ hold
-//    @GetMapping("/product/{id}")
-//    public String showProductDetails(@PathVariable("id") int productId, Model model) {
-//        Optional<Product> optProduct = productInt.findByProductId(productId);
-//        if (optProduct.isEmpty()) {
-//            model.addAttribute("errorMessage", "Product not found");
-//            return "errorPage"; // 假设有一个名为 errorPage.html 的模板
-//        }
-//        Product product = optProduct.get();
-//        model.addAttribute("product", product);
-//        model.addAttribute("coverImage", product.getCoverImagePath()); // For cover image
-//	    model.addAttribute("additionalImages", product.getAdditionalImages()); // For additional images
-//        return "productDetails"; // 假设有一个名为 productDetails.html 的模板
-//    }
-
-	// BPC Update
-	@GetMapping("/product/{id}")
-=======
-
     @GetMapping("/7haven/products/search")
     public String searchProducts(@RequestParam("keyword") String keyword,
                                  @RequestParam(defaultValue = "1") int page,
@@ -223,7 +154,6 @@ public class ProductController {
     }
 
     @GetMapping("/7haven/product/{id}")
->>>>>>> ac4c38cc3f81458ea688541c04e0a0eb1051bd36
     public String showProductDetails(@PathVariable("id") int productId, Model model) {
         Optional<Product> optProduct = productInt.findByProductId(productId);
         if (optProduct.isEmpty()) {
@@ -232,7 +162,6 @@ public class ProductController {
         }
         Product product = optProduct.get();
         model.addAttribute("product", product);
-<<<<<<< HEAD
         model.addAttribute("coverImage", product.getCoverImagePath());
         model.addAttribute("additionalImages", product.getAdditionalImages());
 
@@ -241,11 +170,7 @@ public class ProductController {
         model.addAttribute("reviews", reviews);
 
         return "productDetails";
-=======
-        model.addAttribute("coverImage", product.getCoverImagePath()); // For cover image
-        model.addAttribute("additionalImages", product.getAdditionalImages()); // For additional images
-        return "productDetails"; // 假设有一个名为 productDetails.html 的模板
->>>>>>> ac4c38cc3f81458ea688541c04e0a0eb1051bd36
+
     }
 	
 	//BPC Update
