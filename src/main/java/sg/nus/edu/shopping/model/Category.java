@@ -3,6 +3,7 @@ package sg.nus.edu.shopping.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ public class Category {
 
     @OneToMany (mappedBy = "category")
     @JsonIgnore
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     public Category() {
     }

@@ -25,9 +25,6 @@ public class CategoryImplementation implements CategoryInterface {
     }
 
     public Category findByCategoryName(String categoryName) {
-        if (categoryRepo.findByCategoryName(categoryName) == null) {
-            throw new IllegalArgumentException("Category does not exist");
-        }
         return categoryRepo.findByCategoryName(categoryName);
     }
     public Category findByProductsContaining(Product product) {
@@ -39,6 +36,9 @@ public class CategoryImplementation implements CategoryInterface {
 
     public  List<Category> findAll() {
         return categoryRepo.findAll();
+    }
+    public Category save(Category category) {
+        return categoryRepo.save(category);
     }
 
     //CRUD for category

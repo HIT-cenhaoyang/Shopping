@@ -44,4 +44,39 @@ public class CategoryRestController {
             return new ResponseEntity<>(categoryResult, HttpStatus.OK);
         }
     }
+
+    @PostMapping ("/categories")
+    public ResponseEntity<Category> createCategory(@RequestBody Category newCategory) {
+        if(categoryInt.findByCategoryName(newCategory.getCategoryName()) != null) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } else {
+            Category savedCategory = categoryInt.save(newCategory);
+            return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
+        }
+    }
+
+    @PutMapping ("/categories/{categoryId}")
+    public ResponseEntity<Category> updateCategory(
+            @PathVariable("categoryId") Integer categoryId,
+            @RequestBody Category updatedCategory) {
+        Category existingCategory = categoryInt.findByCategoryId(categoryId);
+        if (existingCategory != null) {
+            existingCategory.setCategoryName(updatedCategory.getCategoryName());
+            existingCategory.setCategoryDescription(updatedCategory.getCategoryDescription());
+            Category savedCategory = categoryInt.save(existingCategory);
+            return new ResponseEntity<>(savedCategory, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/categories/{categoryId}")
+    public ResponseEntity<Category> deleteCategory(@PathVariable("categoryId") Integer categoryId) {
+        try {
+            categoryInt.deleteCategory(categoryId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
