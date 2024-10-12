@@ -147,7 +147,7 @@ public class CustomerController {
 	@GetMapping("/logout")
 	public String logout(HttpSession sessionObj, Model model) {
 		sessionObj.invalidate();
-		return "redirect:/login";
+		return "redirect:/7haven/products";
 	}
 
 

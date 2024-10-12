@@ -48,36 +48,36 @@ public class ProductController{
         this.categoryInt = categoryImp;
     }
 
-    @GetMapping("/products")
-    public String showProductsOnlyView(@RequestParam(value = "category", required = false) Integer categoryId,
-                               @RequestParam(defaultValue = "1") int page,
-                               @RequestParam(defaultValue = "10") int size,
-                               Model model) {
-        Pageable pageable1 = PageRequest.of(page - 1, size);
-        Page<Product> productPage;
-        if (categoryId != null) {
-            Category category = categoryInt.findByCategoryId(categoryId);
-            productPage = productInt.getProductByCategory(category, pageable1);
-            model.addAttribute("categoryId", categoryId); // 添加 categoryId 到模型
-        } else {
-            productPage = productInt.getProducts(pageable1);
-            model.addAttribute("pageName", "mainPage"); // 添加 pageName 属性
-        }
-
-        if (page == 1 && "mainPage".equals(model.getAttribute("pageName"))) {
-            List<Integer> hotImageIds = Arrays.asList(20, 30, 50);
-            List<String> hotProductImages = productImageRepository.findFilenamesByIds(hotImageIds);
-            model.addAttribute("hotProducts", hotProductImages);  // 热销商品图片
-        }
-
-        model.addAttribute("products", productPage.getContent()); // 当前页的产品
-        model.addAttribute("currentPage", page); // 当前页码
-        int totalPages = productPage.getTotalPages() > 0 ? productPage.getTotalPages() : 1;
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("totalItems", productPage.getTotalElements()); // 总产品数量
-
-        return "homePage";
-    }
+//    @GetMapping("/products")
+//    public String showProductsOnlyView(@RequestParam(value = "category", required = false) Integer categoryId,
+//                               @RequestParam(defaultValue = "1") int page,
+//                               @RequestParam(defaultValue = "10") int size,
+//                               Model model) {
+//        Pageable pageable1 = PageRequest.of(page - 1, size);
+//        Page<Product> productPage;
+//        if (categoryId != null) {
+//            Category category = categoryInt.findByCategoryId(categoryId);
+//            productPage = productInt.getProductByCategory(category, pageable1);
+//            model.addAttribute("categoryId", categoryId); // 添加 categoryId 到模型
+//        } else {
+//            productPage = productInt.getProducts(pageable1);
+//            model.addAttribute("pageName", "mainPage"); // 添加 pageName 属性
+//        }
+//
+//        if (page == 1 && "mainPage".equals(model.getAttribute("pageName"))) {
+//            List<Integer> hotImageIds = Arrays.asList(20, 30, 50);
+//            List<String> hotProductImages = productImageRepository.findFilenamesByIds(hotImageIds);
+//            model.addAttribute("hotProducts", hotProductImages);  // 热销商品图片
+//        }
+//
+//        model.addAttribute("products", productPage.getContent()); // 当前页的产品
+//        model.addAttribute("currentPage", page); // 当前页码
+//        int totalPages = productPage.getTotalPages() > 0 ? productPage.getTotalPages() : 1;
+//        model.addAttribute("totalPages", totalPages);
+//        model.addAttribute("totalItems", productPage.getTotalElements()); // 总产品数量
+//
+//        return "homePage";
+//    }
 
     @GetMapping("/7haven/products")
     public String showProducts(@RequestParam(value = "category", required = false) Integer categoryId,
@@ -155,27 +155,27 @@ public class ProductController{
         return "productDetails"; // 假设有一个名为 productDetails.html 的模板
     }
 
-    @GetMapping("/7haven/contact")
+    @GetMapping("/contact")
     public String contact() {
         return "contactPage"; // Ensure you have a contactPage.html template
     }
 
-    @GetMapping("/7haven/about")
+    @GetMapping("/about")
     public String about() {
         return "aboutPage"; // Ensure you have an aboutPage.html template
     }
 
-    @GetMapping("/7haven/delivery")
+    @GetMapping("/delivery")
     public String delivery() {
         return "deliveryPage"; // Ensure you have a deliveryPage.html template
     }
 
-    @GetMapping("/7haven/returns")
+    @GetMapping("/returns")
     public String returns() {
         return "returnsPage"; // Ensure you have a returnsPage.html template
     }
 
-    @GetMapping("/7haven/faqs")
+    @GetMapping("/faqs")
     public String faqs() {
         return "faqsPage"; // Ensure you have a faqsPage.html template
     }
