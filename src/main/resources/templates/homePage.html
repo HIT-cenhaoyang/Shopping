@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Product Page</title>
@@ -25,6 +25,7 @@
             text-align: center;
             padding: 20px 0;
             font-size: 2em;
+            font-family: 'Dancing Script', cursive;
             font-weight: 700;
         }
 
@@ -69,20 +70,21 @@
             display: flex;
             justify-content: center; /* Center the form */
             flex-grow: 1;
-            max-width: 800px; /* Increase the maximum width */
+            max-width:800px; /* Increase the maximum width */
             margin: 0 auto; /* Center the form horizontally */
         }
 
         .top-bar input[type="text"] {
-            padding: 10px;
-            width: 100%;
+            padding: 13px;
+            width: 100% ;
             border: none;
-            border-radius: 5px 0 0 5px; /* 左侧圆角 */
+            border-radius: 3px 0 0 3px; /* 左侧圆角 */
             outline: none;
+            font-size: 1.1em;
         }
 
         .top-bar button {
-            padding: 10px 20px;
+            padding: 13px 20px;
             background-color: #444; /* 深灰色按钮 */
             color: white;
             border: none;
@@ -99,6 +101,7 @@
             margin: 0;
             padding: 20px; /* Add padding on all sides */
             font-size: 2em;
+            font-family: 'Dancing Script', cursive;
             font-weight: 700;
             text-align: left; /* Ensure text is aligned to the left */
         }
@@ -295,6 +298,25 @@
             color: white;
         }
 
+        .image-container img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-container img.hover-image {
+            display: none;
+        }
+
+        .image-container:hover img.default-image {
+            display: none;
+        }
+
+        .image-container:hover img.hover-image {
+            display: inline;
+        }
+
         /* 响应式布局，宽度变化时调整列数 */
         @media (max-width: 1200px) {
             .product {
@@ -307,6 +329,18 @@
                 flex: 1 1 calc(100% - 40px); /* 单列布局 */
             }
         }
+
+        @font-face {
+            font-family: 'Dancing Script';
+            src: url('/fonts/DancingScript-Regular.ttf') format('truetype');
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: 'Dancing Script';
+            src: url('/fonts/DancingScript-Bold.ttf') format('truetype');
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -317,23 +351,47 @@
      -->
     <!-- 顶部栏，包含搜索框和登录/购物车 -->
     <div class="top-bar">
-        <h1>7Haven</h1>
+        <h1>7Haven, Your Dream Home</h1>
         <form action="/7haven/products/search" method="get">
             <label>
                 <input type="text" name="keyword" placeholder="Search products...">
             </label>
-            <button type="submit">Search</button>
+            <button type="submit" class="image-container">
+                <img src="/images/SearchW.png" alt="Search" style="width: 15px; height: 15px;margin-right: 0px;" class="default-image">
+                <img src="/images/SearchG.png" alt="Search" style="width: 15px; height: 15px;margin-right: 0px;" class="hover-image">
+            </button>
         </form>
 
         <div class="user-info" th:if="${session.username != null}">
             <p>Welcome, <span th:text="${session.username}">User</span>!</p>
-            <a href="/logout">Logout</a>
-            <a href="/7haven/cart">Cart</a>
+            <a href="/7haven/cart" class="image-container" style="margin-left: 20px">
+                <img src="/images/CartW.png" alt="Cart"  class="default-image">
+            <img src="/images/CartG.png" alt="Cart"  class="hover-image">
+            </a>
+            <a th:href="@{/7haven/display/profile/{username}(username=${session.username})}" class="image-container">
+                <img src="/images/PersonalInformationW.png" alt="Profile"  class="default-image">
+                <img src="/images/PersonalInformationG.png" alt="Profile"  class="hover-image">
+            </a>
+            <a href="/logout" class="image-container">
+                <img src="/images/LogoutW.png" alt="Logout"  class="default-image">
+                <img src="/images/LogoutG.png" alt="Logout"  class="hover-image">
+            </a>
+
         </div>
         <div th:if="${session.username == null}">
-            <a href="/login">Login</a>
-            <a href="/7haven/cart">Cart</a>
+            <a href="/7haven/cart" class="image-container" style="margin-left: 20px">
+                <img src="/images/CartW.png" alt="Cart"  class="default-image">
+                <img src="/images/CartG.png" alt="Cart"  class="hover-image">
+            </a>
+            <a href="/login" class="image-container">
+                <img src="/images/LoginW.png" alt="Login"  class="default-image">
+                <img src="/images/LoginG.png" alt="Login"  class="hover-image">
+            </a>
+
         </div>
+
+
+
     </div>
 
     <!-- 分类导航 -->

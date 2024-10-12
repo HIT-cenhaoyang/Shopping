@@ -138,7 +138,7 @@ public class ProductController{
 
     @GetMapping("/7haven/cart")
     public String cart() {
-        return "cartPage"; // 假设你有一个名为 cartPage.html 的模板
+        return "cartPage";
     }
 
     @GetMapping("/7haven/product/{id}")
@@ -146,13 +146,13 @@ public class ProductController{
         Optional<Product> optProduct = productInt.findByProductId(productId);
         if (optProduct.isEmpty()) {
             model.addAttribute("errorMessage", "Product not found");
-            return "errorPage"; // 假设有一个名为 errorPage.html 的模板
+            return "errorPage";
         }
         Product product = optProduct.get();
         model.addAttribute("product", product);
-        model.addAttribute("coverImage", product.getCoverImagePath()); // For cover image
-        model.addAttribute("additionalImages", product.getAdditionalImages()); // For additional images
-        return "productDetails"; // 假设有一个名为 productDetails.html 的模板
+        model.addAttribute("coverImage", product.getCoverImagePath());
+        model.addAttribute("additionalImages", product.getAdditionalImages());
+        return "productDetails";
     }
 
     @GetMapping("/contact")
@@ -167,7 +167,7 @@ public class ProductController{
 
     @GetMapping("/delivery")
     public String delivery() {
-        return "deliveryPage"; // Ensure you have a deliveryPage.html template
+        return "deliverPage"; // Ensure you have a deliveryPage.html template
     }
 
     @GetMapping("/returns")
@@ -187,9 +187,4 @@ public class ProductController{
             model.addAttribute("product",productrepository.findAll());
             return"purchesRecord";
         }
-
-
-
-
-
 }
