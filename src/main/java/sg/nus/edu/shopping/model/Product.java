@@ -27,26 +27,31 @@ public class Product {
     @ManyToOne @JoinColumn(name = "categoryId")
     private Category category;
 
+    private String dimensions;
+
     @OneToMany(mappedBy = "product")
     private List<ProductImage> images = new ArrayList<>();
 
     private String description;
 
-    private String dimensions;
 
     @OneToMany(mappedBy = "product")
-    private List<ShoppingCart> shoppingCarts;
+    private List<ShoppingCart> shoppingCarts = new ArrayList<>();;
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore
-    private List<OrderDetail> orders;
+    private List<OrderDetail> orders = new ArrayList<>();;
 
     @OneToMany(mappedBy = "product")
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();;
 
 
     //constructor
     public Product() {
+        this.images = new ArrayList<>();
+        this.shoppingCarts = new ArrayList<>();
+        this.orders = new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
 
     public Product(String name, double price, String sku) {
