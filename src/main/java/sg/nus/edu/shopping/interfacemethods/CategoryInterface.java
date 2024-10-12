@@ -15,4 +15,5 @@ public interface CategoryInterface {
     void deleteCategory(int categoryId);
     Category findByProductsContaining(Product product);
     List<Category> findAll();
+    Category save(Category category);
 }

@@ -19,4 +19,10 @@ public class ReviewImplementation implements ReviewInterface{
     public List<Review> findByProductId(int productId) {
         return reviewRepo.findByProductProductId(productId);
     }
+    
+    //BPC Update
+    public void saveReview(Review review) {
+        reviewRepo.save(review); // Assuming you have a `reviewRepo` already injected
+    }
+
 }

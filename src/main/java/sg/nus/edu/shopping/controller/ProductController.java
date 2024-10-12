@@ -9,15 +9,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpSession;
 import sg.nus.edu.shopping.interfacemethods.CategoryInterface;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
 import sg.nus.edu.shopping.model.Category;
+import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.Product;
+import sg.nus.edu.shopping.model.Review;
+import sg.nus.edu.shopping.repository.CustomerRepository;
 import sg.nus.edu.shopping.repository.ProductImageRepository;
 import sg.nus.edu.shopping.service.CategoryImplementation;
 import sg.nus.edu.shopping.service.ProductImplementation;
+import sg.nus.edu.shopping.service.ReviewImplementation;
 
 import java.util.Arrays;
 import sg.nus.edu.shopping.repository.ProductRepository;
@@ -25,15 +32,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class ProductController{
+public class ProductController {
+	//BPC Update
+	@Autowired
+	private ReviewImplementation reviewService;
+	
+	//BPC Update
+	@Autowired
+    private CustomerRepository customerRepo; // To get the logged-in customer
 
-    @Autowired
-    private ProductInterface productInt;
+	@Autowired
+	private ProductInterface productInt;
 
-    @Autowired
-    private CategoryInterface categoryInt;
-    @Autowired
-    private ProductImageRepository productImageRepository;
+	@Autowired
+	private CategoryInterface categoryInt;
+	@Autowired
+	private ProductImageRepository productImageRepository;
+
 
     @Autowired
     private ProductRepository productRepository;
@@ -111,11 +126,8 @@ public class ProductController{
         int totalPages = productPage.getTotalPages() > 0 ? productPage.getTotalPages() : 1;
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalItems", productPage.getTotalElements()); // 总产品数量
-
-        return "homePage";
-    }
-
-
+		return "homePage";
+	}
     @GetMapping("/7haven/products/search")
     public String searchProducts(@RequestParam("keyword") String keyword,
                                  @RequestParam(defaultValue = "1") int page,
@@ -152,39 +164,80 @@ public class ProductController{
         model.addAttribute("product", product);
         model.addAttribute("coverImage", product.getCoverImagePath());
         model.addAttribute("additionalImages", product.getAdditionalImages());
+
+        // Fetch and add reviews to the model
+        List<Review> reviews = reviewService.findByProductId(productId);
+        model.addAttribute("reviews", reviews);
+
         return "productDetails";
+
     }
 
-    @GetMapping("/contact")
-    public String contact() {
-        return "contactPage"; // Ensure you have a contactPage.html template
-    }
+	//BPC Update
+	@PostMapping("/reviews/add")
+	public String addReview(@RequestParam("productId") int productId, @RequestParam("comment") String comment, HttpSession session, Model model) {
+	    Customer customer = getLoggedInCustomer(session); // Get logged-in customer from session
 
-    @GetMapping("/about")
-    public String about() {
-        return "aboutPage"; // Ensure you have an aboutPage.html template
-    }
+	    if (customer == null) {
+	        // Handle case where the customer is not logged in
+	        return "redirect:/login"; // Redirect to login page
+	    }
+
+	    // Find the product by ID
+	    Optional<Product> productOpt = productInt.findByProductId(productId);
+	    if (productOpt.isPresent()) {
+	        Review review = new Review(comment, productOpt.get(), customer);
+	        reviewService.saveReview(review);
+	    }
+
+	    // Redirect back to the product details page
+	    return "redirect:/product/" + productId;
+	}
+
+	//BPC Update
+	private Customer getLoggedInCustomer(HttpSession session) {
+	    String customerId = (String) session.getAttribute("loggedInCustomerId");
+	    if (customerId != null) {
+	        return customerRepo.findCustomerById(customerId).orElse(null); // Use findCustomerById
+	    }
+	    return null; // Return null if customerId is not found in session
+	}
+
+
+
+
+	@GetMapping("/contact")
+	public String contact() {
+		return "contactPage"; // Ensure you have a contactPage.html template
+	}
+
+	@GetMapping("/about")
+	public String about() {
+		return "aboutPage"; // Ensure you have an aboutPage.html template
+	}
 
     @GetMapping("/delivery")
     public String delivery() {
         return "deliverPage"; // Ensure you have a deliveryPage.html template
     }
 
-    @GetMapping("/returns")
-    public String returns() {
-        return "returnsPage"; // Ensure you have a returnsPage.html template
-    }
+	@GetMapping("/returns")
+	public String returns() {
+		return "returnsPage"; // Ensure you have a returnsPage.html template
+	}
 
-    @GetMapping("/faqs")
-    public String faqs() {
-        return "faqsPage"; // Ensure you have a faqsPage.html template
-    }
+	@GetMapping("/faqs")
+	public String faqs() {
+		return "faqsPage"; // Ensure you have a faqsPage.html template
+	}
 
-        @Autowired
-        private ProductRepository productrepository;
-        @RequestMapping("/product")
-        public String getProduct(Model model) {
-            model.addAttribute("product",productrepository.findAll());
-            return"purchesRecord";
-        }
+	@Autowired
+	private ProductRepository productrepository;
+
+	@RequestMapping("/product")
+	public String getProduct(Model model) {
+		model.addAttribute("product", productrepository.findAll());
+		return "purchesRecord";
+	}
+
 }
