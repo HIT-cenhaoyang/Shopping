@@ -70,7 +70,7 @@ public class CustomerController {
             @RequestParam("address") String address,
             Model model
     ) {
-        //make sure the user name is unique
+        //make sure the username is unique
         if (cusregister.isUsernameTaken(userName)) {
             model.addAttribute("errorMessage", "Username already taken. Please choose another one.");
             return "registerPage";
@@ -100,7 +100,7 @@ public class CustomerController {
         cusregister.saveCustomer(customer);
 
         model.addAttribute("successMessage", "Registration successful!");
-        return "redirect:/home";
+        return "redirect:/login";
 
     }
     
@@ -122,7 +122,7 @@ public class CustomerController {
 		} else {
 			if (dataU.getPassword().equals(user.getPassword())) {
 				sessionObj.setAttribute("username", user.getUserName());
-				return "redirect:/7haven/list-users";
+				return "redirect:/7haven/products";
 			} else {
 				model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
 				model.addAttribute("user", new Customer());
@@ -134,16 +134,20 @@ public class CustomerController {
 	//Author: xu zhiye
 	@GetMapping("/7haven/list-users")
 	public String listUsers(HttpSession sessionObj, Model model) {
-
-		return "homePage";
-
+		String username = (String) sessionObj.getAttribute("username");
+		if (username == null) {
+			return "redirect:/login";
+		} else {
+			model.addAttribute("user", cusregister.searchUserByUserName(username));
+			return "homePage";
+		}
 	}
 
 	//Author: xu zhiye
 	@GetMapping("/logout")
 	public String logout(HttpSession sessionObj, Model model) {
 		sessionObj.invalidate();
-		return "redirect:/login";
+		return "redirect:/7haven/products";
 	}
 
 

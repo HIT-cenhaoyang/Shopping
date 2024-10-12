@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Page</title>
-    <link rel="stylesheet" href="/statics/homepage style.css">
-
     <style>
         /* 通用样式 */
         body {
@@ -33,17 +31,46 @@
         /* 顶部搜索栏和按钮 */
         .top-bar {
             display: flex;
-            justify-content: center; /* 搜索栏居中 */
+            justify-content: space-between;
             align-items: center;
             padding: 10px 30px;
             background-color: #333; /* 深灰背景 */
         }
 
+        .auth-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Control the spacing between Welcome message and Logout link */
+            color: white;
+        }
+
+        .user-info p {
+            margin: 0;
+        }
+
+        .user-info a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .user-info a:hover {
+            color: #ccc; /* Color change on hover */
+        }
+
         /* 搜索表单 */
         .top-bar form {
             display: flex;
+            justify-content: center; /* Center the form */
             flex-grow: 1;
-            max-width: 600px; /* 限制搜索栏最大宽度 */
+            max-width: 800px; /* Increase the maximum width */
+            margin: 0 auto; /* Center the form horizontally */
         }
 
         .top-bar input[type="text"] {
@@ -291,24 +318,32 @@
     <!-- 顶部栏，包含搜索框和登录/购物车 -->
     <div class="top-bar">
         <h1>7Haven</h1>
-        <form action="/products/search" method="get">
-            <input type="text" name="keyword" placeholder="Search products...">
+        <form action="/7haven/products/search" method="get">
+            <label>
+                <input type="text" name="keyword" placeholder="Search products...">
+            </label>
             <button type="submit">Search</button>
         </form>
-        <div class="auth-links">
-            <a href="/cart">Cart</a>
+
+        <div class="user-info" th:if="${session.username != null}">
+            <p>Welcome, <span th:text="${session.username}">User</span>!</p>
+            <a href="/logout">Logout</a>
+            <a href="/7haven/cart">Cart</a>
+        </div>
+        <div th:if="${session.username == null}">
             <a href="/login">Login</a>
+            <a href="/7haven/cart">Cart</a>
         </div>
     </div>
 
     <!-- 分类导航 -->
     <nav>
-        <a href="/products">Main Page</a>
-        <a href="/products?category=1">Sofa</a>
-        <a href="/products?category=2">Table</a>
-        <a href="/products?category=3">Chair</a>
-        <a href="/products?category=4">Bed</a>
-        <a href="/products?category=5">Storage</a>
+        <a href="/7haven/products">Main Page</a>
+        <a href="/7haven/products?category=1">Sofa</a>
+        <a href="/7haven/products?category=2">Table</a>
+        <a href="/7haven/products?category=3">Chair</a>
+        <a href="/7haven/products?category=4">Bed</a>
+        <a href="/7haven/products?category=5">Storage</a>
     </nav>
 </header>
 
@@ -317,43 +352,46 @@
     <div th:if="${message}" class="message">
         <p th:text="${message}"></p>
     </div>
-    <!-- 热销商品滚动框 -->
-    <div th:if="${#strings.equals(pageName, 'mainPage')}"class="carousel-container">
+
+    <div th:if="${currentPage == 1} and ${#strings.equals(pageName, 'mainPage')}" class="carousel-container">
         <div class="carousel-slide">
-            <!-- Thymeleaf 循环显示热销商品图片 -->
+            <!-- Thymeleaf loop to display hot product images -->
             <div th:each="imageUrl : ${hotProducts}">
                 <img th:src="@{|${imageUrl}|}" alt="Hot Product">
             </div>
         </div>
     </div>
+
     <!-- 产品展示 -->
     <div class="products-container">
-
         <div th:each="product : ${products}" class="product">
-            <a th:href="@{/product/{id}(id=${product.productId})}">
-                <img th:src="@{|${product.coverImagePath}|}" alt="Product Image">
+            <a th:href="@{/7haven/product/{id}(id=${product.productId})}">
+                <img th:src="@{|${product.coverImagePath}|}" alt="产品图片">
             </a>
-            <h2 th:text="${product.name}">Product Name</h2>
-            <!--
-            <p th:text="${product.description}">Product Description</p>
-            -->
-            <p class="price" th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">Product Price</p>
+            <h2 th:text="${product.name}" style="color: #333;">产品名称</h2>
+            <p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">产品价格</p>
         </div>
-
     </div>
+
     <div class="pagination">
-        <a th:if="${currentPage > 1}" th:href="@{/products(page=${currentPage - 1}, size=10)}"
-           th:hrefappend="${categoryId != null} ? '(category=' + ${categoryId} + ')' : ''">&laquo; Previous</a>
+        <a th:if="${currentPage > 1} and ${categoryId != null}" th:href="@{/7haven/products(page=${currentPage - 1}, size=10, category=${categoryId})}">&laquo; Previous</a>
+        <a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword == null}" th:href="@{/7haven/products(page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
+        <a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword != null}" th:href="@{/7haven/products/search(keyword=${keyword}, page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
 
-        <span th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
-        <a th:href="@{/products(page=${i}, size=10)}"
-           th:hrefappend="${categoryId != null} ? '(category=' + ${categoryId} + ')' : ''"
-           th:text="${i}"></a>
-        </span>
+        <span th:if="${totalPages != null}" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
+        <a th:if="${categoryId != null}" th:href="@{/7haven/products(page=${i}, size=10, category=${categoryId})}" th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/7haven/products(page=${i}, size=10)}" th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword != null}" th:href="@{/7haven/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
+    </span>
+        <span th:if="${totalPages == null}" th:each="i : ${#numbers.sequence(1, 1)}" th:classappend="${i == currentPage} ? 'active'">
+        <a th:if="${categoryId != null}" th:href="@{/7haven/products(page=${i}, size=10, category=${categoryId})}" th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/7haven/products(page=${i}, size=10)}" th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword != null}" th:href="@{/7haven/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
+    </span>
 
-        <a th:if="${currentPage < totalPages}" th:href="@{/products(page=${currentPage + 1}, size=10)}"
-           th:hrefappend="${categoryId != null} ? '(category=' + ${categoryId} + ')' : ''">Next &raquo;</a>
-
+        <a th:if="${currentPage < totalPages} and ${categoryId != null}" th:href="@{/7haven/products(page=${currentPage + 1}, size=10, category=${categoryId})}">Next &raquo;</a>
+        <a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword == null}" th:href="@{/7haven/products(page=${currentPage + 1}, size=10)}">Next &raquo;</a>
+        <a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword != null}" th:href="@{/7haven/products/search(keyword=${keyword}, page=${currentPage + 1}, size=10)}">Next &raquo;</a>
     </div>
 
 </section>
@@ -386,8 +424,8 @@
         carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`; // 移动到下一张图片
     }
 
-    // 每8秒切换一次图片
-    setInterval(showNextSlide, 8000);
+    // 每3秒切换一次图片
+    setInterval(showNextSlide, 3000);
 </script>
 </body>
 </html>
