@@ -368,10 +368,8 @@
             <a th:href="@{/7haven/product/{id}(id=${product.productId})}">
                 <img th:src="@{|${product.coverImagePath}|}" alt="产品图片">
             </a>
-            <h2>
-                <a th:href="@{/7haven/product/{id}(id=${product.productId})}" th:text="${product.name}">产品名称</a>
-            </h2>
-            <p class="price" th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">产品价格</p>
+            <h2 th:text="${product.name}" style="color: #333;">产品名称</h2>
+            <p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">产品价格</p>
         </div>
     </div>
 
@@ -426,8 +424,8 @@
         carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`; // 移动到下一张图片
     }
 
-    // 每8秒切换一次图片
-    setInterval(showNextSlide, 8000);
+    // 每3秒切换一次图片
+    setInterval(showNextSlide, 3000);
 </script>
 </body>
 </html>
