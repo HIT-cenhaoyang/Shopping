@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(sessionCheckInterceptor)
-		.addPathPatterns("/7haven/*");
+		.addPathPatterns("/7haven/**");
 	}
 
 }

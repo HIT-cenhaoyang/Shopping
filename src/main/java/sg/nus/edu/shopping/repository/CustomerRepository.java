@@ -22,7 +22,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 
     Optional<Customer> findByUserName(String userName);
 
-    @Query("Select c from Customer as c where c.userName = : userName")
+    @Query("Select c from Customer as c where c.userName = :userName")
     public ArrayList<Customer> findCustomerByuserName(@Param("userName") String keyword);
     
     //Author: xu zhiye

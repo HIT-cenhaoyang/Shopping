@@ -6,11 +6,13 @@
     <title>Purchase Records</title>
     <!-- 引用自定义样式文件 -->
     <link rel="stylesheet" type="text/css" href="purchaserecord.css">
+	<link rel="stylesheet" th:href="@{/styles/homepagestyle.css}" />
 
     <!-- 引用 Google 字体（可选） -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+	<div th:replace="fragments :: header"></div>
 <h1>Purchase Records</h1>
 <h4>Orders</h4>
 <table class="table table-bordered">
@@ -27,7 +29,7 @@
     </thead>
     <tbody>
     <!-- 遍历 Customer 中的 Orders 列表 -->
-    <tr th:each="order : ${customer.purchaseRecords}">
+    <tr th:each="order : ${orders}">
         <td th:text="${order.orderDate}"></td>
         <td th:text="${order.recipientName}"></td>
         <td th:text="${order.recipientAddress}"></td>
@@ -50,22 +52,22 @@
                 <tr th:each="detail : ${order.orderDetails}">
                     <td>
                         <!-- 商品名称点击跳转 -->
-                        <a th:href="@{8080/product/{productId}(productId=${detail.product.productId})}">
+                        <a th:href="@{/product/}+${detail.product.productId}">
                             <span th:text="${detail.product.name}"></span>
                         </a>
                     </td>
                     <td th:text="${detail.productQty}"></td>
                     <td th:text="${detail.product.price}"></td>
-                    <td>
+                    <td class="cover-image-container">
                         <!-- 商品图片点击跳转 -->
-                        <a th:href="@{8080/product/{productId}(productId=${detail.product.productId})}">
+                        <a th:href="@{/product/}+${detail.product.productId}">
                             <img th:src="${detail.product.coverImagePath}" class="product-image" alt="Product Image"/>
                         </a>
                     </td>
 
                     <!-- 使用 form 表单和 POST 方法发送评论请求 -->
                     <td>
-                    <form th:action="@{/product/review}" method="post">
+                    <form th:action="@{/7haven/product/review}" method="post">
                         <input type="hidden" name="productId" th:value="${detail.product.productId}">
                         <button type="submit"
                                 style="background-color: #ff9800; color: #fff; padding: 5px 10px; border: none; cursor: pointer; border-radius: 3px;">
@@ -82,7 +84,7 @@
 </tbody>
 </table>
 <div style="text-align: center; margin: 20px;">
-    <button onclick="window.location.href='/7haven/list-users'"
+    <button onclick="window.location.href='/products'"
             style="background-color: #5a4834; color: #ffffff; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px;">
         Back to Mainpage
     </button>

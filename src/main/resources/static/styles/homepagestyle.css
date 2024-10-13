@@ -394,3 +394,28 @@ section {
     cursor: pointer;
 }
 
+.cover-image-container {
+    flex: 1;
+    max-width: 50%;
+    margin-right: 20px;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px; /* Set a fixed height */
+    width: auto; /* Set width to auto to maintain aspect ratio */
+}
+
+.cover-image-container img {
+    max-width: 100%; /* Scale the image to fit the width */
+    max-height: 100%; /* Ensure the image fits within the height */
+    object-fit: contain; /* Maintain aspect ratio and contain image */
+    border-radius: 5px;
+}
+
+.container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+	margin: 10px 0;
+}

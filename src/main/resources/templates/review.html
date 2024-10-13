@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/styles/homepagestyle.css}" />
     <title>Product Review</title>
     <!-- 引用自定义样式文件 -->
 </head>
 <body>
+	<div th:replace="fragments :: header"></div>
 <div class="container">
     <h1>Review for Product</h1>
     <!-- 表单 -->
-    <form th:action="@{/product/review/submit}" method="post">
+    <form th:action="@{/7haven/product/review/submit}" method="post">
         <!-- 隐藏字段用于传递 productId -->
         <input type="hidden" name="productId" th:value="${product.productId}">
 
@@ -20,7 +22,7 @@
 
         <!-- 用户评论 -->
         <label for="reviewContent">Your Review:</label>
-        <textarea id="reviewContent" name="reviewContent" placeholder="Enter your review here..."></textarea>
+        <textarea id="reviewContent" name="reviewContent" placeholder="Enter your review here..." required></textarea>
 
         <!-- 提交按钮 -->
         <button type="submit" class="submit-btn">Submit Review</button>
