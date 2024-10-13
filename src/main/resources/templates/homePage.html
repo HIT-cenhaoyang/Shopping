@@ -1,489 +1,493 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Product Page</title>
-    <style>
-        /* 通用样式 */
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4; /* 页面整体浅灰色背景 */
-            color: #333;
-        }
+	<meta charset="UTF-8">
+	<title>Product Page</title>
 
-        /* 顶部栏和导航栏的统一样式 */
-        header {
-            background-color: #333333; /* 顶部背景颜色白色 */
-            color: #ffffff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+	<style>
+		/* 通用样式 */
+		body {
+			font-family: 'Roboto', Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			background-color: #f4f4f4;
+			/* 页面整体浅灰色背景 */
+			color: #333;
+		}
 
-        header h1 {
-            margin: 0;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 2em;
-            font-family: 'Dancing Script', cursive;
-            font-weight: 700;
-        }
+		/* 顶部栏和导航栏的统一样式 */
+		header {
+			background-color: #333333;
+			/* 顶部背景颜色白色 */
+			color: #ffffff;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
 
-        /* 顶部搜索栏和按钮 */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 30px;
-            background-color: #333; /* 深灰背景 */
-        }
+		header h1 {
+			margin: 0;
+			text-align: center;
+			padding: 20px 0;
+			font-size: 2em;
+			font-family: 'Dancing Script', cursive;
+			font-weight: 700;
+		}
 
-        .auth-links {
-            display: flex;
-            gap: 20px;
-        }
+		/* 顶部搜索栏和按钮 */
+		.top-bar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px 30px;
+			background-color: #333;
+			/* 深灰背景 */
+		}
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px; /* Control the spacing between Welcome message and Logout link */
-            color: white;
-        }
+		.auth-links {
+			display: flex;
+			gap: 20px;
+		}
 
-        .user-info p {
-            margin: 0;
-        }
+		.user-info {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			/* Control the spacing between Welcome message and Logout link */
+			color: white;
+		}
 
-        .user-info a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
+		.user-info p {
+			margin: 0;
+		}
 
-        .user-info a:hover {
-            color: #ccc; /* Color change on hover */
-        }
+		.user-info a {
+			color: white;
+			text-decoration: none;
+			font-weight: bold;
+			transition: color 0.3s;
+		}
 
-        /* 搜索表单 */
-        .top-bar form {
-            display: flex;
-            justify-content: center; /* Center the form */
-            flex-grow: 1;
-            max-width:800px; /* Increase the maximum width */
-            margin: 0 auto; /* Center the form horizontally */
-        }
+		.user-info a:hover {
+			color: #ccc;
+			/* Color change on hover */
+		}
 
-        .top-bar input[type="text"] {
-            padding: 13px;
-            width: 100% ;
-            border: none;
-            border-radius: 3px 0 0 3px; /* 左侧圆角 */
-            outline: none;
-            font-size: 1.1em;
-        }
+		/* 搜索表单 */
+		.top-bar form {
+			display: flex;
+			justify-content: center;
+			/* Center the form */
+			flex-grow: 1;
+			max-width: 800px;
+			/* Increase the maximum width */
+			margin: 0 auto;
+			/* Center the form horizontally */
+		}
 
-        .top-bar button {
-            padding: 13px 20px;
-            background-color: #444; /* 深灰色按钮 */
-            color: white;
-            border: none;
-            border-radius: 0 5px 5px 0; /* 右侧圆角 */
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+		.top-bar input[type="text"] {
+			padding: 13px;
+			width: 100%;
+			border: none;
+			border-radius: 3px 0 0 3px;
+			/* 左侧圆角 */
+			outline: none;
+			font-size: 1.1em;
+		}
 
-        .top-bar button:hover {
-            background-color: #555; /* 悬停时颜色 */
-        }
+		.top-bar button {
+			padding: 13px 20px;
+			background-color: #444;
+			/* 深灰色按钮 */
+			color: white;
+			border: none;
+			border-radius: 0 5px 5px 0;
+			/* 右侧圆角 */
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
 
-        .top-bar h1 {
-            margin: 0;
-            padding: 20px; /* Add padding on all sides */
-            font-size: 2em;
-            font-family: 'Dancing Script', cursive;
-            font-weight: 700;
-            text-align: left; /* Ensure text is aligned to the left */
-        }
+		.top-bar button:hover {
+			background-color: #555;
+			/* 悬停时颜色 */
+		}
 
-        /* 登录和购物车按钮 */
-        .top-bar .auth-links {
-            display: flex;
-            gap: 20px;
-            position: absolute;
-            right: 30px;
-        }
+		.top-bar h1 {
+			margin: 0;
+			padding: 20px;
+			/* Add padding on all sides */
+			font-size: 2em;
+			font-family: 'Dancing Script', cursive;
+			font-weight: 700;
+			text-align: left;
+			/* Ensure text is aligned to the left */
+		}
 
-        .top-bar a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
+		/* 登录和购物车按钮 */
+		.top-bar .auth-links {
+			display: flex;
+			gap: 20px;
+			position: absolute;
+			right: 30px;
+		}
 
-        .top-bar a:hover {
-            color: #ccc; /* 悬停时的颜色变化 */
-        }
+		.top-bar a {
+			color: white;
+			text-decoration: none;
+			font-weight: bold;
+			transition: color 0.3s;
+		}
 
-        /* 分类导航栏样式 */
-        nav {
-            background-color: #e0e0e0; /* 分类导航栏浅灰色背景 */
-            padding: 10px 0;
-            text-align: center;
-            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-        }
+		.top-bar a:hover {
+			color: #ccc;
+			/* 悬停时的颜色变化 */
+		}
 
-        nav a {
-            display: inline-block;
-            color: #333;
-            margin: 0 15px;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-size: 1em;
-            font-weight: 500;
-            background-color: transparent;
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-        }
+		/* 分类导航栏样式 */
+		nav {
+			background-color: #e0e0e0;
+			/* 分类导航栏浅灰色背景 */
+			padding: 10px 0;
+			text-align: center;
+			box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+		}
 
-        /* 鼠标悬停时背景色变化 */
-        nav a:hover {
-            background-color: #333; /* 悬停时深灰背景 */
-            color: white; /* 悬停时文字变白 */
-            border-radius: 5px; /* 悬停时圆角效果 */
-        }
+		nav a {
+			display: inline-block;
+			color: #333;
+			margin: 0 15px;
+			padding: 10px 20px;
+			text-decoration: none;
+			font-size: 1em;
+			font-weight: 500;
+			background-color: transparent;
+			border: 1px solid transparent;
+			transition: all 0.3s ease;
+		}
 
-        /* 主体内容样式 */
-        section {
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: 0 auto; /* 居中显示 */
-        }
+		/* 鼠标悬停时背景色变化 */
+		nav a:hover {
+			background-color: #333;
+			/* 悬停时深灰背景 */
+			color: white;
+			/* 悬停时文字变白 */
+			border-radius: 5px;
+			/* 悬停时圆角效果 */
+		}
 
-        /* 产品展示样式 */
-        .products-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center; /* 居中对齐 */
-            gap: 30px; /* 产品之间的间距 */
-        }
+		/* 主体内容样式 */
+		section {
+			padding: 40px 20px;
+			max-width: 1200px;
+			margin: 0 auto;
+			/* 居中显示 */
+		}
 
-        .product {
-            background-color: white;
-            border-radius: 5px;
-            padding: 20px;
-            flex: 1 1 calc(33.333% - 40px); /* 三列布局 */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+		/* 产品展示样式 */
+		.products-container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			/* 居中对齐 */
+			gap: 30px;
+			/* 产品之间的间距 */
+		}
 
-        .product:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
+		.product {
+			background-color: white;
+			border-radius: 5px;
+			padding: 20px;
+			flex: 1 1 calc(33.333% - 40px);
+			/* 三列布局 */
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			transition: transform 0.3s, box-shadow 0.3s;
+		}
 
-        .product img {
-            max-width: 100%;
-            max-height: 200px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
+		.product:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+		}
 
-        .product h2 {
-            font-size: 1.4em;
-            margin-bottom: 10px;
-            color: #333;
-        }
+		.product img {
+			max-width: 100%;
+			max-height: 200px;
+			margin-bottom: 20px;
+			border-radius: 5px;
+		}
 
-        .product p {
-            color: #555;
-            margin-bottom: 15px;
-        }
+		.product h2 {
+			font-size: 1.4em;
+			margin-bottom: 10px;
+			color: #333;
+		}
 
-        .product .price {
-            font-size: 1.2em;
-            color: #333;
-            font-weight: bold;
-        }
+		.product p {
+			color: #555;
+			margin-bottom: 15px;
+		}
 
-        .pagination {
-            text-align: center;
-            margin-top: 20px;
-        }
+		.product .price {
+			font-size: 1.2em;
+			color: #333;
+			font-weight: bold;
+		}
 
-        .pagination a, .pagination span {
-            display: inline-block;
-            padding: 8px 12px;
-            margin: 0 3px;
-            background-color: #f4f4f4; /* Set to page background color */
-            color: #999; /* Default text color */
-            text-decoration: none;
-            border-radius: 3px;
-            transition: background-color 0.3s, color 0.3s, border 0.3s;
-        }
+		.pagination {
+			text-align: center;
+			margin-top: 20px;
+		}
 
-        .pagination a:hover {
-            background-color: #333; /* Hover background color */
-            color: #fff; /* Hover text color */
-        }
+		.pagination a,
+		.pagination span {
+			display: inline-block;
+			padding: 8px 12px;
+			margin: 0 3px;
+			background-color: #f4f4f4;
+			/* Set to page background color */
+			color: #999;
+			/* Default text color */
+			text-decoration: none;
+			border-radius: 3px;
+			transition: background-color 0.3s, color 0.3s, border 0.3s;
+		}
 
-        .pagination .active {
-            background-color: #333; /* Active background color */
-            color: #fff; /* Active text color */
-            border: 2px solid #000; /* Active border color */
-        }
+		.pagination a:hover {
+			background-color: #333;
+			/* Hover background color */
+			color: #fff;
+			/* Hover text color */
+		}
 
-        .carousel-container {
-            position: relative;
-            width: 100%; /* Full width */
-            max-width: 1200px; /* Maximum width */
-            margin: 40px auto; /* Centered with margin */
-            overflow: hidden; /* Hide overflow */
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
-            height: 800px; /* Increase height */
-        }
+		.pagination .active {
+			background-color: #333;
+			/* Active background color */
+			color: #fff;
+			/* Active text color */
+			border: 2px solid #000;
+			/* Active border color */
+		}
 
-        .carousel-slide {
-            display: flex;
-            transition: transform 0.5s ease-in-out; /* Smooth transition */
-        }
+		.carousel-container {
+			position: relative;
+			width: 100%;
+			/* Full width */
+			max-width: 1200px;
+			/* Maximum width */
+			margin: 40px auto;
+			/* Centered with margin */
+			overflow: hidden;
+			/* Hide overflow */
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			/* Shadow effect */
+			height: 800px;
+			/* Increase height */
+		}
 
-        .carousel-slide div {
-            min-width: 100%; /* Each slide takes full width */
-            box-sizing: border-box; /* Include padding and border in element's total width and height */
-        }
+		.carousel-slide {
+			display: flex;
+			transition: transform 0.5s ease-in-out;
+			/* Smooth transition */
+		}
 
-        .carousel-slide img {
-            width: 100%; /* Image takes full width */
-            height: auto;
-            max-height: 800px; /* Increase maximum height */
-            border-radius: 10px;
-        }
+		.carousel-slide div {
+			min-width: 100%;
+			/* Each slide takes full width */
+			box-sizing: border-box;
+			/* Include padding and border in element's total width and height */
+		}
 
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
+		.carousel-slide img {
+			width: 100%;
+			/* Image takes full width */
+			height: auto;
+			max-height: 800px;
+			/* Increase maximum height */
+			border-radius: 10px;
+		}
 
-        .information h2 {
-            margin-bottom: 10px;
-        }
+		footer {
+			background-color: #333;
+			color: white;
+			padding: 20px 0;
+			text-align: center;
+		}
 
-        .information ul {
-            list-style: none;
-            padding: 0;
-        }
+		.information h2 {
+			margin-bottom: 10px;
+		}
 
-        .information li {
-            margin: 5px 0;
-        }
+		.information ul {
+			list-style: none;
+			padding: 0;
+		}
 
-        .information a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+		.information li {
+			margin: 5px 0;
+		}
 
-        .information a:hover {
-            color: #ccc;
-        }
+		.information a {
+			color: white;
+			text-decoration: none;
+			transition: color 0.3s;
+		}
 
-        .logo span {
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-        }
+		.information a:hover {
+			color: #ccc;
+		}
 
-        .image-container img {
-            width: 25px;
-            height: 25px;
-            margin-right: 10px;
-            transition: opacity 0.3s ease;
-        }
+		.logo span {
+			font-size: 24px;
+			font-weight: bold;
+			color: white;
+		}
 
-        .image-container img.hover-image {
-            display: none;
-        }
+		.image-container img {
+			width: 25px;
+			height: 25px;
+			margin-right: 10px;
+			transition: opacity 0.3s ease;
+		}
 
-        .image-container:hover img.default-image {
-            display: none;
-        }
+		.image-container img.hover-image {
+			display: none;
+		}
 
-        .image-container:hover img.hover-image {
-            display: inline;
-        }
+		.image-container:hover img.default-image {
+			display: none;
+		}
 
-        /* 响应式布局，宽度变化时调整列数 */
-        @media (max-width: 1200px) {
-            .product {
-                flex: 1 1 calc(50% - 40px); /* 两列布局 */
-            }
-        }
+		.image-container:hover img.hover-image {
+			display: inline;
+		}
 
-        @media (max-width: 768px) {
-            .product {
-                flex: 1 1 calc(100% - 40px); /* 单列布局 */
-            }
-        }
+		/* 响应式布局，宽度变化时调整列数 */
+		@media (max-width: 1200px) {
+			.product {
+				flex: 1 1 calc(50% - 40px);
+				/* 两列布局 */
+			}
+		}
 
-        @font-face {
-            font-family: 'Dancing Script';
-            src: url('/fonts/DancingScript-Regular.ttf') format('truetype');
-            font-weight: 400;
-        }
+		@media (max-width: 768px) {
+			.product {
+				flex: 1 1 calc(100% - 40px);
+				/* 单列布局 */
+			}
+		}
 
-        @font-face {
-            font-family: 'Dancing Script';
-            src: url('/fonts/DancingScript-Bold.ttf') format('truetype');
-            font-weight: 700;
-        }
-    </style>
+		@font-face {
+			font-family: 'Dancing Script';
+			src: url('/fonts/DancingScript-Regular.ttf') format('truetype');
+			font-weight: 400;
+		}
+
+		@font-face {
+			font-family: 'Dancing Script';
+			src: url('/fonts/DancingScript-Bold.ttf') format('truetype');
+			font-weight: 700;
+		}
+	</style>
 </head>
+
 <body>
+	<div th:replace="fragments :: header"></div>
 
-<header>
-    <!--
-     <h1>7Haven</h1>
-     -->
-    <!-- 顶部栏，包含搜索框和登录/购物车 -->
-    <div class="top-bar">
-        <h1>7Haven, Your Dream Home</h1>
-        <form action="/7haven/products/search" method="get">
-            <label>
-                <input type="text" name="keyword" placeholder="Search products...">
-            </label>
-            <button type="submit" class="image-container">
-                <img src="/images/SearchW.png" alt="Search" style="width: 15px; height: 15px;margin-right: 0px;" class="default-image">
-                <img src="/images/SearchG.png" alt="Search" style="width: 15px; height: 15px;margin-right: 0px;" class="hover-image">
-            </button>
-        </form>
+	<section>
+		<!-- 提示信息 -->
+		<div th:if="${message}" class="message">
+			<p th:text="${message}"></p>
+		</div>
 
-        <div class="user-info" th:if="${session.username != null}">
-            <p>Welcome, <span th:text="${session.username}">User</span>!</p>
-            <a href="/7haven/cart" class="image-container" style="margin-left: 20px">
-                <img src="/images/CartW.png" alt="Cart"  class="default-image">
-            <img src="/images/CartG.png" alt="Cart"  class="hover-image">
-            </a>
-            <a th:href="@{/7haven/display/profile/{username}(username=${session.username})}" class="image-container">
-                <img src="/images/PersonalInformationW.png" alt="Profile"  class="default-image">
-                <img src="/images/PersonalInformationG.png" alt="Profile"  class="hover-image">
-            </a>
-            <a href="/logout" class="image-container">
-                <img src="/images/LogoutW.png" alt="Logout"  class="default-image">
-                <img src="/images/LogoutG.png" alt="Logout"  class="hover-image">
-            </a>
+		<div th:if="${currentPage == 1} and ${#strings.equals(pageName, 'mainPage')}" class="carousel-container">
+			<div class="carousel-slide">
+				<!-- Thymeleaf loop to display hot product images -->
+				<div th:each="imageUrl : ${hotProducts}">
+					<img th:src="@{|${imageUrl}|}" alt="Hot Product">
+				</div>
+			</div>
+		</div>
 
-        </div>
-        <div th:if="${session.username == null}">
-            <a href="/7haven/cart" class="image-container" style="margin-left: 20px">
-                <img src="/images/CartW.png" alt="Cart"  class="default-image">
-                <img src="/images/CartG.png" alt="Cart"  class="hover-image">
-            </a>
-            <a href="/login" class="image-container">
-                <img src="/images/LoginW.png" alt="Login"  class="default-image">
-                <img src="/images/LoginG.png" alt="Login"  class="hover-image">
-            </a>
+		<!-- 产品展示 -->
+		<div class="products-container">
+			<div th:each="product : ${products}" class="product">
+				<a th:href="@{/7haven/product/{id}(id=${product.productId})}">
+					<img th:src="@{|${product.coverImagePath}|}" alt="产品图片">
+				</a>
+				<h2 th:text="${product.name}" style="color: #333;">产品名称</h2>
+				<p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">产品价格
+				</p>
+			</div>
+		</div>
 
-        </div>
+		<div class="pagination">
+			<a th:if="${currentPage > 1} and ${categoryId != null}"
+				th:href="@{products(page=${currentPage - 1}, size=10, category=${categoryId})}">&laquo; Previous</a>
+			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword == null}"
+				th:href="@{/products(page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
+			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword != null}"
+				th:href="@{/products/search(keyword=${keyword}, page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
 
+			<span th:if="${totalPages != null}" th:each="i : ${#numbers.sequence(1, totalPages)}"
+				th:classappend="${i == currentPage} ? 'active'">
+				<a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId})}"
+					th:text="${i}"></a>
+				<a th:if="${categoryId == null} and ${keyword == null}" th:href="@{products(page=${i}, size=10)}"
+					th:text="${i}"></a>
+				<a th:if="${categoryId == null} and ${keyword != null}"
+					th:href="@{products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
+			</span>
+			<span th:if="${totalPages == null}" th:each="i : ${#numbers.sequence(1, 1)}"
+				th:classappend="${i == currentPage} ? 'active'">
+				<a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId})}"
+					th:text="${i}"></a>
+				<a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10)}"
+					th:text="${i}"></a>
+				<a th:if="${categoryId == null} and ${keyword != null}"
+					th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
+			</span>
 
+			<a th:if="${currentPage < totalPages} and ${categoryId != null}"
+				th:href="@{/products(page=${currentPage + 1}, size=10, category=${categoryId})}">Next &raquo;</a>
+			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword == null}"
+				th:href="@{/products(page=${currentPage + 1}, size=10)}">Next &raquo;</a>
+			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword != null}"
+				th:href="@{/products/search(keyword=${keyword}, page=${currentPage + 1}, size=10)}">Next &raquo;</a>
+		</div>
 
-    </div>
+	</section>
 
-    <!-- 分类导航 -->
-    <nav>
-        <a href="/7haven/products">Main Page</a>
-        <a href="/7haven/products?category=1">Sofa</a>
-        <a href="/7haven/products?category=2">Table</a>
-        <a href="/7haven/products?category=3">Chair</a>
-        <a href="/7haven/products?category=4">Bed</a>
-        <a href="/7haven/products?category=5">Storage</a>
-    </nav>
-</header>
+	<footer>
+		<div class="information">
+			<h2>Information</h2>
+			<ul>
+				<li><a href="/contact">Contact Us</a></li>
+				<li><a href="/about">About Us</a></li>
+				<li><a href="/delivery">Delivery</a></li>
+				<li><a href="/returns">Returns</a></li>
+				<li><a href="/faqs">FAQs</a></li>
+			</ul>
+		</div>
+		<div class="logo">
+			<span>7Haven</span>
+		</div>
+	</footer>
 
-<section>
-    <!-- 提示信息 -->
-    <div th:if="${message}" class="message">
-        <p th:text="${message}"></p>
-    </div>
+	<script>
+		let currentIndex = 0;
+		const slides = document.querySelectorAll('.carousel-slide div');
+		const totalSlides = slides.length;
 
-    <div th:if="${currentPage == 1} and ${#strings.equals(pageName, 'mainPage')}" class="carousel-container">
-        <div class="carousel-slide">
-            <!-- Thymeleaf loop to display hot product images -->
-            <div th:each="imageUrl : ${hotProducts}">
-                <img th:src="@{|${imageUrl}|}" alt="Hot Product">
-            </div>
-        </div>
-    </div>
+		function showNextSlide() {
+			const carouselSlide = document.querySelector('.carousel-slide');
+			currentIndex = (currentIndex + 1) % totalSlides; // 循环播放
+			const slideWidth = carouselSlide.clientWidth; // 获取滚动框的宽度
+			carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`; // 移动到下一张图片
+		}
 
-    <!-- 产品展示 -->
-    <div class="products-container">
-        <div th:each="product : ${products}" class="product">
-            <a th:href="@{/7haven/product/{id}(id=${product.productId})}">
-                <img th:src="@{|${product.coverImagePath}|}" alt="产品图片">
-            </a>
-            <h2 th:text="${product.name}" style="color: #333;">产品名称</h2>
-            <p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">产品价格</p>
-        </div>
-    </div>
-
-    <div class="pagination">
-        <a th:if="${currentPage > 1} and ${categoryId != null}" th:href="@{/7haven/products(page=${currentPage - 1}, size=10, category=${categoryId})}">&laquo; Previous</a>
-        <a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword == null}" th:href="@{/7haven/products(page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
-        <a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword != null}" th:href="@{/7haven/products/search(keyword=${keyword}, page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
-
-        <span th:if="${totalPages != null}" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
-        <a th:if="${categoryId != null}" th:href="@{/7haven/products(page=${i}, size=10, category=${categoryId})}" th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/7haven/products(page=${i}, size=10)}" th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword != null}" th:href="@{/7haven/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
-    </span>
-        <span th:if="${totalPages == null}" th:each="i : ${#numbers.sequence(1, 1)}" th:classappend="${i == currentPage} ? 'active'">
-        <a th:if="${categoryId != null}" th:href="@{/7haven/products(page=${i}, size=10, category=${categoryId})}" th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/7haven/products(page=${i}, size=10)}" th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword != null}" th:href="@{/7haven/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
-    </span>
-
-        <a th:if="${currentPage < totalPages} and ${categoryId != null}" th:href="@{/7haven/products(page=${currentPage + 1}, size=10, category=${categoryId})}">Next &raquo;</a>
-        <a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword == null}" th:href="@{/7haven/products(page=${currentPage + 1}, size=10)}">Next &raquo;</a>
-        <a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword != null}" th:href="@{/7haven/products/search(keyword=${keyword}, page=${currentPage + 1}, size=10)}">Next &raquo;</a>
-    </div>
-
-</section>
-
-<footer>
-    <div class="information">
-        <h2>Information</h2>
-        <ul>
-            <li><a href="/contact">Contact Us</a></li>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/delivery">Delivery</a></li>
-            <li><a href="/returns">Returns</a></li>
-            <li><a href="/faqs">FAQs</a></li>
-        </ul>
-    </div>
-    <div class="logo">
-        <span>7Haven</span>
-    </div>
-</footer>
-
-<script>
-    let currentIndex = 0;
-    const slides = document.querySelectorAll('.carousel-slide div');
-    const totalSlides = slides.length;
-
-    function showNextSlide() {
-        const carouselSlide = document.querySelector('.carousel-slide');
-        currentIndex = (currentIndex + 1) % totalSlides; // 循环播放
-        const slideWidth = carouselSlide.clientWidth; // 获取滚动框的宽度
-        carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`; // 移动到下一张图片
-    }
-
-    // 每3秒切换一次图片
-    setInterval(showNextSlide, 3000);
-</script>
+		// 每3秒切换一次图片
+		setInterval(showNextSlide, 3000);
+	</script>
 </body>
+
 </html>

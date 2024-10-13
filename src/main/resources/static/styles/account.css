@@ -13,7 +13,7 @@ header h2 {
 }
 
 section {
-    padding: 40px 30%;
+    padding: 40px 35%;
 }
 
 .form-row {
@@ -43,8 +43,15 @@ input, select {
     transition: border-color 0.5s;
 }
 
+.container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+	margin: 10px 0;
+}
+
 button {
-    width: 100%;
+    width: 80%;
     background-color: #4285f4;
     color: #ffffff;
     border: none;
@@ -56,12 +63,21 @@ button {
 	margin-top: 10px;
 }
 
-button:hover {
+button:hover .btn:hover{
     background-color: rgb(46, 115, 225);
 }
 
 table {
 	text-align: left;
 }
-
-
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color:  #4285f4;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}

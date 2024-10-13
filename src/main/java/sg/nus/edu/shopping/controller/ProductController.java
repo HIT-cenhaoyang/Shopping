@@ -94,16 +94,13 @@ public class ProductController {
 //        return "homePage";
 //    }
 
-    @GetMapping("/7haven/products")
+    @GetMapping("/products")
     public String showProducts(@RequestParam(value = "category", required = false) Integer categoryId,
                                @RequestParam(defaultValue = "1") int page,
                                @RequestParam(defaultValue = "10") int size,
                                HttpSession sessionObj,
                                Model model) {
-        String username = (String) sessionObj.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+       
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Product> productPage;
         if (categoryId != null) {
@@ -112,6 +109,8 @@ public class ProductController {
             model.addAttribute("categoryId", categoryId); // 添加 categoryId 到模型
         } else {
             productPage = productInt.getProducts(pageable);
+            System.out.println(productPage.getNumber());
+            System.out.println(productPage.getTotalPages());
             model.addAttribute("pageName", "mainPage"); // 添加 pageName 属性
         }
 
@@ -128,7 +127,7 @@ public class ProductController {
         model.addAttribute("totalItems", productPage.getTotalElements()); // 总产品数量
 		return "homePage";
 	}
-    @GetMapping("/7haven/products/search")
+    @GetMapping("/products/search")
     public String searchProducts(@RequestParam("keyword") String keyword,
                                  @RequestParam(defaultValue = "1") int page,
                                  @RequestParam(defaultValue = "10") int size,

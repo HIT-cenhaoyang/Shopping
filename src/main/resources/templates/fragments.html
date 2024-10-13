@@ -1,0 +1,70 @@
+<!-- fragments.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>My Website</title>
+	<link rel="stylesheet" th:href="@{/styles/homepagestyle.css}" />
+</head>
+
+<body>
+
+	<div th:fragment="header">
+		<header>
+			<div class="top-bar">
+				<h1>7Haven, Your Dream Home</h1>
+				<form action="/products/search" method="get">
+					<label>
+						<input type="text" name="keyword" placeholder="Search products...">
+					</label>
+					<button type="submit" class="image-container">
+						<img src="/images/SearchW.png" alt="Search" style="width: 15px; height: 15px;margin-right: 0px;"
+							class="default-image">
+						<img src="/images/SearchG.png" alt="Search" style="width: 15px; height: 15px;margin-right: 0px;"
+							class="hover-image">
+					</button>
+				</form>
+
+				<div class="user-info" th:if="${!#strings.isEmpty(session.username)}">
+					<p>Welcome, <span th:text="${session.username}">User</span>!</p>
+					<a th:href="@{/7haven/checkout}" class="image-container" style="margin-left: 20px">
+						<img src="/images/CartW.png" alt="Cart" class="default-image">
+						<img src="/images/CartG.png" alt="Cart" class="hover-image">
+					</a>
+					<a th:href="@{/7haven/display/profile/}+${session.customerId}" class="image-container">
+						<img src="/images/PersonalInformationW.png" alt="Profile" class="default-image">
+						<img src="/images/PersonalInformationG.png" alt="Profile" class="hover-image">
+					</a>
+					<a th:href="@{/logout}" class=" image-container">
+						<img src="/images/LogoutW.png" alt="Logout" class="default-image">
+						<img src="/images/LogoutG.png" alt="Logout" class="hover-image">
+					</a>
+
+				</div>
+				<div th:if="${#strings.isEmpty(session.username)}">
+					<a th:href="@{/7haven/checkout}" class="image-container" style="margin-left: 20px">
+						<img src="/images/CartW.png" alt="Cart" class="default-image">
+						<img src="/images/CartG.png" alt="Cart" class="hover-image">
+					</a>
+					<a th:href="@{/login}" class="image-container">
+						<img src="/images/LoginW.png" alt="Login" class="default-image">
+						<img src="/images/LoginG.png" alt="Login" class="hover-image">
+					</a>
+				</div>
+			</div>
+
+			<!-- 分类导航 -->
+			<nav>
+				<a th:href="@{/products}">Main Page</a>
+				<a th:href="@{/products?category=1}">Sofa</a>
+				<a th:href="@{/products?category=2}">Table</a>
+				<a th:href="@{/products?category=3}">Chair</a>
+				<a th:href="@{/products?category=4}">Bed</a>
+				<a th:href="@{/products?category=5}">Storage</a>
+			</nav>
+		</header>
+	</div>
+
+</body>
+
+</html>

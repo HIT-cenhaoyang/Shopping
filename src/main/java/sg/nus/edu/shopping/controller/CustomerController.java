@@ -121,8 +121,9 @@ public class CustomerController {
 			return "login";
 		} else {
 			if (dataU.getPassword().equals(user.getPassword())) {
-				sessionObj.setAttribute("username", user.getUserName());
-				return "redirect:/7haven/products";
+				sessionObj.setAttribute("username", dataU.getUserName());
+				sessionObj.setAttribute("customerId", dataU.getCustomerId());
+				return "redirect:/products";
 			} else {
 				model.addAttribute("errorMsg", "Your user name or password are wrong, please try again!");
 				model.addAttribute("user", new Customer());
@@ -131,26 +132,12 @@ public class CustomerController {
 		}
 	}
 
-	//Author: xu zhiye
-	@GetMapping("/7haven/list-users")
-	public String listUsers(HttpSession sessionObj, Model model) {
-		String username = (String) sessionObj.getAttribute("username");
-		if (username == null) {
-			return "redirect:/login";
-		} else {
-			model.addAttribute("user", cusregister.searchUserByUserName(username));
-			return "homePage";
-		}
-	}
 
-	//Author: xu zhiye
 	@GetMapping("/logout")
 	public String logout(HttpSession sessionObj, Model model) {
 		sessionObj.invalidate();
-		return "redirect:/7haven/products";
+		return "redirect:/products";
 	}
-
-
 
 	//Author: xu zhiye
 	@GetMapping("/user/resetPassword")
@@ -215,9 +202,9 @@ public class CustomerController {
 	}
 
 	//Author: xu zhiye
-	@GetMapping("/7haven/display/profile/{username}")
-	public String displayProfile(Model model, @PathVariable String username) {
-		Customer dataU = cusregister.searchUserByUserName(username);
+	@GetMapping("/7haven/display/profile/{userId}")
+	public String displayProfile(Model model, @PathVariable String userId) {
+		Customer dataU = cusregister.findById(userId);
 
 		model.addAttribute("user", dataU);
 		return "profilePage";

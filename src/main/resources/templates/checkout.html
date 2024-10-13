@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Checkout Page</title>
+	<link rel="stylesheet" th:href="@{/styles/homepagestyle.css}" />
     <script>
         // 显示所有支付方式
         function showAllPaymentDetails() {
@@ -78,6 +79,7 @@
 </head>
 
 <body>
+	<div th:replace="fragments :: header"></div>
 <form th:action="@{/cartPage}" method="post">
     <input type="submit" value="return to cart"/>
 </form>
@@ -167,10 +169,10 @@
             </li>
         </ul>
     </div>
-
-    <!-- 隐藏字段，用于存储选中的银行卡号 -->
-    <input type="hidden" id="selectedCardNumberInput" name="cardNumber" th:value="${customer.paymentDetails[0].cardNumber}" />
-
+	<div th:if="${customer.paymentDetails.size() > 0}">
+    	<!-- 隐藏字段，用于存储选中的银行卡号 -->
+    	<input type="hidden" id="selectedCardNumberInput" name="cardNumber" th:value="${customer.paymentDetails[0].cardNumber}" />
+	</div>
     <input type="submit" value="payment"/>
 </form>
 </body>

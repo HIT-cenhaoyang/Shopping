@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Product Details</title>
+	<link rel="stylesheet" th:href="@{/styles/homepagestyle.css}" />
 	<style>
 		/* General styles */
 		body {
@@ -242,33 +243,52 @@
 			background-color: #e53e00;
 		}
 	</style>
+	<script th:inline="javascript">
+		// Function to change the cover image when an additional image is clicked
+		function addToCart() {
+			
+			var customerId = /*[[${session.customerId}]]*/ 0;
+			var productId = /*[[${product.productId}]]*/ 0;
+			var quantityInput = /*[[${product.stockAvailable}]]*/ 0;
+			
+			if(customerId === null || customerId === '' || customerId.trim() === ''){
+				window.location.href = /*[[@{/login}]]*/ 'login.html';
+			}
+			
+            var quantity = parseInt(quantityInput);
+            if (quantity < 1) {
+                alert('Out of stock!');
+                return;
+            }
+			
+			console.log("Prodcut ID: "+ productId);
+			console.log("customerId ID: "+ customerId);
+			console.log("quantity ID: "+ quantity);
+            fetch(`/api/cart/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ customerId: customerId, productId: productId, quantity: 1 })
+            }).then(response => {
+                if (response.ok) {
+                    console.error('Product added to cart successfully.');
+                } else {
+                    console.error('Failed to add product to cart.');
+                    redirectToErrorPage();
+                }
+            }).catch(error => {
+                console.error('Error: ' + error.message);
+                redirectToErrorPage();
+            });
+		}
+		
+	</script>
 </head>
 
 <body style="font-family: Arial, sans-serif;">
-<<<<<<< HEAD
 	<!-- Header stays centered -->
-	<header>
-		<div class="top-bar">
-			<h1>7Haven</h1>
-			<form action="/products/search" method="get">
-				<input type="text" name="keyword" placeholder="Search products...">
-				<button type="submit">Search</button>
-			</form>
-			<div class="auth-links">
-				<a href="/cart">Cart</a>
-				<a href="/login">Login</a>
-			</div>
-		</div>
-
-		<nav>
-			<a href="/products">Main Page</a>
-			<a href="/products?category=1">Sofa</a>
-			<a href="/products?category=2">Table</a>
-			<a href="/products?category=3">Chair</a>
-			<a href="/products?category=4">Bed</a>
-			<a href="/products?category=5">Storage</a>
-		</nav>
-	</header>
+	<div th:replace="fragments :: header"></div>
 
 	<section>
 		<!-- Cover Image, taking up 50% of the width -->
@@ -286,60 +306,10 @@
 			<!-- Stock Availability and Add to Cart Button -->
 			<div class="stock-info">
 				<p>In Stock: <span th:text="${product.stockAvailable}">0</span></p>
-				<button class="add-to-cart-btn" onclick="addToCart(${product.productId})">Add to Cart</button>
+				<button class="add-to-cart-btn" th:onclick="addToCart()">Add to Cart</button>
 			</div>
 		</div>
 	</section>
-=======
-
-<header style="padding: 20px; background-color: #f8f8f8; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;">
-	<div>
-		<a href="/7haven/products?category=1" style="text-decoration: none; color: #333; font-size: 18px;">Home</a>
-	</div>
-	<div>
-		<a href="/cart" style="text-decoration: none; color: #333; font-size: 18px;">Cart</a>
-	</div>
-</header>
-
-<section style="padding: 20px; max-width: 1000px; margin: 0 auto; margin-left: 30px;">
-	<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-
-		<div style="flex: 1; margin-right: 20px; margin-bottom: 20px;">
-			<div style="width: 400px; height: 300px; background-color: rgb(255, 255, 255); display: flex; justify-content: center; align-items: center;">
-				<img th:src="@{|${coverImage}|}" alt="Product Cover Image" id="coverImage" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 5px;">
-			</div>
-		</div>
-
-		<div style="flex: 2; min-width: 300px;">
-			<h2 th:text="${product.name}" style="font-size: 24px; margin-bottom: 10px;">Product Name</h2>
-			<p style="color: green; font-size: 20px; margin-bottom: 10px;" th:text="'$' + ${product.price}">Product Price</p>
-			<p style="line-height: 1.5; margin-bottom: 20px;" th:text="${product.description}">Product Description</p>
-
-			<div style="margin-top: 20px; display: flex; align-items: center;">
-				<p style="margin-right: 20px; color: #333;">Stock: <span th:text="${product.stockAvailable}">0</span></p>
-				<form th:action="@{/cart/add}" method="post">
-					<input type="hidden" name="productId" th:value="${product.productId}" />
-					<button type="submit" style="padding: 10px 20px; background-color: #ff4500; color: white; border: none; border-radius: 5px; cursor: pointer; width: auto;">Add to Cart</button>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<div style="margin-top: 30px;">
-		<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-			<div th:each="image : ${additionalImages}" style="flex: 0 1 100px;">
-				<img th:src="@{|${image.fileName}|}" alt="Product Additional Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px; cursor: pointer;" onclick="changeCoverImage(this.src)">
-			</div>
-		</div>
-	</div>
-
-	<script>
-		function changeCoverImage(newSrc) {
-			document.getElementById("coverImage").src = newSrc;
-		}
-	</script>
-</section>
->>>>>>> ac4c38cc3f81458ea688541c04e0a0eb1051bd36
 
 	<!-- Additional Images Section -->
 	<div class="additional-images">
