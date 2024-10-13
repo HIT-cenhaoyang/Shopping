@@ -37,13 +37,13 @@ public class Customer {
     @OneToMany(mappedBy = "customer") @JsonIgnore
     private List<PurchaseRecord> purchaseRecords;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer") @JsonIgnore
     private List<ShoppingCart> shoppingCarts;
 
-    @OneToMany(mappedBy = "payment_customer")
+    @OneToMany(mappedBy = "payment_customer") @JsonIgnore
     private List<PaymentDetail> paymentDetails;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer") @JsonIgnore
     private List<Review> reviews;
 
 
@@ -85,6 +85,7 @@ public class Customer {
     }
 
 
+    @JsonIgnore
     public List<ShoppingCart> getShoppingCart() {
         return shoppingCarts;
     }
