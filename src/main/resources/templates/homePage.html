@@ -54,6 +54,7 @@
 				<a th:if="${categoryId == null} and ${keyword != null}"
 					th:href="@{products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
 			</span>
+
 			<span th:if="${totalPages == null}" th:each="i : ${#numbers.sequence(1, 1)}"
 				th:classappend="${i == currentPage} ? 'active'">
 				<a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId})}"
