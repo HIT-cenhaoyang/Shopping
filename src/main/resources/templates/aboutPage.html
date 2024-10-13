@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/styles/homepage_style.css?v=1.0}">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css?v=1.0}">
     <title>About Us</title>
 </head>
 <body>
@@ -44,26 +44,7 @@
     </div>
 </section>
 
-<footer class="footer">
-    <div class="container">
-        <div class="information">
-            <h2>Information</h2>
-            <ul>
-                <li><a href="/contact">Contact Us</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/delivery">Delivery</a></li>
-                <li><a href="/returns">Returns</a></li>
-                <li><a href="/faqs">FAQs</a></li>
-            </ul>
-        </div>
-        <div class="logo">
-            <h2>7Haven</h2>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>Copyright © 2024 7Haven. Powered by Team7 and Springboot</p>
-    </div>
-</footer>
+<div th:replace="foot :: footer"></div>
 
 </body>
 </html>

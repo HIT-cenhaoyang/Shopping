@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Product Page</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/styles/homepage_style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css}">
 </head>
 
 <body>
@@ -75,27 +75,7 @@
 
 	</section>
 
-	<footer class="footer">
-		<div class="container">
-			<div class="information">
-				<h2>Information</h2>
-				<ul>
-					<li><a href="/contact">Contact Us</a></li>
-					<li><a href="/about">About Us</a></li>
-					<li><a href="/delivery">Delivery</a></li>
-					<li><a href="/returns">Returns</a></li>
-					<li><a href="/faqs">FAQs</a></li>
-				</ul>
-			</div>
-			<div class="logo">
-				<h2>7Haven</h2>
-			</div>
-		</div>
-		<div class="footer-bottom">
-			<p>Copyright © 2024 7Haven. Powered by Teams7 and Springboot</p>
-		</div>
-	</footer>
-
+	<div th:replace="foot :: footer"></div>
 
 	<script>
 		let currentIndex = 0;
@@ -113,5 +93,6 @@
 		setInterval(showNextSlide, 3000);
 	</script>
 </body>
+
 
 </html>
