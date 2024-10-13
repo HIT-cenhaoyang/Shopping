@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ReviewInterface {
     List<Review> findByProductId(int productId);
+    void saveReview(Review review);
 }

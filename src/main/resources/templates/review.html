@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Review</title>
+    <!-- 引用自定义样式文件 -->
+</head>
+<body>
+<div class="container">
+    <h1>Review for Product</h1>
+    <!-- 表单 -->
+    <form th:action="@{/product/review/submit}" method="post">
+        <!-- 隐藏字段用于传递 productId -->
+        <input type="hidden" name="productId" th:value="${product.productId}">
+
+        <!-- 商品名称 -->
+        <!--<label for="productName">Product Name:</label>-->
+        <!--<input type="text" id="productName" th:value="${product.name}" readonly>-->
+
+        <!-- 用户评论 -->
+        <label for="reviewContent">Your Review:</label>
+        <textarea id="reviewContent" name="reviewContent" placeholder="Enter your review here..."></textarea>
+
+        <!-- 提交按钮 -->
+        <button type="submit" class="submit-btn">Submit Review</button>
+    </form>
+
+    <!-- 返回按钮 -->
+    <button onclick="window.history.back()" class="back-btn">Go Back</button>
+
+</div>
+</body>
+</html>
