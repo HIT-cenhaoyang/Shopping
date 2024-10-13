@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css?v=1.0}">
+    <title>Return Information</title>
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+
+<section>
+    <!-- Return Information content -->
+    <div class="return-info-container">
+        <h2>Return Information</h2>
+        <p>At 7Haven, we want you to be completely satisfied with your purchase. If you are not happy with your order, you can return it within 30 days of delivery. Here is everything you need to know about our return process:</p>
+
+        <h3>Return Policy</h3>
+        <p>You can return most items within 30 days of delivery for a full refund. Items must be in their original condition and packaging. Some items, such as custom orders, are not eligible for return.</p>
+
+        <h3>Return Process</h3>
+        <p>To initiate a return, please contact our customer service team at <a href="mailto:returns@7haven.com">returns@7haven.com</a>. We will provide you with a return authorization number and instructions on how to return your item.</p>
+
+        <h3>Refunds</h3>
+        <p>Once we receive your return, we will inspect the item and process your refund within 5-7 business days. Refunds will be issued to the original payment method. Please note that shipping costs are non-refundable.</p>
+
+        <h3>Exchanges</h3>
+        <p>If you would like to exchange an item, please contact our customer service team. We will assist you with the exchange process and ensure you receive the correct item.</p>
+
+        <h3>Contact Us</h3>
+        <p>If you have any questions or concerns about your return, please do not hesitate to contact our customer service team at <a href="mailto:returns@7haven.com">returns@7haven.com</a>.</p>
+
+    </div>
+</section>
+
+<div th:replace="foot :: footer"></div>
+
+</body>
+</html>

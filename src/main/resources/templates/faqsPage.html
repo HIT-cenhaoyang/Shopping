@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css?v=1.0}">
+    <title>FAQs</title>
+</head>
+<body>
+
+<div th:replace="fragments :: header"></div>
+
+<section>
+    <!-- FAQs content -->
+    <div class="faqs-container">
+        <h2>Frequently Asked Questions</h2>
+
+        <h3>What is 7Haven?</h3>
+        <p>7Haven is an online store offering a wide range of furniture and home decor items to help you create your dream home.</p>
+
+        <h3>How can I place an order?</h3>
+        <p>You can place an order by browsing our products, adding items to your cart, and proceeding to checkout. You will need to create an account or log in to complete your purchase.</p>
+
+        <h3>What payment methods do you accept?</h3>
+        <p>We accept various payment methods, including credit/debit cards, PayPal, and other secure payment options available at checkout.</p>
+
+        <h3>How can I track my order?</h3>
+        <p>Once your order has been shipped, you will receive a confirmation email with a tracking number. You can use this tracking number to monitor the status of your delivery on our carrier's website.</p>
+
+        <h3>What is your return policy?</h3>
+        <p>You can return most items within 30 days of delivery for a full refund. Items must be in their original condition and packaging. Some items, such as custom orders, are not eligible for return.</p>
+
+        <h3>How can I contact customer service?</h3>
+        <p>If you have any questions or concerns, please contact our customer service team at <a href="mailto:support@7haven.com">support@7haven.com</a>.</p>
+    </div>
+</section>
+
+<div th:replace="foot :: footer"></div>
+
+</body>
+</html>

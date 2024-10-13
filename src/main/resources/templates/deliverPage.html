@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css?v=1.0}">
+    <title>Delivery Information</title>
+</head>
+<body>
+
+<div th:replace="fragments :: header"></div>
+
+<section>
+    <!-- Delivery Information content -->
+    <div class="delivery-info-container">
+        <h2>Delivery Information</h2>
+        <p>At 7Haven, we strive to provide a seamless delivery experience for our customers. Here is everything you need to know about our delivery process:</p>
+
+        <h3>Delivery Times</h3>
+        <p>We aim to deliver your order within 5-7 business days. Please note that delivery times may vary depending on your location and the availability of the items you ordered.</p>
+
+        <h3>Shipping Costs</h3>
+        <p>Shipping costs are calculated based on the weight and dimensions of your order, as well as your delivery location. You can view the estimated shipping cost at checkout before completing your purchase.</p>
+
+        <h3>Tracking Your Order</h3>
+        <p>Once your order has been shipped, you will receive a confirmation email with a tracking number. You can use this tracking number to monitor the status of your delivery on our carrier's website.</p>
+
+        <h3>Delivery Restrictions</h3>
+        <p>Currently, we only deliver within the continental United States. We do not ship to P.O. boxes, APO/FPO addresses, or international locations.</p>
+
+        <h3>Contact Us</h3>
+        <p>If you have any questions or concerns about your delivery, please do not hesitate to contact our customer service team at <a href="mailto:support@7haven.com">support@7haven.com</a>.</p>
+
+    </div>
+</section>
+
+<div th:replace="foot :: footer"></div>
+
+</body>
+</html>

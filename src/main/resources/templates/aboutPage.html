@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css?v=1.0}">
+    <title>About Us</title>
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<section>
+    <!-- About Us content -->
+    <div class="about-us-container">
+        <h2>About Us</h2>
+        <p>Welcome to 7Haven, an innovative online furniture store that strives to bring the beauty and serenity of nature into your home. Our mission is to provide high-quality, eco-friendly furniture that not only meets your functional needs but also complements the natural environment. At 7Haven, we specialize in natural wood furniture, designed to create a warm, inviting atmosphere in any room. We believe that furniture is more than just a collection of items—it's a reflection of your values and your lifestyle. By choosing 7Haven, you are making a conscious decision to embrace sustainability without compromising on style or quality. Our collection combines modern design with the timeless appeal of natural materials, making your home both beautiful and environmentally friendly.</p>
+
+        <!-- Additional content -->
+        <h2>Design Philosophy</h2>
+        <p>At 7Haven, our design philosophy is rooted in the belief that less is more. We embrace simplicity and natural beauty, ensuring that our furniture not only serves a practical purpose but also brings peace and tranquility into your living space. Each of our designs is inspired by the elegance of raw materials, particularly natural wood, and we emphasize the importance of creating products that are environmentally sustainable. We want our furniture to inspire a deeper connection with nature, offering a sense of calm and mindfulness in a fast-paced, ever-changing world. Our goal is to create timeless pieces that will last a lifetime, transcending trends and fads, and standing as a testament to thoughtful, responsible design.</p>
+
+        <h2>Design Principles</h2>
+        <p>Our approach to design is guided by three core principles that define every piece of furniture we create at 7Haven:</p>
+        <h4>Natural Aesthetics:</h4>
+        <p>
+             We use premium, responsibly sourced wood to celebrate the raw beauty of nature. From oak to walnut, each piece of wood is carefully selected for its texture, grain, and unique characteristics, making every item we create one of a kind.
+        </p>
+        <h4>Sustainability and Responsibility:</h4>
+        <p>
+            We believe that good design is about more than aesthetics; it's about making choices that benefit the planet. We use eco-friendly processes and materials, and we ensure that our products are made with minimal environmental impact. Every piece is crafted with care to be long-lasting and recyclable, helping to reduce waste and promote a sustainable future.
+        </p>
+        <h4>Functionality and Comfort: </h4>
+        <p>
+            While we love creating beautiful furniture, we never lose sight of the importance of functionality. Every item we design is intended to improve your daily life, offering both comfort and practicality. From ergonomic chairs to space-saving storage solutions, we ensure that our designs fit seamlessly into your lifestyle.
+        </p>
+        <h2>Meet Team7</h2>
+        <p>
+            Behind the success of 7Haven is Team7, a close-knit group of eight passionate and creative individuals, all of whom share a deep love for furniture design and a commitment to sustainability. Our team is composed of skilled designers, craftsmen, and customer service professionals, each bringing their own expertise to the table. We work collaboratively to transform our shared vision into reality, ensuring that every piece of furniture we create reflects our commitment to quality and environmental responsibility. Each member of Team7 plays a vital role in our mission to make 7Haven a leader in the eco-friendly furniture market. From conceptualizing new designs to ensuring our customers have the best shopping experience, our team is dedicated to delivering excellence at every stage of the process. We see ourselves as more than just colleagues—we are a family united by a shared passion for making homes more beautiful, more sustainable, and more connected to nature.
+        </p>
+        <p>
+            At 7Haven, we are not just selling furniture—we are promoting a lifestyle that values simplicity, sustainability, and the beauty of the natural world. Our team is constantly striving to innovate and improve, so you can expect nothing less than the best from us.
+        </p>
+        <!-- Insert image -->
+        <img src="/images/Family.jpg" alt="Our Team" style="display: block; margin: 0 auto; width:100%; max-width:600px; height:auto; border-radius: 10px;">
+
+    </div>
+</section>
+
+<div th:replace="foot :: footer"></div>
+
+</body>
+</html>
