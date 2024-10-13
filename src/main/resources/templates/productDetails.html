@@ -272,7 +272,7 @@
                 body: JSON.stringify({ customerId: customerId, productId: productId, quantity: 1 })
             }).then(response => {
                 if (response.ok) {
-                    console.error('Product added to cart successfully.');
+                    console.log('Product added to cart successfully.');
                 } else {
                     console.error('Failed to add product to cart.');
                     redirectToErrorPage();
