@@ -236,34 +236,7 @@ section {
 	border: 2px solid #000; /* Active border color */
 }
 
-/* Carousel styles */
-.carousel-container {
-	position: relative;
-	width: 100%; /* Full width */
-	max-width: 1200px; /* Maximum width */
-	margin: 40px auto; /* Centered with margin */
-	overflow: hidden; /* Hide overflow */
-	border-radius: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
-	height: 800px; /* Increase height */
-}
 
-.carousel-slide {
-	display: flex;
-	transition: transform 0.5s ease-in-out; /* Smooth transition */
-}
-
-.carousel-slide div {
-	min-width: 100%; /* Each slide takes full width */
-	box-sizing: border-box; /* Include padding and border in element's total width and height */
-}
-
-.carousel-slide img {
-	width: 100%; /* Image takes full width */
-	height: auto;
-	max-height: 800px; /* Increase maximum height */
-	border-radius: 2px;
-}
 
 /* Footer styles */
 .footer {

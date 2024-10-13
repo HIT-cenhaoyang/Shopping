@@ -26,6 +26,8 @@ import sg.nus.edu.shopping.service.CategoryImplementation;
 import sg.nus.edu.shopping.service.ProductImplementation;
 import sg.nus.edu.shopping.service.ReviewImplementation;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import sg.nus.edu.shopping.repository.ProductRepository;
 import java.util.List;
@@ -85,9 +87,20 @@ public class ProductController {
         }
 
         if (page == 1 && "mainPage".equals(model.getAttribute("pageName"))) {
-            List<Integer> hotImageIds = Arrays.asList(20, 30, 50);
-            List<String> hotProductImages = productImageRepository.findFilenamesByIds(hotImageIds);
-            model.addAttribute("hotProducts", hotProductImages);  // 热销商品图片
+            File imageFolder = new File("src/main/resources/static/images/hotProducts");
+            File[] imageFiles = imageFolder.listFiles();
+
+            List<String> hotProductImages = new ArrayList<>();
+            if (imageFiles != null) {
+                for (File imageFile : imageFiles) {
+                    hotProductImages.add("/images/hotProducts/" + imageFile.getName()); // 拼接图片的路径
+                }
+            }
+
+            // 添加到 model 中传递给前端
+            model.addAttribute("hotProducts", hotProductImages);
+            model.addAttribute("currentPage", 1);
+            model.addAttribute("pageName", "mainPage");
         }
 
         model.addAttribute("products", productPage.getContent()); // 当前页的产品
