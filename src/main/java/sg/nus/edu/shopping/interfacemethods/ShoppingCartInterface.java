@@ -12,4 +12,6 @@ public interface ShoppingCartInterface {
     void removeProduct(int cartId);
     ShoppingCart addProduct(String customerId, int productId, int quantity);
     void clearCartByCustomer(Customer customer);
+    
+    ShoppingCart getCartByCustomerIdProductId(String customerId, int productId);
 }

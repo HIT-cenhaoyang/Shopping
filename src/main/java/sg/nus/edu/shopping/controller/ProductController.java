@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 import sg.nus.edu.shopping.interfacemethods.CategoryInterface;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
+import sg.nus.edu.shopping.interfacemethods.ShoppingCartInterface;
 import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.Review;
+import sg.nus.edu.shopping.model.ShoppingCart;
 import sg.nus.edu.shopping.repository.CustomerRepository;
 import sg.nus.edu.shopping.repository.ProductImageRepository;
 import sg.nus.edu.shopping.service.CategoryImplementation;
@@ -52,6 +54,9 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
+    
+    @Autowired
+    private ShoppingCartInterface cartService;
 
     @Autowired
     public void setProductInterface(ProductImplementation productImp) {
@@ -109,8 +114,6 @@ public class ProductController {
             model.addAttribute("categoryId", categoryId); // 添加 categoryId 到模型
         } else {
             productPage = productInt.getProducts(pageable);
-            System.out.println(productPage.getNumber());
-            System.out.println(productPage.getTotalPages());
             model.addAttribute("pageName", "mainPage"); // 添加 pageName 属性
         }
 
@@ -148,11 +151,15 @@ public class ProductController {
     }
 
     @GetMapping("/7haven/cart")
-    public String cart() {
+    public String cart(HttpSession sessionObj, Model model) {
+    	String customerName = (String) sessionObj.getAttribute("username");
+    	List<ShoppingCart> cartList = cartService.getCartByCustomerUsername(customerName);
+
+        model.addAttribute("cart", cartList);
         return "cartPage";
     }
 
-    @GetMapping("/7haven/product/{id}")
+    @GetMapping("/product/{id}")
     public String showProductDetails(@PathVariable("id") int productId, Model model) {
         Optional<Product> optProduct = productInt.findByProductId(productId);
         if (optProduct.isEmpty()) {

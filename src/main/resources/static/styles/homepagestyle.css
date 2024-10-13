@@ -379,3 +379,15 @@ footer {
 	src: url('/fonts/DancingScript-Bold.ttf') format('truetype');
 	font-weight: 700;
 }
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color:  #4285f4;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}

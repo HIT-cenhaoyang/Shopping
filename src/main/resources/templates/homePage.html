@@ -411,7 +411,7 @@
 		<!-- 产品展示 -->
 		<div class="products-container">
 			<div th:each="product : ${products}" class="product">
-				<a th:href="@{/7haven/product/{id}(id=${product.productId})}">
+				<a th:href="@{/product/{id}(id=${product.productId})}">
 					<img th:src="@{|${product.coverImagePath}|}" alt="产品图片">
 				</a>
 				<h2 th:text="${product.name}" style="color: #333;">产品名称</h2>

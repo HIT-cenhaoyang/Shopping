@@ -45,10 +45,6 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
         if (existingCart == null) {
             throw new IllegalArgumentException("Cart not found");
         }
-        Customer customer = shoppingCartRepo.findCustomerByCartId(cartId);
-        customer.removeProductFromCart(existingCart);
-
-        customerRepo.save(customer);
         shoppingCartRepo.delete(existingCart);
     }
 
@@ -67,4 +63,15 @@ public class ShoppingCartImplementation implements ShoppingCartInterface {
     public void clearCartByCustomer(Customer customer) {
         shoppingCartRepo.deleteByCustomer(customer);
     }
+
+	@Override
+	public ShoppingCart getCartByCustomerIdProductId(String customerId, int productId) {
+		// TODO Auto-generated method stub
+		List<ShoppingCart> list = shoppingCartRepo.getCartByCustomerIdProductId(customerId, productId);
+		if(list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+
 }

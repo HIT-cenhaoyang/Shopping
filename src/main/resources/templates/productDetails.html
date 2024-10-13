@@ -253,6 +253,7 @@
 			
 			if(customerId === null || customerId === '' || customerId.trim() === ''){
 				window.location.href = /*[[@{/login}]]*/ 'login.html';
+				return;
 			}
 			
             var quantity = parseInt(quantityInput);
