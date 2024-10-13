@@ -1,152 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/styles/homepage_style.css?v=1.0}">
     <title>Contact Us</title>
-    <style>
-        /* 添加一些基本的样式 */
-        .contact-info-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .contact-info-container h2, .contact-info-container h3 {
-            margin-bottom: 15px;
-        }
-
-        .contact-info-container p {
-            margin-bottom: 20px;
-        }
-
-        .contact-info-container ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .contact-info-container ul li {
-            display: inline-block;
-            margin: 0 15px;
-        }
-
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            transition: transform 0.3s ease, filter 0.3s ease;
-        }
-
-        .social-icon:hover {
-            transform: scale(1.1);
-            filter: brightness(0.8);
-        }
-
-        .image-container {
-            display: inline-block;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/statics/homepage style.css">
 </head>
 <body>
-
 <header>
-    <!-- Top bar with search and login/cart -->
-    <div class="top-bar">
-        <h1>7Haven Your Dream</h1>
-        <form action="/7haven/products/search" method="get">
-            <label>
-                <input type="text" name="keyword" placeholder="Search products...">
-            </label>
-            <button type="submit" class="image-container">
-                <img src="/images/SearchW.png" alt="Search" style="width: 15px; height: 15px;margin-right: 0px;" class="default-image">
-                <img src="/images/SearchG.png" alt="Search" style="width: 15px; height: 15px;margin-right: 0px;" class="hover-image">
-            </button>
-        </form>
-
-        <div class="user-info" th:if="${session.username != null}">
-            <p>Welcome, <span th:text="${session.username}">User</span>!</p>
-            <a href="/7haven/cart" class="image-container" style="margin-left: 20px">
-                <img src="/images/CartW.png" alt="Cart" class="default-image">
-                <img src="/images/CartG.png" alt="Cart" class="hover-image">
-            </a>
-            <a th:href="@{/7haven/display/profile/{username}(username=${session.username})}" class="image-container">
-                <img src="/images/PersonalInformationW.png" alt="Profile" class="default-image">
-                <img src="/images/PersonalInformationG.png" alt="Profile" class="hover-image">
-            </a>
-            <a href="/logout" class="image-container">
-                <img src="/images/LogoutW.png" alt="Logout" class="default-image">
-                <img src="/images/LogoutG.png" alt="Logout" class="hover-image">
-            </a>
-        </div>
-        <div th:if="${session.username == null}">
-            <a href="/7haven/cart" class="image-container" style="margin-left: 20px">
-                <img src="/images/CartW.png" alt="Cart" class="default-image">
-                <img src="/images/CartG.png" alt="Cart" class="hover-image">
-            </a>
-            <a href="/login" class="image-container">
-                <img src="/images/LoginW.png" alt="Login" class="default-image">
-                <img src="/images/LoginG.png" alt="Login" class="hover-image">
-            </a>
-        </div>
-    </div>
-
-    <!-- Navigation bar -->
-    <nav>
-        <a href="/7haven/products">Main Page</a>
-        <a href="/7haven/products?category=1">Sofa</a>
-        <a href="/7haven/products?category=2">Table</a>
-        <a href="/7haven/products?category=3">Chair</a>
-        <a href="/7haven/products?category=4">Bed</a>
-        <a href="/7haven/products?category=5">Storage</a>
-    </nav>
+    <!-- Include your header content here -->
 </header>
-
 <section>
-    <!-- Contact Us content -->
-    <div class="contact-info-container">
-        <h2>Contact Us</h2>
-        <p>If you have any questions or need assistance, please feel free to reach out to us through any of the following methods:</p>
-
-        <h3>Phone</h3>
-        <p>You can call us at: <strong>(86) XXXX-0707</strong></p>
-
-        <h3>Email</h3>
-        <p>Email us at: <a href="mailto:support@7haven.com">support@7haven.com</a></p>
-
-        <h3>Social Media</h3>
-        <p>Follow us on social media for the latest updates and promotions:</p>
-        <ul>
-            <li><a href="https://www.tiktok.com/@7haven" target="_blank">
-                <img src="/images/tiktok.png" alt="TikTok" class="social-icon">
-            </a></li>
-            <li><a href="https://www.instagram.com/7haven" target="_blank">
-                <img src="/images/instagram.png" alt="Instagram" class="social-icon">
-            </a></li>
-        </ul>
-    </div>
+    <h1>Contact Us</h1>
+    <p>Here you can add your contact information.</p>
 </section>
-
-<footer class="footer">
-    <div class="container">
-        <div class="information">
-            <h2>Information</h2>
-            <ul>
-                <li><a href="/contact">Contact Us</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/delivery">Delivery</a></li>
-                <li><a href="/returns">Returns</a></li>
-                <li><a href="/faqs">FAQs</a></li>
-            </ul>
-        </div>
-        <div class="logo">
-            <h2>7Haven</h2>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>Copyright © 2024 7Haven. Powered by Team7 and Springboot</p>
-    </div>
+<footer>
+    <!-- Include your footer content here -->
 </footer>
-
 </body>
 </html>
