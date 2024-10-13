@@ -253,6 +253,7 @@
 			
 			if(customerId === null || customerId === '' || customerId.trim() === ''){
 				window.location.href = /*[[@{/login}]]*/ 'login.html';
+				return;
 			}
 			
             var quantity = parseInt(quantityInput);
@@ -305,6 +306,8 @@
 			<div class="stock-info">
 				<p>In Stock: <span th:text="${product.stockAvailable}">0</span></p>
 				<button class="add-to-cart-btn" th:onclick="addToCart()">Add to Cart</button>
+				&nbsp; &nbsp;
+				<button onclick="window.history.back()" class="add-to-cart-btn">Go Back</button>
 			</div>
 		</div>
 	</section>
@@ -324,16 +327,6 @@
 			<p th:text="${review.comment}">This is a review comment.</p>
 			<hr>
 		</div>
-	</div>
-
-	<!-- Add a Comment Section -->
-	<div class="add-review-section">
-		<h4>Add Your Review</h4>
-		<form th:action="@{/reviews/add}" method="post">
-			<input type="hidden" name="productId" th:value="${product.productId}" />
-			<textarea name="comment" rows="4" placeholder="Write your review here..."></textarea>
-			<button type="submit">Submit Review</button>
-		</form>
 	</div>
 
 	<script>

@@ -12,7 +12,6 @@ import sg.nus.edu.shopping.repository.OrderDetailRepository;
 import sg.nus.edu.shopping.repository.PurchaseRecordRepository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,5 +61,10 @@ public class PurchaseRecordImplementation implements PurchaseRecordInterface {
         List<OrderDetail> orderDetails = orderDetailRepo.findByProduct(product);
         List<PurchaseRecord> orderListByProduct = orderDetails.stream().map(OrderDetail::getPurchaseRecord).distinct().collect(Collectors.toList());
         return orderListByProduct;
+    }
+    @Override
+    @Transactional
+    public  List<PurchaseRecord> findByCustomer(Customer customer){
+        return purchaseRecordRepo.findByCustomer(customer);
     }
 }

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 
 @Entity
-public class Product {
+public class Product{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
@@ -36,7 +36,8 @@ public class Product {
 
 
     @OneToMany(mappedBy = "product")
-    private List<ShoppingCart> shoppingCarts = new ArrayList<>();;
+    @JsonIgnore
+    private List<ShoppingCart> shoppingCarts = new ArrayList<>();
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore

@@ -114,4 +114,11 @@ public class PurchaseRecord {
         return orderTotal;
     }
 
+    public double getTotal() {
+        double total = 0;
+        for (OrderDetail orderDetail : orderDetails) {
+            total += orderDetail.getOrderSubTotal();
+        }
+        return total;
+    }
 }

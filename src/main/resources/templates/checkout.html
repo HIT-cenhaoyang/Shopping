@@ -133,7 +133,7 @@
             <th>Quantity</th>
         </tr>
         <tr th:each="c : ${cart}">
-            <td>
+            <td class="cover-image-container">
                 <img th:src="${c.product.coverImagePath}" class="product-image" alt="Product Image"/>
             </td>
             <td th:text="${c.product.name}"></td>

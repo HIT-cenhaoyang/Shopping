@@ -2,27 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Your Cart</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" th:href="@{/styles/homepagestyle.css}" />
+	<style>
+		/* Cover image styling */
+		.cover-image-container {
+		    flex: 1;
+		    max-width: 50%;
+		    margin-right: 20px;
+		    background-color: #f4f4f4;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    height: 400px; /* Set a fixed height */
+		    width: auto; /* Set width to auto to maintain aspect ratio */
+		}
+
+		.cover-image-container img {
+		    max-width: 100%; /* Scale the image to fit the width */
+		    max-height: 100%; /* Ensure the image fits within the height */
+		    object-fit: contain; /* Maintain aspect ratio and contain image */
+		    border-radius: 5px;
+		}
+	</style>
 </head>
 <body>
+	
+	<div th:replace="fragments :: header"></div>
     <h1>Your Cart</h1>
     
     <div class="cart-container">
-        <div class="cart-details" id="cart-details">
+		<!-- class name cannot change, other javascript mappinged wrongly in updatesummay-->
+        <table class="cart-details" id="cart-details">
             <!-- Cart items will be loaded here dynamically -->
-        </div>
+        </table>
 
-        <!-- Order summary -->
+
         <div class="order-summary">
             <h2>Order summary</h2>
-            <p>Products (<span id="product-count">0</span>): $<span id="product-total">0.00</span></p>
-            <p><strong>Subtotal: $<span id="subtotal">0.00</span></strong></p>
-            <button class="checkout-btn">Check out</button>
+			<!-- class name cannot change, other javascript mappinged wrongly in updatesummay-->
+			<p>Products (<span id="product-count">0</span>): $<span id="product-total">0.00</span></p>
+     
+			<a th:href="@{/7haven/checkout}" class="btn">Check out</a> 
         </div>
+		
+
+		<div class="container">
+			<a th:href="@{/7haven/purchase/history}" class="btn">Retrieve Purchase Records </a> &nbsp; &nbsp;
+			<a href=" " onclick="history.go(-1); return false;" class="btn">Back</a>
+		</div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+			console.log("loading")
             loadCartItems();
         });
 
@@ -41,6 +73,8 @@
         }
 
         function addItemToCart(item) {
+
+			console.log(item)
             const cartDetails = document.getElementById('cart-details');
 
             const cartItem = document.createElement('div');
@@ -49,18 +83,24 @@
             const coverImage = item.product.images && item.product.images.length > 0 ? item.product.images[0].fileName : 'default.jpg';
 
             cartItem.innerHTML = `
-                <img src="/images/${coverImage}" alt="${item.product.name}">
-                <div class="item-info">
-                    <h3>${item.product.name}</h3>
-                    <p>${item.product.description}</p>
-                    <p>Price per unit: $${item.product.price.toFixed(2)}</p>
-                </div>
-                <div class="item-actions">
-                    <button onclick="updateQuantity(${item.cartId}, -1)">-</button>
-                    <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.cartId}, 0)">
+			<tr>
+				<td>
+				<div class="cover-image-container">
+					<img src="${item.product.coverImagePath}" alt="Product Image" id="${item.product.name}">
+				</div>
+				</td>
+				<td><h3>${item.product.name}</h3></td>
+
+                <td>
+					<p>${item.product.description}</p>
+                	Price per unit: $<span class="item-price">${item.product.price.toFixed(2)}</span>
+				</td>
+                <td>
+					<button onclick="updateQuantity(${item.cartId}, -1)">-</button>
+                    <input type="number" value="${item.productQty}" min="1" onchange="updateQuantity(${item.cartId}, 0)">
                     <button onclick="updateQuantity(${item.cartId}, 1)">+</button>
-                </div>
-                <p class="item-total-price">$${(item.product.price * item.quantity).toFixed(2)}</p>
+                </td>
+			</tr>
             `;
             cartDetails.appendChild(cartItem);
             updateSummary();
@@ -76,12 +116,9 @@
                 removeItem(cartId);
             } else {
                 quantityInput.value = newQuantity;
-                let unitPrice = parseFloat(itemRow.querySelector('.item-info p:nth-child(3)').textContent.replace('Price per unit: $', ''));
-                itemRow.querySelector('.item-total-price').textContent = "$" + (newQuantity * unitPrice).toFixed(2);
                 updateSummary();
 
-                // 更新购物车中的数量
-                fetch(`/api/cart/update/${cartId}`, {
+                fetch(`/api/cart/update/${cartId}/${newQuantity}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -116,17 +153,15 @@
             let itemRows = document.querySelectorAll('.cart-item');
 
             itemRows.forEach(function(item) {
-                let quantity = parseInt(item.querySelector('input[type="number"]').value);
-                let priceText = item.querySelector('.item-total-price').textContent;
-                let price = parseFloat(priceText.replace('$', ''));
-
+                var quantity = parseInt(item.querySelector('input[type="number"]').value);
+                var priceText = item.querySelector('.item-price').textContent;
+                var pricePerUnit = parseFloat(priceText.replace('$', ''));
                 totalItems += quantity;
-                totalPrice += price;
+                totalPrice += pricePerUnit * quantity;
             });
 
             document.getElementById('product-count').textContent = totalItems;
             document.getElementById('product-total').textContent = totalPrice.toFixed(2);
-            document.getElementById('subtotal').textContent = totalPrice.toFixed(2);
         }
     </script>
 </body>

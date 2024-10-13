@@ -5,6 +5,49 @@
 	<meta charset="UTF-8">
 	<title>Product Page</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css}">
+	<style>
+		.carousel-container {
+			position: relative;
+			width: 100%; /* Full width */
+			max-width: 1200px; /* Maximum width */
+			margin-bottom: 40px; /* Centered with margin */
+			margin-top: 0;
+			overflow: hidden; /* Hide overflow */
+			border-radius: 3px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+			height: 700px; /* Increase height */
+		}
+
+		.carousel-slide {
+			display: flex;
+			transition: transform 0.5s ease-in-out;
+		}
+
+		.slide {
+			min-width: 100%;
+			box-sizing: border-box;
+		}
+
+		.carousel-dots {
+			text-align: center;
+			margin-top: 10px;
+		}
+
+		.carousel-dots .dot {
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			margin: 0 5px;
+			background-color: #bbb;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+
+		.carousel-dots .dot.active {
+			background-color: #717171;
+		}
+
+	</style>
 </head>
 
 <body>
@@ -19,16 +62,22 @@
 		<div th:if="${currentPage == 1} and ${#strings.equals(pageName, 'mainPage')}" class="carousel-container">
 			<div class="carousel-slide">
 				<!-- Thymeleaf loop to display hot product images -->
-				<div th:each="imageUrl : ${hotProducts}">
+				<div th:each="imageUrl, indexStat : ${hotProducts}" class="slide">
 					<img th:src="@{|${imageUrl}|}" alt="Hot Product">
 				</div>
 			</div>
+			<!-- 小圆点显示 -->
+			<div class="carousel-dots">
+        <span th:each="hotProduct, indexStat : ${hotProducts}" class="dot"
+			  th:classappend="${indexStat.index == 0} ? 'active' : ''"></span>
+			</div>
 		</div>
+
 
 		<!-- 产品展示 -->
 		<div class="products-container">
 			<div th:each="product : ${products}" class="product">
-				<a th:href="@{/7haven/product/{id}(id=${product.productId})}">
+				<a th:href="@{/product/{id}(id=${product.productId})}">
 					<img th:src="@{|${product.coverImagePath}|}" alt="产品图片">
 				</a>
 				<h2 th:text="${product.name}" style="color: #333;">产品名称</h2>
@@ -79,18 +128,37 @@
 
 	<script>
 		let currentIndex = 0;
-		const slides = document.querySelectorAll('.carousel-slide div');
+		const slides = document.querySelectorAll('.carousel-slide .slide');
 		const totalSlides = slides.length;
+		const dots = document.querySelectorAll('.carousel-dots .dot');
 
-		function showNextSlide() {
+		function updateCarousel() {
 			const carouselSlide = document.querySelector('.carousel-slide');
-			currentIndex = (currentIndex + 1) % totalSlides; // 循环播放
-			const slideWidth = carouselSlide.clientWidth; // 获取滚动框的宽度
-			carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`; // 移动到下一张图片
+			const slideWidth = carouselSlide.clientWidth;
+			carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+
+			// 更新小圆点的状态
+			dots.forEach(dot => dot.classList.remove('active'));
+			dots[currentIndex].classList.add('active');
 		}
 
-		// 每3秒切换一次图片
+		// 下一张图片
+		function showNextSlide() {
+			currentIndex = (currentIndex + 1) % totalSlides; // 循环播放
+			updateCarousel();
+		}
+
+		// 点击切换到指定图片
+		dots.forEach((dot, index) => {
+			dot.addEventListener('click', () => {
+				currentIndex = index;
+				updateCarousel();
+			});
+		});
+
+		// 每3秒自动切换图片
 		setInterval(showNextSlide, 3000);
+
 	</script>
 </body>
 

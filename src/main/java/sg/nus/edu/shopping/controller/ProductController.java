@@ -16,16 +16,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 import sg.nus.edu.shopping.interfacemethods.CategoryInterface;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
+import sg.nus.edu.shopping.interfacemethods.ShoppingCartInterface;
 import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.Review;
+import sg.nus.edu.shopping.model.ShoppingCart;
 import sg.nus.edu.shopping.repository.CustomerRepository;
 import sg.nus.edu.shopping.repository.ProductImageRepository;
 import sg.nus.edu.shopping.service.CategoryImplementation;
 import sg.nus.edu.shopping.service.ProductImplementation;
 import sg.nus.edu.shopping.service.ReviewImplementation;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import sg.nus.edu.shopping.repository.ProductRepository;
 import java.util.List;
@@ -52,6 +56,9 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
+    
+    @Autowired
+    private ShoppingCartInterface cartService;
 
     @Autowired
     public void setProductInterface(ProductImplementation productImp) {
@@ -79,15 +86,24 @@ public class ProductController {
             model.addAttribute("categoryId", categoryId); // 添加 categoryId 到模型
         } else {
             productPage = productInt.getProducts(pageable);
-            System.out.println(productPage.getNumber());
-            System.out.println(productPage.getTotalPages());
             model.addAttribute("pageName", "mainPage"); // 添加 pageName 属性
         }
 
         if (page == 1 && "mainPage".equals(model.getAttribute("pageName"))) {
-            List<Integer> hotImageIds = Arrays.asList(20, 30, 50);
-            List<String> hotProductImages = productImageRepository.findFilenamesByIds(hotImageIds);
-            model.addAttribute("hotProducts", hotProductImages);  // 热销商品图片
+            File imageFolder = new File("src/main/resources/static/images/hotProducts");
+            File[] imageFiles = imageFolder.listFiles();
+
+            List<String> hotProductImages = new ArrayList<>();
+            if (imageFiles != null) {
+                for (File imageFile : imageFiles) {
+                    hotProductImages.add("/images/hotProducts/" + imageFile.getName()); // 拼接图片的路径
+                }
+            }
+
+            // 添加到 model 中传递给前端
+            model.addAttribute("hotProducts", hotProductImages);
+            model.addAttribute("currentPage", 1);
+            model.addAttribute("pageName", "mainPage");
         }
 
         model.addAttribute("products", productPage.getContent()); // 当前页的产品
@@ -118,11 +134,15 @@ public class ProductController {
     }
 
     @GetMapping("/7haven/cart")
-    public String cart() {
+    public String cart(HttpSession sessionObj, Model model) {
+    	String customerName = (String) sessionObj.getAttribute("username");
+    	List<ShoppingCart> cartList = cartService.getCartByCustomerUsername(customerName);
+
+        model.addAttribute("cart", cartList);
         return "cartPage";
     }
 
-    @GetMapping("/7haven/product/{id}")
+    @GetMapping("/product/{id}")
     public String showProductDetails(@PathVariable("id") int productId, Model model) {
         Optional<Product> optProduct = productInt.findByProductId(productId);
         if (optProduct.isEmpty()) {
