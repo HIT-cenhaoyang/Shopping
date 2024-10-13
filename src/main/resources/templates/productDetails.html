@@ -261,9 +261,7 @@
                 return;
             }
 			
-			console.log("Prodcut ID: "+ productId);
-			console.log("customerId ID: "+ customerId);
-			console.log("quantity ID: "+ quantity);
+
             fetch(`/api/cart/add`, {
                 method: 'POST',
                 headers: {
@@ -272,7 +270,7 @@
                 body: JSON.stringify({ customerId: customerId, productId: productId, quantity: 1 })
             }).then(response => {
                 if (response.ok) {
-                    console.error('Product added to cart successfully.');
+                    alert('Product added to cart successfully.');
                 } else {
                     console.error('Failed to add product to cart.');
                     redirectToErrorPage();
