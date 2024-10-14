@@ -17,6 +17,7 @@ public interface CustomerInterface {
 	public Customer searchUserByUserEmail(String userEmail);
 	public Customer findById(String id);
 
+	//Author: Hannah
 	Optional<Customer> findCustomerById(String customerId);
 	List<Customer> findAllCustomers();
 	Optional<Customer> findByUserName(String userName);

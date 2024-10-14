@@ -30,9 +30,13 @@ public class Product{
     private String dimensions;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<ProductImage> images = new ArrayList<>();
 
     private String description;
+
+    //to set visibility status of product
+    private boolean isLive;
 
 
     @OneToMany(mappedBy = "product")
@@ -44,6 +48,7 @@ public class Product{
     private List<OrderDetail> orders = new ArrayList<>();;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<Review> reviews = new ArrayList<>();;
 
 
@@ -53,6 +58,7 @@ public class Product{
         this.shoppingCarts = new ArrayList<>();
         this.orders = new ArrayList<>();
         this.reviews = new ArrayList<>();
+        this.isLive = false;
     }
 
     public Product(String name, double price, String sku) {
@@ -60,6 +66,7 @@ public class Product{
         this.price = price;
         //to ensure no duplicate products are saved
         this.sku = sku;
+        this.isLive = false;
     }
 
     //get images of product
@@ -67,6 +74,7 @@ public class Product{
         return images;
     }
 
+    @JsonIgnore
     public void setImages(List<ProductImage> images) {
         this.images = images;
     }
@@ -108,6 +116,7 @@ public class Product{
     }
     
     //BPC
+    @JsonIgnore
     public List<ProductImage> getAdditionalImages() {
         return images.stream()
                      .filter(img -> !img.isCoverImage())
@@ -171,8 +180,17 @@ public class Product{
         this.sku = sku;
     }
 
+    @JsonIgnore
     public Category getCategory() {
         return category;
+    }
+
+    public String getCategoryName() {
+        return category.getCategoryName();
+    }
+
+    public int getCategoryId() {
+        return category.getCategoryId();
     }
 
     public void setCategory(Category category) {
@@ -209,5 +227,13 @@ public class Product{
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public boolean isLive() {
+        return isLive;
+    }
+
+    public void setLive(boolean live) {
+        isLive = live;
     }
 }
