@@ -419,3 +419,11 @@ section {
     align-items: center; 
 	margin: 10px 0;
 }
+
+.product-name {
+	font-weight: bold; /* Make the product name bolder */
+}
+
+.price {
+	font-weight: lighter; /* Make the price thinner */
+}

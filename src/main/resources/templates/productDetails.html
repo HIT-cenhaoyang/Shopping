@@ -7,112 +7,7 @@
 	<title>Product Details</title>
 	<link rel="stylesheet" th:href="@{/styles/homepagestyle.css}" />
 	<style>
-		/* General styles */
-		body {
-			font-family: 'Roboto', Arial, sans-serif;
-			margin: 0;
-			padding: 0;
-			background-color: #f4f4f4;
-			color: #333;
-		}
-
-		/* Header and navigation bar */
-		header {
-			background-color: #333333;
-			color: #ffffff;
-			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-		}
-
-		header h1 {
-			margin: 0;
-			text-align: center;
-			padding: 20px 0;
-			font-size: 2em;
-			font-weight: 700;
-		}
-
-		/* Top bar and buttons */
-		.top-bar {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			padding: 10px 30px;
-			background-color: #333;
-		}
-
-		.top-bar form {
-			display: flex;
-			flex-grow: 1;
-			max-width: 600px;
-		}
-
-		.top-bar input[type="text"] {
-			padding: 10px;
-			width: 100%;
-			border: none;
-			border-radius: 5px 0 0 5px;
-			outline: none;
-		}
-
-		.top-bar button {
-			padding: 10px 20px;
-			background-color: #444;
-			color: white;
-			border: none;
-			border-radius: 0 5px 5px 0;
-			cursor: pointer;
-			transition: background-color 0.3s;
-		}
-
-		.top-bar button:hover {
-			background-color: #555;
-		}
-
-		.auth-links {
-			display: flex;
-			gap: 20px;
-			position: absolute;
-			right: 30px;
-		}
-
-		.top-bar a {
-			color: white;
-			text-decoration: none;
-			font-weight: bold;
-			transition: color 0.3s;
-		}
-
-		.top-bar a:hover {
-			color: #ccc;
-		}
-
-		/* Navigation bar */
-		nav {
-			background-color: #e0e0e0;
-			padding: 10px 0;
-			text-align: center;
-			box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-		}
-
-		nav a {
-			display: inline-block;
-			color: #333;
-			margin: 0 15px;
-			padding: 10px 20px;
-			text-decoration: none;
-			font-size: 1em;
-			font-weight: 500;
-			background-color: transparent;
-			border: 1px solid transparent;
-			transition: all 0.3s ease;
-		}
-
-		nav a:hover {
-			background-color: #333;
-			color: white;
-			border-radius: 5px;
-		}
-
+		/* Main content section */
 		/* Main content section */
 		section {
 			padding: 40px 20px;
@@ -121,26 +16,27 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-between;
+			font-family: 'Com_Sem', cursive;
 		}
 
 		/* Cover image styling */
 		.cover-image-container {
-		    flex: 1;
-		    max-width: 50%;
-		    margin-right: 20px;
-		    background-color: #f4f4f4;
-		    display: flex;
-		    justify-content: center;
-		    align-items: center;
-		    height: 400px; /* Set a fixed height */
-		    width: auto; /* Set width to auto to maintain aspect ratio */
+			flex: 1;
+			max-width: 50%;
+			margin-right: 20px;
+			background-color: #f4f4f4;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 400px; /* Set a fixed height */
+			width: auto; /* Set width to auto to maintain aspect ratio */
 		}
 
 		.cover-image-container img {
-		    max-width: 100%; /* Scale the image to fit the width */
-		    max-height: 100%; /* Ensure the image fits within the height */
-		    object-fit: contain; /* Maintain aspect ratio and contain image */
-		    border-radius: 5px;
+			max-width: 100%; /* Scale the image to fit the width */
+			max-height: 100%; /* Ensure the image fits within the height */
+			object-fit: contain; /* Maintain aspect ratio and contain image */
+			border-radius: 5px;
 		}
 
 		/* Product details styling */
@@ -174,15 +70,15 @@
 
 		.product-details .add-to-cart-btn {
 			padding: 10px 20px;
-			background-color: #ff4500;
+			background-color: #494949;
 			color: white;
 			border: none;
-			border-radius: 5px;
+			border-radius: 4px;
 			cursor: pointer;
 		}
 
 		.product-details .add-to-cart-btn:hover {
-			background-color: #e53e00;
+			background-color: #333333;
 		}
 
 		/* Additional images styling */
@@ -201,26 +97,32 @@
 			cursor: pointer;
 		}
 
-		/* Reviews and Add Review sections */
-		.review-section,
-		.add-review-section {
-			max-width: 80%; /* Limit the width and center the section */
-			margin: 30px auto; /* Centered by setting left and right margins to auto */
-		}
-
-		.review-section h3,
-		.add-review-section h4 {
-			font-size: 18px;
-			margin-bottom: 10px;
-			font-weight: bold;
-		}
-
-		.review-section p,
-		.add-review-section textarea {
-			width: 100%;
-			padding: 10px;
+		/* Reviews section styling */
+		.review-section {
+			max-width: 80%; /* 限制宽度并居中 */
+			margin: 30px auto; /* 通过设置左右边距为auto来居中 */
+			padding: 20px;
+			background-color: #f9f9f9;
 			border-radius: 5px;
-			border: 1px solid #ccc;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		.review-section h3 {
+			font-size: 24px;
+			margin-bottom: 20px;
+			font-weight: bold;
+			color: #333;
+		}
+
+		.review-section p {
+			font-size: 16px;
+			margin-bottom: 10px;
+			color: #555;
+		}
+
+		.review-section p strong {
+			font-size: 18px;
+			color: #000;
 		}
 
 		.review-section hr {
@@ -229,19 +131,20 @@
 			border-top: 1px solid #ddd;
 		}
 
-		.add-review-section button {
-			padding: 10px 20px;
-			background-color: #ff4500;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			margin-top: 10px;
+		/* Footer styling */
+		.foot {
+			margin-top: 20px;
+			padding: 10px;
+			background-color: #f1f1f1;
+			text-align: center;
+			border-top: 1px solid #ccc;
 		}
 
-		.add-review-section button:hover {
-			background-color: #e53e00;
+		/* Additional script styling */
+		script {
+			display: none; /* 隐藏脚本标签 */
 		}
+
 	</style>
 	<script th:inline="javascript">
 		// Function to change the cover image when an additional image is clicked
@@ -328,7 +231,7 @@
 			<hr>
 		</div>
 	</div>
-
+	<div th:replace="foot :: footer"></div>
 	<script>
 		// Function to change the cover image when an additional image is clicked
 		function changeCoverImage(newSrc) {

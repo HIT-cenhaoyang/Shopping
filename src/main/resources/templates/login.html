@@ -1,17 +1,97 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang ="en">
 
 <head>
 	<title>7haven Login</title>	
-	<link th:href="@{/styles/account.css}" rel="stylesheet" />
-	<!-- This html author is Xu Zhiye -->
 
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css}">
+	<!-- This html author is Xu Zhiye -->
+	<style>
+		/* Form styles */
+		.form-container {
+			background-color: white;
+			padding: 40px;
+			border-radius: 10px;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			max-width: 400px;
+			width: 100%;
+		}
+
+		.form-container h2 {
+			margin-bottom: 20px;
+			color: #333;
+			font-size: 24px;
+			text-align: center;
+		}
+
+		.form-row {
+			display: flex;
+			justify-content: center;
+		}
+
+		.form-row input {
+			width: 50%; /* Reduce the width */
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 16px;
+			margin-top: 10px;
+		}
+
+		.container {
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
+
+		.container button {
+			padding: 10px 20px;
+			background-color: #474747;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+
+		.container button:hover {
+			background-color: #333333;
+		}
+
+		/* Footer links */
+		.form-footer {
+			text-align: center;
+			margin-top: 20px; /* Increase the margin-top for more spacing */
+		}
+
+		.form-footer a {
+			color: #474747; /* Uniform gray-black color */
+			text-decoration: none;
+			font-size: 14px;
+			margin: 0 10px; /* Add horizontal spacing between links */
+		}
+
+		.form-footer a:hover {
+			color: #333333; /* Darker color on hover */
+			text-decoration: underline;
+		}
+
+		/* Error message */
+		.error-message {
+			text-align: center;
+			color: red;
+			margin-top: 10px;
+		}
+
+		.error-message p {
+			margin: 0;
+		}
+	</style>
 </head>
 
 <body>
-	<header>
-		<h2 >Welcome to Ultra 7haven Furniture</h2>
-	</header>
+<div th:replace="top :: header"></div>
+
 	<section>
 	<form th:action="@{/validate/login}" th:object="${user}" method="post">
 		<h2 style="text-align: center;">Member Login</h2>
@@ -32,6 +112,8 @@
 		<div class="error-message"><p><span th:text="${errorMsg}" /></p></div>
 	</form>
 	</section>
+
+<div th:replace="foot :: footer"></div>
 </body>
 
 </html>

@@ -3,34 +3,121 @@
 
 <head>
 	<title>7haven Account Verify</title>
-	<link th:href="@{/styles/account.css}" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css}">
 	<!-- This html author is Xu Zhiye -->
+	<style>
+		/* Form styles */
+		.form-container {
+			padding: 40px;
+			max-width: 400px;
+			width: 100%;
+			margin: 0 auto;
+		}
+
+		.form-container h2 {
+			margin-bottom: 20px;
+			color: #333;
+			font-size: 24px;
+			text-align: center;
+		}
+
+		.form-row {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 15px;
+		}
+
+		.form-row label {
+			width: 40%;
+			font-weight: bold;
+		}
+
+		.form-row input {
+			width: 70%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 16px;
+		}
+
+		.container {
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
+
+		.container button {
+			padding: 10px 20px;
+			background-color: #474747;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+
+		.container button:hover {
+			background-color: #333333;
+		}
+
+		/* Footer links */
+		.form-footer {
+			text-align: center;
+			margin-top: 20px;
+		}
+
+		.form-footer a {
+			color: #474747;
+			text-decoration: none;
+			font-size: 14px;
+			margin: 0 10px;
+		}
+
+		.form-footer a:hover {
+			color: #333333;
+			text-decoration: underline;
+		}
+
+		/* Error message */
+		.error-message {
+			text-align: center;
+			color: red;
+			margin-top: 10px;
+		}
+
+		.error-message p {
+			margin: 0;
+		}
+	</style>
 </head>
 
 <body>
-	<header>
-		<h2>Welcome to Ultra 7haven Furniture</h2>
-	</header>
+<div th:replace="top :: header"></div>
 
-	<section>
-		<form th:action="@{/validateAccount}" th:object="${user}" method="post">
-			<h2 style="text-align: center;">Member Validate</h2>
-			<div class="form-row">
-				<input type="text" id="name" th:field="*{name}" placeholder="Registered Real Name" required />
-			</div>
-			<div class="form-row">
-				<input type="text" id="email" th:field="*{email}" placeholder="Registered Email" required />
-			</div>
-			<div class="container">
-				<button type="submit">Submit</button>
-			</div>
-			<div class="container">
-<a th:href="@{/login}">Back to Login</a></div>
-						</div>
-			<div class="form-footer"><span th:text="${MSG}" /></div>
-		</form>
-
-	</section>
+<section class="form-container">
+	<form th:action="@{/validateAccount}" th:object="${user}" method="post">
+		<h2>Member Validate</h2>
+		<div class="form-row">
+			<label for="name">Registered RealName:</label>
+			<input type="text" id="name" th:field="*{name}" placeholder="Registered Real Name" required />
+		</div>
+		<div class="form-row">
+			<label for="email">Registered Email:</label>
+			<input type="text" id="email" th:field="*{email}" placeholder="Registered Email" required />
+		</div>
+		<div class="container">
+			<button type="submit">Submit</button>
+		</div>
+		<div class="form-footer">
+			<a th:href="@{/login}">Back to Login</a>
+		</div>
+		<div class="form-footer">
+			<span th:text="${MSG}"></span>
+		</div>
+	</form>
+</section>
+<div th:replace="foot :: footer"></div>
 </body>
 
 </html>

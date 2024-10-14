@@ -89,11 +89,10 @@
 		<div class="products-container">
 			<div th:each="product : ${products}" class="product">
 				<a th:href="@{/product/{id}(id=${product.productId})}">
-					<img th:src="@{|${product.coverImagePath}|}" alt="产品图片">
+					<img th:src="@{|${product.coverImagePath}|}" alt="product image">
 				</a>
-				<h2 th:text="${product.name}" style="color: #333;">产品名称</h2>
-				<p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">产品价格
-				</p>
+				<h2 th:text="${product.name}" style="color: #333;" class = "product-name">product name</h2>
+				<p class="price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')}">price</p>
 			</div>
 		</div>
 
