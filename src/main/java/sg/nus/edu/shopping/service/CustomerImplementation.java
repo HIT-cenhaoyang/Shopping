@@ -31,12 +31,7 @@ public class CustomerImplementation implements CustomerInterface{
 		customerRepo.save(customer);
 
 	}
-	
-	@Override
-	@Transactional
-	public ArrayList<Customer> findCustomerByuserName(String userName) {
-		return customerRepo.findCustomerByuserName(userName);
-	}
+
 
 	//Author: xu zhiye
 	@Override
