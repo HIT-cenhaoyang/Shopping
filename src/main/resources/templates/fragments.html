@@ -43,10 +43,6 @@
 
 				</div>
 				<div th:if="${#strings.isEmpty(session.username)}">
-					<a th:href="@{/7haven/cart}" class="image-container" style="margin-left: 20px">
-						<img src="/images/CartW.png" alt="Cart" class="default-image">
-						<img src="/images/CartG.png" alt="Cart" class="hover-image">
-					</a>
 					<a th:href="@{/login}" class="image-container">
 						<img src="/images/LoginW.png" alt="Login" class="default-image">
 						<img src="/images/LoginG.png" alt="Login" class="hover-image">

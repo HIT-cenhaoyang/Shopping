@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import sg.nus.edu.shopping.interfacemethods.CustomerInterface;
 import sg.nus.edu.shopping.model.Customer;
+import sg.nus.edu.shopping.model.PaymentDetail;
 import sg.nus.edu.shopping.service.CustomerImplementation;
 import sg.nus.edu.shopping.service.CustomerValidator;
 
@@ -68,6 +69,7 @@ public class CustomerController {
             @RequestParam("email") String email,
             @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("address") String address,
+			@RequestParam("CardNumber") String CardNumber,
             Model model
     ) {
         //make sure the username is unique
@@ -89,6 +91,7 @@ public class CustomerController {
         }
 
         Customer customer = new Customer();
+		PaymentDetail paymentDetail = new PaymentDetail();
         customer.setName(name);
         customer.setUserName(userName);
         customer.setPassword(password);
@@ -98,6 +101,7 @@ public class CustomerController {
         customer.setPhoneNumber(phoneNumber);
         customer.setAddress(address);
         cusregister.saveCustomer(customer);
+		paymentDetail.setCardNumber(CardNumber);
 
         model.addAttribute("successMessage", "Registration successful!");
         return "redirect:/login";
