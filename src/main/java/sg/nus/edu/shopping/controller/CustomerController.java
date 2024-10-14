@@ -207,7 +207,6 @@ public class CustomerController {
 		Customer dataU = cusregister.findById(userId);
 
 		model.addAttribute("user", dataU);
-		System.out.println("user"+dataU.getPaymentDetails().get(0).getBankName());
 		return "profilePage";
 	}
 
@@ -217,7 +216,6 @@ public class CustomerController {
 		// find by ID from database
 		Customer dataU = cusregister.findById(user.getCustomerId());
 
-		System.out.println("user"+user.getPaymentDetails().get(0).getBankName());
 		// ensure no duplicate userName
 		if (!dataU.getUserName().equalsIgnoreCase(user.getUserName())
 				&& cusregister.searchUserByUserName(user.getUserName()) != null) {
@@ -225,8 +223,11 @@ public class CustomerController {
 			model.addAttribute("user", user);
 			return "profilePage";
 		} else {
+			user.getPaymentDetails().forEach(pd -> {
+				pd.setPayment_customer(user);
+			});
 			cusregister.saveCustomer(user);
-			return "redirect:/home";
+			return "redirect:/products";
 		}
 	}
 	
