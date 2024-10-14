@@ -11,13 +11,13 @@ public interface CustomerInterface {
 	//Author: Xu Ziyi
 	public boolean isUsernameTaken(String userName);
 	public void saveCustomer(Customer customer);
-	public ArrayList<Customer> findCustomerByuserName(String userName);
 	
 	//Author: xu zhiye
 	public Customer searchUserByUserName(String userName);
 	public Customer searchUserByUserEmail(String userEmail);
 	public Customer findById(String id);
 
+	//Author: Hannah
 	Optional<Customer> findCustomerById(String customerId);
 	List<Customer> findAllCustomers();
 	Optional<Customer> findByUserName(String userName);

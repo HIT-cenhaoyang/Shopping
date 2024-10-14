@@ -4,62 +4,85 @@
     <title>Your Cart</title>
     <link rel="stylesheet" th:href="@{/styles/homepagestyle.css}" />
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
         .cart-container {
             display: flex;
             justify-content: space-between;
-            margin: 20px;
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
         table.cart-details {
-            width: 100%;
+            width: 70%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
 
         table.cart-details th, table.cart-details td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
+            border-bottom: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
         }
 
         table.cart-details th {
-            background-color: #f4f4f4;
+            background-color: #f8f8f8;
+            color: #333;
+            font-size: 1rem;
+            text-transform: uppercase;
         }
 
         .cover-image-container {
-            width: 150px;
-            height: 150px;
+            width: 100px;
+            height: 100px;
             overflow: hidden;
-            margin: auto;
+            border-radius: 10px;
         }
 
         .cover-image-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
         }
 
         .order-summary {
-            max-width: 300px;
+            width: 25%;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            font-size: 1rem;
+        }
+
+        .order-summary h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #444;
         }
 
         .btn {
             display: inline-block;
-            padding: 10px 20px;
-            margin-top: 10px;
+            padding: 12px 20px;
+            margin: 15px 10px 0 0;
             text-decoration: none;
-            color: #fff;
-            background-color: #0000ff;
+            color: #ffffff;
+            background-color: #007bff;
             border-radius: 5px;
-            text-align: center;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #cc0000;
+            background-color: #0056b3;
         }
 
         .quantity-controls {
@@ -71,24 +94,42 @@
         .quantity-controls button {
             width: 30px;
             height: 30px;
+            border: none;
             font-size: 18px;
-            margin: 0 5px;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .quantity-controls button:hover {
+            background-color: #0056b3;
         }
 
         .quantity-controls input[type="number"] {
             width: 50px;
             text-align: center;
+            margin: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
 
         td h3 {
-            font-size: 1.2em;
+            font-size: 1.1rem;
+            color: #333;
             margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
-<h1>Your Cart</h1>
+<h1 style="text-align:center; margin-top: 30px;">Your Cart</h1>
 
 <div class="cart-container">
     <!-- Shopping Cart Table -->
@@ -108,23 +149,32 @@
     </table>
 
     <div class="order-summary">
-        <h2>Order summary</h2>
+        <h2>Order Summary</h2>
         <p>Products (<span id="product-count">0</span>): $<span id="product-total">0.00</span></p>
-        <a th:href="@{/7haven/checkout}" class="btn">Check out</a>
+        <a href="#" class="btn" id="checkout-btn">Check Out</a>
     </div>
 </div>
 
 <div class="container">
-    <a th:href="@{/7haven/purchase/history}" class="btn">Retrieve Purchase Records</a> &nbsp; &nbsp;
-    <a th:href="@{/products}" class="btn">Continue Shopping</a> &nbsp; &nbsp;
+    <a th:href="@{/7haven/purchase/history}" class="btn">Retrieve Purchase Records</a>
+    <a th:href="@{/products}" class="btn">Continue Shopping</a>
     <a href=" " onclick="history.go(-1); return false;" class="btn">Back</a>
-
 </div>
-
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         loadCartItems();
+        document.getElementById('checkout-btn').addEventListener('click', function(event) {
+            let productCount = parseInt(document.getElementById('product-count').textContent);
+            if (productCount === 0) {
+                event.preventDefault();
+                alert('Your cart is empty!');
+                return false;
+            } else {
+                // Redirect to checkout page
+                window.location.href = "/7haven/checkout";
+            }
+        });
     });
 
     async function loadCartItems() {
@@ -165,7 +215,7 @@
                     </div>
                 </td>
                 <td>
-                    <button class="btn btn-danger" onclick="removeItem(${item.cartId})">Remove</button>
+                    <button class="btn" style="background-color: #dc3545;" onclick="removeItem(${item.cartId})">Remove</button>
                 </td>
             `;
 
