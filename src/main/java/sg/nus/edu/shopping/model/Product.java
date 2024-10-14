@@ -180,17 +180,9 @@ public class Product{
         this.sku = sku;
     }
 
-    @JsonIgnore
+
     public Category getCategory() {
         return category;
-    }
-
-    public String getCategoryName() {
-        return category.getCategoryName();
-    }
-
-    public int getCategoryId() {
-        return category.getCategoryId();
     }
 
     public void setCategory(Category category) {

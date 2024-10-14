@@ -8,6 +8,7 @@ import sg.nus.edu.shopping.interfacemethods.AdminInterface;
 import sg.nus.edu.shopping.interfacemethods.CustomerInterface;
 import sg.nus.edu.shopping.model.Admin;
 import sg.nus.edu.shopping.model.Customer;
+import sg.nus.edu.shopping.repository.PaymentDetailRepository;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,9 @@ public class UserRestController {
     private CustomerInterface custInt;
     @Autowired
     private AdminInterface adminInt;
+    
+    @Autowired
+    private PaymentDetailRepository paymentDetailRepo;
 
     @GetMapping("/customers")
     public ResponseEntity<List<Customer>> getCustomers(
@@ -67,5 +71,11 @@ public class UserRestController {
                 return new ResponseEntity<>("Incorrect password.", HttpStatus.UNAUTHORIZED);
             }
         }
+    }
+    
+    @PostMapping("/deletePayment")
+    public void deletePayment(@RequestParam("cardNumber") String cardNumber) {
+    	paymentDetailRepo.deleteById(cardNumber);
+    	
     }
 }

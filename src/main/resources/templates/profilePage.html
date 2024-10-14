@@ -5,7 +5,28 @@
 	<title>7haven Profile</title>
 	<link th:href="@{/styles/account.css}" rel="stylesheet" />
 	<!-- This html author is Xu Zhiye -->
-
+	<script>
+		function deletePayment(cardNumber) {
+			if (confirm('Are you sure you want to delete this payment detail?')) {
+			            // Send a request to delete the payment detail
+			            fetch(`/api/deletePayment?cardNumber=${cardNumber}`, {
+			                method: 'POST',
+			                headers: {
+			                    'Content-Type': 'application/json',
+			                    'X-Requested-With': 'XMLHttpRequest',
+			                },
+			            })
+			            .then(response => {
+			                if (response.ok) {
+			                    // Refresh the page or remove the row from the DOM
+			                    window.location.reload(); // or update the table dynamically
+			                } else {
+			                    alert('Failed to delete');
+			                }
+			            });
+			        }
+		 }
+	</script>
 </head>
 
 <body>
@@ -62,13 +83,14 @@
 					<th>Expiry date</th>
 					<th>Bank Name</th>
 				</tr>
-				<tr th:each="paymentDetail, iterStat:${user.paymentDetails}">
+				<tr th:each="paymentDetail, iterStat : *{paymentDetails}">
 					<td> <input type="text" th:field="*{paymentDetails[__${iterStat.index}__].holderName}"></td>
 					<td> <input type="text" th:field="*{paymentDetails[__${iterStat.index}__].cardNumber}"></td>
 					<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].expiryDate}"></td>
-					<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].bankName}"></td>
-					<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].payment_customer}"></td>
-
+					<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].bankName}"></td>				
+					<td><button type="button" th:attr="data-cardnumber=${paymentDetail.cardNumber}" 
+						onclick="deletePayment(this.getAttribute('data-cardNumber'))">DEL</button><td>
+							
 				</tr>
 			</table>
 			<div class="container">

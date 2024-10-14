@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sg.nus.edu.shopping.interfacemethods.CategoryInterface;
 import sg.nus.edu.shopping.interfacemethods.ProductInterface;
+import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.ProductImage;
 
@@ -120,6 +121,13 @@ public class ProductRestController {
         Optional<Product> optExistingProduct = productInt.findByProductId(id);
         if (optExistingProduct.isPresent()) {
             Product updatedProduct = optExistingProduct.get();
+            Category category = categoryInt.findByCategoryId(product.getCategory().getCategoryId());
+            if (category!=null) {
+                updatedProduct.setCategory(category);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
             updatedProduct.setName(product.getName());
             updatedProduct.setPrice(product.getPrice());
             updatedProduct.setDescription(product.getDescription());
@@ -127,6 +135,7 @@ public class ProductRestController {
             updatedProduct.setSku(product.getSku());
             updatedProduct.setImages(product.getImages());
             updatedProduct.setStockAvailable(product.getStockAvailable());
+            updatedProduct.setLive(product.isLive());
 
             //create new list if null. This is to prevent react.js from reporting null error
             if (updatedProduct.getImages() == null) {

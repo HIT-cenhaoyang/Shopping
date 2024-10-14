@@ -41,8 +41,9 @@ public class Customer {
     @OneToMany(mappedBy = "customer") @JsonIgnore
     private List<ShoppingCart> shoppingCarts;
 
-    @OneToMany(mappedBy = "payment_customer") @JsonIgnore
-    private List<PaymentDetail> paymentDetails = new ArrayList<>();
+    @OneToMany(mappedBy = "payment_customer" , cascade = CascadeType.ALL) 
+    @JsonIgnore
+    private List<PaymentDetail> paymentDetails;
 
     @OneToMany(mappedBy = "customer") @JsonIgnore
     private List<Review> reviews;
