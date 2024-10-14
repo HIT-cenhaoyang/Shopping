@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import sg.nus.edu.shopping.interfacemethods.CustomerInterface;
+import sg.nus.edu.shopping.interfacemethods.PaymentInterface;
 import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.PaymentDetail;
 import sg.nus.edu.shopping.service.CustomerImplementation;
@@ -44,6 +45,11 @@ public class CustomerController {
 		// Other binding
 		binder.addValidators(customerValidator);
 	}
+
+	@Autowired
+	private PaymentInterface paymentService;
+	@Autowired
+	public void setPaymentService(PaymentInterface paymentService) {this.paymentService = paymentService;}
 	
     //if the user put in http://localhost/3306/register the browser will open register page
     @GetMapping("/register")
@@ -101,7 +107,13 @@ public class CustomerController {
         customer.setPhoneNumber(phoneNumber);
         customer.setAddress(address);
         cusregister.saveCustomer(customer);
+
 		paymentDetail.setCardNumber(CardNumber);
+		paymentDetail.setBankName("DBS");
+		paymentDetail.setExpiryDate("2023-12-12");
+		paymentDetail.setHolderName(name);
+		paymentDetail.setPayment_customer(customer);
+		paymentService.savePaymentDetails(paymentDetail);
 
         model.addAttribute("successMessage", "Registration successful!");
         return "redirect:/login";
