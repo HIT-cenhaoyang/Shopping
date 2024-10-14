@@ -15,19 +15,4 @@ public class ShoppingApplication {
         SpringApplication.run(ShoppingApplication.class, args);
     }
 
-//    @Bean
-//    CommandLineRunner runMe(OrderDetailRepository orderDetailRepo, CustomerRepository customerRepo,
-//                            PaymentDetailRepository paymentDetailRepo, ProductRepository productRepo,
-//                            ShoppingCartRepository shoppingCartRepo, PurchaseRecordRepository purchaseRecordRepo,
-//                            AdminRepository adminRepo) {
-//        return args -> {
-//            //Only for test Only
-//            orderDetailRepo.findAll();
-//            paymentDetailRepo.findAll();
-//            productRepo.findAll();
-//            shoppingCartRepo.findAll();
-//            purchaseRecordRepo.findAll();
-//            adminRepo.findAll();
-//        };
-//    }
 }

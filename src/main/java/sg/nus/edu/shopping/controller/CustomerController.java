@@ -83,8 +83,8 @@ public class CustomerController {
         }
 
         //make sure password is correct format
-        if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{9,20}$")) {
-            model.addAttribute("errorMessage", "Password must contain at least 9 characters at most 20 characters, including uppercase, lowercase letters, and numbers.");
+        if (!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\\\-\\\\[\\\\]{};':\\\"\\\\\\\\|,.<>\\\\/?]).{6,10}$")) {
+            model.addAttribute("errorMessage", "Password must contain at least 6 characters at most 10 characters, including uppercase, lowercase letters, special character and numbers.");
             return "registerPage";
         }
 

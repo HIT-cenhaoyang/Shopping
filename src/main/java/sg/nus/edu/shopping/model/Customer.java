@@ -23,7 +23,7 @@ public class Customer {
 
     private String phoneNumber;
     
-    @Pattern(regexp = "^[a-zA-Z0-9]{9,20}$", message = "Password must contain at least 9 characters at most 20 characters, including uppercase, lowercase letters, and numbers.")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\\\\\\\-\\\\\\\\[\\\\\\\\]{};':\\\\\\\"\\\\\\\\\\\\\\\\|,.<>\\\\\\\\/?]).{6,10}$", message = "Password must contain at least 6 characters at most 10 characters, including uppercase, lowercase letters, special character and numbers.")
     private String password;
 
     private String email;
