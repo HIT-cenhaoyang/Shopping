@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
 	<title>7haven Profile</title>
-	<link th:href="@{/styles/account.css}" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" th:href="@{/styles/homepagestyle.css}">
 	<!-- This html author is Xu Zhiye -->
 	<script>
 		function deletePayment(cardNumber) {
@@ -27,84 +27,185 @@
 			        }
 		 }
 	</script>
+	<style>
+		/* General styles */
+		body {
+			font-family: 'Com_Sem', cursive;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+			color: #333;
+		}
+
+		/* Profile section */
+		.profile-section {
+			padding: 40px;
+			margin: 20px auto;
+			max-width: 800px;
+			background-color: #f4f4f4;
+		}
+
+		/* Profile title */
+		.profile-title {
+			text-align: center;
+			margin-bottom: 20px;
+			color: #333;
+		}
+
+		/* Profile table */
+		.profile-table, .payment-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 20px;
+		}
+
+		.profile-table th, .profile-table td, .payment-table th, .payment-table td {
+			border-bottom: 1px solid #ddd;
+			padding: 10px;
+			text-align: left;
+		}
+
+		.profile-table th, .payment-table th {
+			background-color: #e0e0e0;
+			color: #333;
+			font-size: 1rem;
+			text-transform: uppercase;
+			font-family: 'Com_Sem', cursive;
+		}
+
+		/* Profile input */
+		.profile-input {
+			width: 100%;
+			padding: 8px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 1rem;
+		}
+
+		/* Date format */
+		.date-format {
+			color: #666;
+			font-size: 0.9rem;
+			font-family: 'Com_Sem', cursive;
+		}
+
+		/* Delete button */
+		.delete-btn {
+			padding: 8px 12px;
+			background-color: #dc3545;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 0.9rem;
+			font-family: 'Com_Sem', cursive;
+		}
+
+		.delete-btn:hover {
+			background-color: #c82333;
+		}
+
+		/* Form actions */
+		.form-actions {
+			text-align: center;
+			margin-top: 20px;
+		}
+
+		/* Button styles */
+		.btn {
+			display: inline-block;
+			padding: 12px 20px;
+			margin: 10px;
+			text-decoration: none;
+			color: #fff;
+			background-color: #474747;
+			border-radius: 5px;
+			font-weight: bold;
+			transition: background-color 0.3s ease;
+			font-family: 'Com_Sem', cursive;
+		}
+
+		.btn:hover {
+			background-color: #333;
+		}
+
+		/* Form footer */
+		.form-footer {
+			text-align: center;
+			margin-top: 20px;
+			color: #333;
+		}
+	</style>
 </head>
 
 <body>
-	<header>
-		<h2>Welcome to Ultra 7haven Furniture</h2>
-	</header>
-	<section>
-		<form th:action="@{/7haven/update/profile}" method="post" th:object="${user}">
-			<h2 style="text-align: center;">Member Profile</h2>
-			<table>
-				<tr>
-					<th>Real Name:</th>
-					<td><input type="text" th:field="*{name}"></td>
-				</tr>
-				<tr>
-					<th>User Name:</th>
-					<td><input type="text" th:field="*{userName}"></td>
-				</tr>
-				<tr>
-					<th>Birth Date:</th>
-					<td><input type="text" th:field="*{birthDate}"></td>
-				</tr>
-				<tr>
-					<th></th>
-					<td>Date format: MM-dd-yy</td>
-				</tr>
-				<tr>
-					<th>Gender:</th>
-					<td><input type="text" th:field="*{gender}"></td>
-				</tr>
-				<tr>
-					<th>Email: </th>
-					<td><input type="text" th:field="*{email}"></td>
-				</tr>
-				<tr>
-					<th>Phone: </th>
-					<td><input type="text" th:field="*{phoneNumber}"></td>
-				</tr>
-				<tr>
-					<th>Address: </th>
-					<td><input type="text" th:field="*{address}"></td>
-				</tr>
-
-				<tr>
-					<th><input type="hidden" th:field="*{customerId}"></th>
-					<th><input type="hidden" th:field="*{password}"></th>
-				</tr>
-				<tr>
-			</table>
-			<table>
-				<tr>
-					<th>Holder Name</th>
-					<th>Card Number</th>
-					<th>Expiry date</th>
-					<th>Bank Name</th>
-				</tr>
-				<tr th:each="paymentDetail, iterStat : *{paymentDetails}">
-					<td> <input type="text" th:field="*{paymentDetails[__${iterStat.index}__].holderName}"></td>
-					<td> <input type="text" th:field="*{paymentDetails[__${iterStat.index}__].cardNumber}"></td>
-					<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].expiryDate}"></td>
-					<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].bankName}"></td>				
-					<td><button type="button" th:attr="data-cardnumber=${paymentDetail.cardNumber}" 
-						onclick="deletePayment(this.getAttribute('data-cardNumber'))">DEL</button><td>
-							
-				</tr>
-			</table>
-			<div class="container">
-				<button type="submit">Update the change</button>
-			</div>
-
-			<div class="container">
-				<a th:href="@{/7haven/purchase/history}" class="btn">Retrieve Purchase Records </a> &nbsp; &nbsp;
-				<a href=" " onclick="history.go(-1); return false;" class="btn">Back</a>
-			</div>
-			<div class="form-footer"><span th:text="${MSG}" /></div>
-		</form>
-	</section>
-
+<div th:replace="fragments :: header"></div>
+<section class="profile-section">
+	<form th:action="@{/7haven/update/profile}" method="post" th:object="${user}" class="profile-form">
+		<h2 class="profile-title">Member Profile</h2>
+		<table class="profile-table">
+			<tr>
+				<th>Real Name:</th>
+				<td><input type="text" th:field="*{name}" class="profile-input"></td>
+			</tr>
+			<tr>
+				<th>User Name:</th>
+				<td><input type="text" th:field="*{userName}" class="profile-input"></td>
+			</tr>
+			<tr>
+				<th>Birth Date:</th>
+				<td><input type="text" th:field="*{birthDate}" class="profile-input"></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td class="date-format">Date format: MM-dd-yy</td>
+			</tr>
+			<tr>
+				<th>Gender:</th>
+				<td><input type="text" th:field="*{gender}" class="profile-input"></td>
+			</tr>
+			<tr>
+				<th>Email:</th>
+				<td><input type="text" th:field="*{email}" class="profile-input"></td>
+			</tr>
+			<tr>
+				<th>Phone:</th>
+				<td><input type="text" th:field="*{phoneNumber}" class="profile-input"></td>
+			</tr>
+			<tr>
+				<th>Address:</th>
+				<td><input type="text" th:field="*{address}" class="profile-input"></td>
+			</tr>
+			<tr>
+				<th><input type="hidden" th:field="*{customerId}"></th>
+				<th><input type="hidden" th:field="*{password}"></th>
+			</tr>
+		</table>
+		<table class="payment-table">
+			<tr>
+				<th>Holder Name</th>
+				<th>Card Number</th>
+				<th>Expiry date</th>
+				<th>Bank Name</th>
+			</tr>
+			<tr th:each="paymentDetail, iterStat : *{paymentDetails}">
+				<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].holderName}" class="profile-input"></td>
+				<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].cardNumber}" class="profile-input"></td>
+				<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].expiryDate}" class="profile-input"></td>
+				<td><input type="text" th:field="*{paymentDetails[__${iterStat.index}__].bankName}" class="profile-input"></td>
+				<td><button type="button" th:attr="data-cardnumber=${paymentDetail.cardNumber}"
+							onclick="deletePayment(this.getAttribute('data-cardNumber'))" class="delete-btn">DEL</button></td>
+			</tr>
+		</table>
+		<div class="form-actions">
+			<button type="submit" class="btn">Update the change</button>
+			<a th:href="@{/7haven/purchase/history}" class="btn">Retrieve Purchase Records</a>
+			<a href="" onclick="history.go(-1); return false;" class="btn">Back</a>
+		</div>
+		<div class="form-footer"><span th:text="${MSG}"></span></div>
+	</form>
+</section>
+	<div th:replace="foot :: footer"></div>
 </body>
 
 </html>
