@@ -15,7 +15,7 @@
 			overflow: hidden; /* Hide overflow */
 			border-radius: 3px;
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
-			height: 700px; /* Increase height */
+			height: 600px; /* Increase height */
 		}
 
 		.carousel-slide {
@@ -29,23 +29,33 @@
 		}
 
 		.carousel-dots {
-			text-align: center;
-			margin-top: 10px;
+			position: absolute;
+			bottom: 20px; /* Position the dots slightly above the bottom of the container */
+			left: 50%;
+			transform: translateX(-50%);
+			display: flex;
+			justify-content: center;
 		}
 
 		.carousel-dots .dot {
 			display: inline-block;
-			width: 10px;
-			height: 10px;
+			width: 12px;
+			height: 12px;
 			margin: 0 5px;
-			background-color: #bbb;
+			background-color: rgba(255, 255, 255, 0.7); /* Transparent white background */
 			border-radius: 50%;
 			cursor: pointer;
+			transition: background-color 0.3s ease;
 		}
 
 		.carousel-dots .dot.active {
-			background-color: #717171;
+			background-color: #ffffff; /* Active dot is white */
 		}
+
+		.carousel-dots .dot:hover {
+			background-color: #717171; /* Hover state for dots */
+		}
+
 
 	</style>
 </head>
@@ -66,12 +76,13 @@
 					<img th:src="@{|${imageUrl}|}" alt="Hot Product">
 				</div>
 			</div>
-			<!-- 小圆点显示 -->
+			<!-- 小圆点显示，悬浮在图片上 -->
 			<div class="carousel-dots">
-        <span th:each="hotProduct, indexStat : ${hotProducts}" class="dot"
+		<span th:each="hotProduct, indexStat : ${hotProducts}" class="dot"
 			  th:classappend="${indexStat.index == 0} ? 'active' : ''"></span>
 			</div>
 		</div>
+
 
 
 		<!-- 产品展示 -->
@@ -127,37 +138,53 @@
 	<div th:replace="foot :: footer"></div>
 
 	<script>
-		let currentIndex = 0;
-		const slides = document.querySelectorAll('.carousel-slide .slide');
-		const totalSlides = slides.length;
-		const dots = document.querySelectorAll('.carousel-dots .dot');
-
-		function updateCarousel() {
+		document.addEventListener('DOMContentLoaded', function () {
+			let currentIndex = 0;
+			const slides = document.querySelectorAll('.carousel-slide .slide');
+			const totalSlides = slides.length;
+			const dots = document.querySelectorAll('.carousel-dots .dot');
 			const carouselSlide = document.querySelector('.carousel-slide');
-			const slideWidth = carouselSlide.clientWidth;
-			carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 
-			// 更新小圆点的状态
-			dots.forEach(dot => dot.classList.remove('active'));
-			dots[currentIndex].classList.add('active');
-		}
+			function updateCarousel() {
+				const slideWidth = carouselSlide.clientWidth;
+				carouselSlide.style.transition = 'transform 0.5s ease-in-out'; // 正常过渡
+				carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 
-		// 下一张图片
-		function showNextSlide() {
-			currentIndex = (currentIndex + 1) % totalSlides; // 循环播放
-			updateCarousel();
-		}
+				// 更新小圆点的状态
+				dots.forEach(dot => dot.classList.remove('active'));
+				dots[currentIndex].classList.add('active');
+			}
 
-		// 点击切换到指定图片
-		dots.forEach((dot, index) => {
-			dot.addEventListener('click', () => {
-				currentIndex = index;
-				updateCarousel();
+			// 无缝过渡到第一张
+			function seamlessTransition() {
+				const slideWidth = carouselSlide.clientWidth;
+				carouselSlide.style.transition = 'none'; // 立即跳转，不要过渡效果
+				carouselSlide.style.transform = `translateX(0)`; // 回到第一张
+				currentIndex = 0; // 重置索引
+			}
+
+			// 下一张图片
+			function showNextSlide() {
+				currentIndex++;
+				if (currentIndex >= totalSlides) {
+					// 如果超出最后一张，延迟0.5秒后无缝跳转到第一张
+					setTimeout(seamlessTransition, 500);
+				} else {
+					updateCarousel();
+				}
+			}
+
+			// 点击切换到指定图片
+			dots.forEach((dot, index) => {
+				dot.addEventListener('click', () => {
+					currentIndex = index;
+					updateCarousel();
+				});
 			});
-		});
 
-		// 每3秒自动切换图片
-		setInterval(showNextSlide, 3000);
+			// 每5秒自动切换图片
+			setInterval(showNextSlide, 5000);
+		});
 
 	</script>
 </body>
