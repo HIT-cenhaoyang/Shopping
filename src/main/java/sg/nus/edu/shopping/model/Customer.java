@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,7 +42,7 @@ public class Customer {
     private List<ShoppingCart> shoppingCarts;
 
     @OneToMany(mappedBy = "payment_customer") @JsonIgnore
-    private List<PaymentDetail> paymentDetails;
+    private List<PaymentDetail> paymentDetails = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer") @JsonIgnore
     private List<Review> reviews;

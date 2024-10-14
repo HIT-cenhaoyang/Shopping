@@ -11,12 +11,14 @@ import jakarta.transaction.Transactional;
 import sg.nus.edu.shopping.interfacemethods.CustomerInterface;
 import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.repository.CustomerRepository;
+import sg.nus.edu.shopping.repository.PaymentDetailRepository;
 
 @Service
 @Transactional
 public class CustomerImplementation implements CustomerInterface{
 	@Autowired
 	CustomerRepository customerRepo;
+	
 	
 	@Override
 	@Transactional
