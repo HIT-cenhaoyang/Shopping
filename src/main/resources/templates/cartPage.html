@@ -170,6 +170,13 @@
 
 <div th:replace="foot :: footer"></div>
 <script>
+    //reload page when clicking on the return button of browser
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    });
+
     document.addEventListener("DOMContentLoaded", function() {
         loadCartItems();
         document.getElementById('checkout-btn').addEventListener('click', function(event) {

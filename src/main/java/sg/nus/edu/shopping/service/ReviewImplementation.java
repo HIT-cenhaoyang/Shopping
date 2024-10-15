@@ -25,4 +25,10 @@ public class ReviewImplementation implements ReviewInterface{
         reviewRepo.save(review);
     }
 
+    @Override
+    @Transactional
+    public Double findAverageStarByProductId(int productId){
+        return reviewRepo.findAverageStarByProductId(productId);
+    }
+
 }

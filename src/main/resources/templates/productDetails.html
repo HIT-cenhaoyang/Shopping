@@ -145,6 +145,47 @@
 			display: none; /* 隐藏脚本标签 */
 		}
 
+		/*star*/
+		.star-container {
+			display: flex;
+			justify-content: left;
+			gap: 1px;
+			margin-top: 1px;
+		}
+
+		.star-button {
+			display: inline-block;
+			position: relative;
+			padding: 10px;
+			background-color: black;
+			clip-path: polygon(
+					50% 0%,
+					61% 35%,
+					98% 35%,
+					68% 57%,
+					79% 91%,
+					50% 70%,
+					21% 91%,
+					32% 57%,
+					2% 35%,
+					39% 35%
+			);
+			border: none;
+			cursor: default;
+			transition: background-color 0.3s ease;
+		}
+
+		.star-button.active {
+			background-color: red;
+		}
+
+		.average-star-value {
+			color: red;
+			font-style: italic;
+			font-size: 24px;
+			font-weight: bold;
+		}
+
 	</style>
 	<script th:inline="javascript">
 		// Function to change the cover image when an additional image is clicked
@@ -201,7 +242,7 @@
 		<!-- Product Details, taking up the other 50% -->
 		<div class="product-details">
 			<h2 th:text="${product.name}">Product Name</h2>
-			<p th:text="'$' + ${product.price}">Product Price</p>
+			<p th:text="'$' + ${#numbers.formatDecimal(product.price, 1,'COMMA', 2, 'POINT')}">Product Price</p>
 			<p th:text="${product.description}">Product Description</p>
 			<p>Dimensions: <span th:text="${product.dimensions}">N/A</span></p>
 
@@ -225,8 +266,23 @@
 	<!-- Reviews Section -->
 	<div class="review-section">
 		<h3>Reviews</h3>
+		<!-- display average star -->
+		<p><b>Average Star Rating: </b>
+			<span th:text="${averageStar > 0 ? averageStar : 'No Score'}"
+				  th:class="${averageStar > 0 ? 'average-star-value' : ''}">
+            No Score
+        </span>
+		</p>
+
 		<div th:each="review : ${reviews}">
 			<p><strong th:text="${review.customer.userName}">Customer Name</strong></p>
+			<div class="star-container" th:if="${averageStar > 0}">
+				<button type="button" class="star-button" th:classappend="${review.star >= 1} ? 'active' : ''"></button>
+				<button type="button" class="star-button" th:classappend="${review.star >= 2} ? 'active' : ''"></button>
+				<button type="button" class="star-button" th:classappend="${review.star >= 3} ? 'active' : ''"></button>
+				<button type="button" class="star-button" th:classappend="${review.star >= 4} ? 'active' : ''"></button>
+				<button type="button" class="star-button" th:classappend="${review.star >= 5} ? 'active' : ''"></button>
+			</div>
 			<p th:text="${review.comment}">This is a review comment.</p>
 			<hr>
 		</div>

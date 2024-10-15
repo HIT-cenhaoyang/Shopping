@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/styles/homepagestyle.css">
     <link rel="stylesheet" type="text/css" href="/styles/reviews.css">
     <title>Product Review</title>
-    <!-- 引用自定义样式文件 -->
 </head>
 <body>
-	<div th:replace="fragments :: header"></div>
 <div class="container">
     <h1>Review for Product</h1>
     <!-- 表单 -->
     <form th:action="@{/7haven/product/review/submit}" method="post">
         <!-- 隐藏字段用于传递 productId -->
         <input type="hidden" name="productId" th:value="${product.productId}">
+        <input type="hidden" name="starValue" id="starValue" value="">
 
-        <!-- 商品名称 -->
-        <!--<label for="productName">Product Name:</label>-->
-        <!--<input type="text" id="productName" th:value="${product.name}" readonly>-->
+        <!-- 星级评分 -->
+        <label>Product Score:</label>
+        <div class="star-container">
+            <button type="button" class="star-button" data-value="1"></button>
+            <button type="button" class="star-button" data-value="2"></button>
+            <button type="button" class="star-button" data-value="3"></button>
+            <button type="button" class="star-button" data-value="4"></button>
+            <button type="button" class="star-button" data-value="5"></button>
+        </div>
 
         <!-- 用户评论 -->
         <label for="reviewContent">Your Review:</label>
@@ -33,5 +37,31 @@
     <button onclick="window.history.back()" class="back-btn">Go Back</button>
 
 </div>
+
+<script>
+    const buttons = document.querySelectorAll('.star-button');
+    const hiddenInput = document.getElementById('starValue');
+
+    // 为每个按钮添加点击事件
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 获取当前点击按钮的值
+            const value = parseInt(button.getAttribute('data-value'));
+
+            // 将该按钮的值设置到隐藏的 input 中，提交时传递该值
+            hiddenInput.value = value;
+
+            // 遍历所有按钮，根据 data-value 判断是否需要变色
+            buttons.forEach(btn => {
+                const btnValue = parseInt(btn.getAttribute('data-value'));
+                if (btnValue <= value) {
+                    btn.classList.add('active'); // 将当前按钮及比它小的按钮变成金色
+                } else {
+                    btn.classList.remove('active'); // 恢复比它大的按钮的颜色
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

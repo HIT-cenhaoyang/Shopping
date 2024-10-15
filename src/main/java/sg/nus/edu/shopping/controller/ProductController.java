@@ -169,6 +169,10 @@ public class ProductController {
         List<Review> reviews = reviewService.findByProductId(productId);
         model.addAttribute("reviews", reviews);
 
+        // find Average Star of product
+        Double averageStar = reviewService.findAverageStarByProductId(productId);
+        model.addAttribute("averageStar", averageStar != null ? averageStar : 0);
+
         return "productDetails";
 
     }

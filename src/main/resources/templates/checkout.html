@@ -7,6 +7,14 @@
     <link rel="stylesheet" type="text/css" href="/styles/homepagestyle.css">
     <link rel="stylesheet" type="text/css" href="/styles/checkoutstyle.css">
     <script>
+
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                // 页面从缓存中加载时刷新页面
+                window.location.reload();
+            }
+        });
+
         // 显示所有支付方式
         function showAllPaymentDetails() {
             document.getElementById("allPaymentDetails").style.display = "block";

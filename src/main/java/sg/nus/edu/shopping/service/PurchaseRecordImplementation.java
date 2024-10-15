@@ -2,6 +2,8 @@ package sg.nus.edu.shopping.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import sg.nus.edu.shopping.interfacemethods.PurchaseRecordInterface;
 import sg.nus.edu.shopping.model.Customer;
@@ -72,5 +74,9 @@ public class PurchaseRecordImplementation implements PurchaseRecordInterface {
     @Transactional
     public PurchaseRecord findLastPurchaseRecordByCustomerName(String customerName){
         return purchaseRecordRepo.findLatestPurchaseRecordByCustomer(customerName);
+    }
+
+    public Page<PurchaseRecord> getAllPurchaseRecords(Pageable pageable) {
+        return purchaseRecordRepo.findAll(pageable);
     }
 }

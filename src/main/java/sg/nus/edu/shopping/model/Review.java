@@ -10,6 +10,8 @@ public class Review {
 
     private String comment;
 
+    private int star;
+
     @ManyToOne
     @JoinColumn(name="productId")
     private
@@ -59,5 +61,13 @@ public class Review {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public int getStar() {
+        return star;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
     }
 }

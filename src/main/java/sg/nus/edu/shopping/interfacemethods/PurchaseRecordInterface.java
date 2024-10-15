@@ -1,5 +1,7 @@
 package sg.nus.edu.shopping.interfacemethods;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.PurchaseRecord;
@@ -18,4 +20,5 @@ public interface PurchaseRecordInterface {
     void savePurchaseRecord(PurchaseRecord purchaseRecord);
     List<PurchaseRecord> findByCustomer(Customer customer);
     PurchaseRecord findLastPurchaseRecordByCustomerName(String customerName);
+    Page<PurchaseRecord> getAllPurchaseRecords(Pageable pageable);
 }

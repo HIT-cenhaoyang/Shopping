@@ -28,7 +28,7 @@
     </thead>
     <tbody>
     <!-- 遍历 Customer 中的 Orders 列表 -->
-    <tr th:each="order : ${orders}">
+    <tr th:each="order : ${purchaseRecordsPage.content}">
         <td th:text="${order.orderDate}"></td>
         <td th:text="${order.recipientName}"></td>
         <td th:text="${order.recipientAddress}"></td>
@@ -56,7 +56,7 @@
                     <td>
                         <!-- 商品名称点击跳转 -->
                         <a th:href="@{/product/{id}(id=${detail.product.productId})}">
-                        <span th:text="${detail.product.name}"></span>
+                            <span th:text="${detail.product.name}"></span>
                         </a>
                     </td>
                     <td th:text="${detail.productQty}"></td>
@@ -70,22 +70,41 @@
 
                     <!-- 使用 form 表单和 POST 方法发送评论请求 -->
                     <td>
-                    <form th:action="@{/7haven/product/review}" method="post">
-                        <input type="hidden" name="productId" th:value="${detail.product.productId}">
-                        <button type="submit"
-                                style="background-color: #ff9800; color: #fff; padding: 5px 10px; border: none; cursor: pointer; border-radius: 3px;">
-                            Review
-                        </button>
-                    </form>
+                        <form th:action="@{/7haven/product/review}" method="post">
+                            <input type="hidden" name="productId" th:value="${detail.product.productId}">
+                            <button type="submit"
+                                    style="background-color: #ff9800; color: #fff; padding: 5px 10px; border: none; cursor: pointer; border-radius: 3px;">
+                                Review
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </td>
     </tr>
+    <tr></tr>
     </tbody>
 </table>
-</td>
-</tr>
-<tr></tr>
-</tbody>
-</table>
+
+<!-- Pagination controls -->
+<div style="text-align: center; margin: 20px;">
+    <a th:if="${purchaseRecordsPage.hasPrevious()}"
+       th:href="@{/7haven/purchase/history(page=${purchaseRecordsPage.number - 1})}"
+       style="background-color: #5a4834; color: #ffffff; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; text-decoration: none;">
+        Previous
+    </a>
+
+    <span th:text="${purchaseRecordsPage.number + 1} + ' of ' + ${purchaseRecordsPage.totalPages}"></span>
+
+    <a th:if="${purchaseRecordsPage.hasNext()}"
+       th:href="@{/7haven/purchase/history(page=${purchaseRecordsPage.number + 1})}"
+       style="background-color: #5a4834; color: #ffffff; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; text-decoration: none;">
+        Next
+    </a>
+</div>
+
+
 <div style="text-align: center; margin: 20px;">
     <button onclick="window.location.href='/products'"
             style="background-color: #5a4834; color: #ffffff; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px;">

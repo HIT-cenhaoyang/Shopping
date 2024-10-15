@@ -55,6 +55,10 @@ public class CheckoutController {
         Customer customer = cService.findById(customerId);
         List<ShoppingCart> cartList = cartService.getCartByCustomerId(customerId);
 
+        if(cartList.isEmpty()) {
+            return "redirect:/7haven/cart";
+        }
+
         // 检查每个商品的数量是否小于等于库存数量
         for (ShoppingCart cart : cartList) {
             Product product = cart.getProduct();

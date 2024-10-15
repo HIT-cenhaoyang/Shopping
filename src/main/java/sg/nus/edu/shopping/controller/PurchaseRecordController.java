@@ -5,6 +5,9 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,12 +53,18 @@ public class PurchaseRecordController {
     
 	//Author:zhao yiran
 	@GetMapping("/7haven/purchase/history")
-	public String getCustomer(Model model, HttpSession obj) {
+	public String getCustomer(Model model, HttpSession obj, @RequestParam(defaultValue = "0") int page) {
 		String customerId = (String) obj.getAttribute("customerId");
 		Customer cust = cService.findById(customerId);
 		List<PurchaseRecord> orderList = cust.getPurchaseRecords();
 		
 		model.addAttribute("orders", orderList);
+
+        //pageable
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<PurchaseRecord> purchaseRecordsPage = purchaseRecordService.getAllPurchaseRecords(pageable);
+
+        model.addAttribute("purchaseRecordsPage", purchaseRecordsPage);
 		
 		return "PurchaseRecord";
 	}
@@ -68,7 +77,7 @@ public class PurchaseRecordController {
     }
     
     @PostMapping("/7haven/product/review/submit")
-    public String reviewSubmit(@RequestParam("reviewContent")String content,@Param("productId")int productId, HttpSession sessionObj, Model model){
+    public String reviewSubmit(@RequestParam("starValue") int starValue,@RequestParam("reviewContent")String content,@Param("productId")int productId, HttpSession sessionObj, Model model){
         Product product = pService.findByProductId(productId).orElse(null);
         model.addAttribute("product",product);
         String customerName = (String) sessionObj.getAttribute("username");
@@ -76,6 +85,7 @@ public class PurchaseRecordController {
         review.setCustomer(cService.findByUserName(customerName).orElse(null));
         review.setProduct(pService.findByProductId(productId).orElse(null));
         review.setComment(content);
+        review.setStar(starValue);
         rService.saveReview(review);
         return "redirect:/7haven/purchase/history";
 
