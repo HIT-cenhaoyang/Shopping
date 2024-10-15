@@ -64,7 +64,6 @@ public class CustomerImplementation implements CustomerInterface{
 	//Author: xu zhiye
 	@Override
 	public Customer findById(String id) {
-		// TODO Auto-generated method stub
 		Optional<Customer> result = customerRepo.findById(id);
 		if(result.isPresent()) {
 			return result.get();
@@ -85,5 +84,9 @@ public class CustomerImplementation implements CustomerInterface{
 	}
 	public List<Customer> findByBirthDateMonth(int month) {
 		return customerRepo.findByBirthDateMonth(month);
+	}
+
+	public String findMaxCustomerId() {
+		return customerRepo.findMaxCustomerId();
 	}
 }

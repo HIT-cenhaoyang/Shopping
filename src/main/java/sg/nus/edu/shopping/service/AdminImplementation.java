@@ -5,13 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sg.nus.edu.shopping.interfacemethods.AdminInterface;
 import sg.nus.edu.shopping.model.Admin;
-import sg.nus.edu.shopping.model.*;
+import sg.nus.edu.shopping.model.Category;
+import sg.nus.edu.shopping.model.Product;
+import sg.nus.edu.shopping.model.ProductImage;
 import sg.nus.edu.shopping.repository.AdminRepository;
 import sg.nus.edu.shopping.repository.CategoryRepository;
 import sg.nus.edu.shopping.repository.ProductImageRepository;
 import sg.nus.edu.shopping.repository.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +20,8 @@ import java.util.Optional;
 @Transactional
 public class AdminImplementation implements AdminInterface {
 
-	@Autowired
-	AdminRepository adminRepo;
+    @Autowired
+    AdminRepository adminRepo;
     @Autowired
     ProductRepository productRepo;
     @Autowired
@@ -31,7 +32,7 @@ public class AdminImplementation implements AdminInterface {
     @Override
     public Optional<Admin> findAdminByUserName(String userName) {
         return adminRepo.findAdminByUserName(userName);
-	}
+    }
 
 
     //CRUD for Product
@@ -43,21 +44,25 @@ public class AdminImplementation implements AdminInterface {
         }
         return productRepo.save(product);
     }
+
     public Optional<Product> getProductById(int productId) {
         if (productRepo.findByProductId(productId) == null) {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
         return productRepo.findByProductId(productId);
     }
+
     public Optional<Product> getProductBySku(String sku) {
         if (productRepo.findBySku(sku) == null) {
             throw new IllegalArgumentException("Product with SKU " + sku + " does not exist.");
         }
         return productRepo.findBySku(sku);
     }
+
     public List<Product> getAllProducts() {
         return productRepo.findAll();
     }
+
     public Product updateProduct(int productId, Product updatedProduct) {
         Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
         if (optExistingProduct.isEmpty()) {
@@ -73,6 +78,7 @@ public class AdminImplementation implements AdminInterface {
         existingProduct.setImages(updatedProduct.getImages());
         return productRepo.save(existingProduct);
     }
+
     public void deleteProduct(int productId) {
         Optional<Product> optProduct = productRepo.findByProductId(productId);
         if (optProduct.isEmpty()) {
@@ -81,6 +87,7 @@ public class AdminImplementation implements AdminInterface {
         Product product = optProduct.get();
         productRepo.delete(product);
     }
+
     //CRUD for category
     public Category createCategory(String categoryName) {
         Category existingCategory = categoryRepo.findByCategoryName(categoryName);
@@ -90,15 +97,18 @@ public class AdminImplementation implements AdminInterface {
         Category newCategory = new Category(categoryName);
         return categoryRepo.save(newCategory);
     }
+
     public Category getCategoryById(int categoryId) {
         if (categoryRepo.findByCategoryId(categoryId) == null) {
             throw new IllegalArgumentException("Category with ID " + categoryId + " does not exist.");
         }
         return categoryRepo.findByCategoryId(categoryId);
     }
+
     public List<Category> getAllCategories() {
         return categoryRepo.findAll();
     }
+
     public Category updateCategory(int categoryId, Category updatedCategory) {
         Category existingCategory = categoryRepo.findByCategoryId(categoryId);
         if (existingCategory == null) {
@@ -108,6 +118,7 @@ public class AdminImplementation implements AdminInterface {
         existingCategory.setCategoryDescription(updatedCategory.getCategoryDescription());
         return categoryRepo.save(existingCategory);
     }
+
     public void deleteCategory(int categoryId) {
         Category category = categoryRepo.findByCategoryId(categoryId);
         if (category == null) {
@@ -115,6 +126,7 @@ public class AdminImplementation implements AdminInterface {
         }
         categoryRepo.delete(category);
     }
+
     //CRUD for ProductImage
     public void addProductImage(int productId, ProductImage productImage) {
         // check if product exists
@@ -131,6 +143,7 @@ public class AdminImplementation implements AdminInterface {
         productRepo.save(existingProduct);
         productImageRepo.save(productImage);
     }
+
     public ProductImage getCoverImage(int productId) {
         Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
         if (optExistingProduct.isEmpty()) {
@@ -139,6 +152,7 @@ public class AdminImplementation implements AdminInterface {
         Product existingProduct = optExistingProduct.get();
         return existingProduct.getCoverImage();
     }
+
     public List<ProductImage> getImagesByProduct(int productId) {
         Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
         if (optExistingProduct.isEmpty()) {
@@ -147,6 +161,7 @@ public class AdminImplementation implements AdminInterface {
         Product existingProduct = optExistingProduct.get();
         return productImageRepo.findByProduct(existingProduct);
     }
+
     public ProductImage updateProductImage(int imageId, ProductImage productImage) {
         ProductImage existingImage = productImageRepo.findByImageId(imageId);
         if (existingImage == null) {
@@ -156,6 +171,7 @@ public class AdminImplementation implements AdminInterface {
         existingImage.setFileName(productImage.getFileName());
         return productImageRepo.save(existingImage);
     }
+
     public void deleteProductImage(int productId, int imageId) {
         Optional<Product> optExistingProduct = productRepo.findByProductId(productId);
         if (optExistingProduct.isEmpty()) {
@@ -180,5 +196,9 @@ public class AdminImplementation implements AdminInterface {
 
     public void saveProduct(Product product) {
         productRepo.save(product);
+    }
+
+    public String findMaxAdminId() {
+        return adminRepo.findMaxAdminId();
     }
 }

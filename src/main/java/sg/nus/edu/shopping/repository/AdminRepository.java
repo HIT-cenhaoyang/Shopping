@@ -14,4 +14,7 @@ import sg.nus.edu.shopping.model.Admin;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, String> {
 	Optional<Admin> findAdminByUserName(String userName);
+
+	@Query("SELECT MAX(a.id) FROM Admin a")
+	String findMaxAdminId();
 }
