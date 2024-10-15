@@ -1,0 +1,195 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333333;
+    padding: 20px;
+    padding-bottom: 400px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+h1{
+    text-align: center;
+}
+
+h2, h3 {
+    color: #333333;
+}
+
+/* Container styling for the recipient's information and payment method */
+div {
+    margin-bottom: 20px;
+}
+
+/* Styling for buttons */
+button, input[type="submit"] {
+    background-color: #333333;
+    color: #f4f4f4;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #555555;
+}
+
+/* 初始按钮样式 */
+button.a-button {
+    background-color: #333333; /* 默认底色 */
+    color: #f4f4f4; /* 默认文字颜色 */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* 鼠标悬停时的样式 */
+button.a-button:hover {
+    background-color: #4285f4; /* 鼠标悬停时底色 */
+    color: #ffffff; /* 鼠标悬停时文字颜色 */
+}
+
+
+/* Form input fields for editing */
+input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 60%;
+}
+
+/* Shopping Cart Table */
+.shopping-cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff; /* Ensure the background remains white */
+}
+
+.shopping-cart-table, .shopping-cart-table th, .shopping-cart-table td {
+    border: 1px solid #ddd;
+}
+
+.shopping-cart-table th, .shopping-cart-table td {
+    padding: 15px;
+    text-align: center;
+}
+
+.shopping-cart-table th {
+    background-color: #333333;
+    color: #f4f4f4;
+}
+
+
+/* Product image styling */
+.product-image {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+}
+
+/* List of all payment methods */
+#allPaymentDetails ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#allPaymentDetails li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+/* Button for showing all payment methods */
+#showButton {
+    background-color: #333333;
+    color: #f4f4f4;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#showButton:hover {
+    background-color: #4285f4;
+    color: #ffffff;
+}
+
+/* Return to Cart Button */
+a button {
+    background-color: #333333;
+    color: #f4f4f4;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+a button:hover {
+    background-color: #555555;
+}
+
+/* Header fragment styling */
+div[th\:insert] {
+    padding-bottom: 20px;
+    border-bottom: 2px solid #333333;
+    margin-bottom: 20px;
+}
+
+/* Spacing for form elements */
+form div {
+    margin-bottom: 15px;
+}
+
+/* Selected payment method section */
+#selectedCardNumber {
+    font-weight: bold;
+    color: #333333;
+}
+
+/* Edit button styles */
+button[type="button"] {
+    margin-left: 10px;
+}
+
+/* 初始提交按钮样式 */
+input[type="button"].submit-button {
+    background-color: #333333; /* 默认底色 */
+    color: #f4f4f4; /* 默认文字颜色 */
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* 鼠标悬停时的样式 */
+input[type="button"].submit-button:hover {
+    background-color: #4285f4; /* 鼠标悬停时底色 */
+    color: #ffffff; /* 鼠标悬停时文字颜色 */
+}
+
+.selected-payment-method {
+    text-align: right;
+}
+
+.payment-button{
+    text-align: right;
+}
+
+.red-text{
+    color:red;
+}
+
+.total-price{
+    color:red;
+    font-size: x-large;
+    font-weight: bolder;
+}

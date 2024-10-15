@@ -123,11 +123,4 @@ button:hover, .btn-comment:hover {
     button, .btn-comment {
         padding: 5px;
     }
-    /* 针对Order Detail表头的样式 */
-    .table-sm thead th[colspan="7"] {
-        background-color: #f0f0f0;
-        font-size: 1.2rem;
-        font-weight: bold;
-        padding: 10px 0;
-    }
 }

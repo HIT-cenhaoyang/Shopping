@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+.success-message {
+    color: green;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.order-summary, .contact-info {
+    margin-top: 20px;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buttons {
+    margin-top: 30px;
+}
+
+.buttons a, .buttons form {
+    display: inline-block;
+    margin: 10px;
+}
+
+input[type="submit"], a.button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover, a.button:hover {
+    background-color: #0056b3;
+}

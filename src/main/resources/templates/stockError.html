@@ -2,13 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Stock Error</title>
+    <link rel="stylesheet" type="text/css" href="/styles/checkoutstyle.css">
+    <link rel="stylesheet" type="text/css" href="/styles/stockerrorstyle.css">
 </head>
 <body>
-<h1>Stock Error</h1>
-<p>Sorry, the requested quantity of <span th:text="${productName}"></span> is not available.</p>
-<p>Requested Quantity: <span th:text="${requiredQty}"></span></p>
-<p>Available Stock: <span th:text="${availableStock}"></span></p>
-<p>Please adjust your order and try again.</p>
-<a href="/7haven/cart">Go Back to Shopping Cart</a>
+<div class="container">
+    <h1>Stock Error</h1>
+    <p><img th:src="${productImagePath}" class="product-image" alt="Product Image"/></p>
+    <p>Sorry, the requested quantity of <span th:text="${productName}" style="font-weight: bold;"></span> is not available.</p>
+    <p>Requested Quantity: <span th:text="${requiredQty}" style="color: blue;"></span></p>
+    <p>Available Stock: <span th:text="${availableStock}" style="color: red;"></span></p>
+    <p>Please adjust your order and try again.</p>
+    <a href="/7haven/cart" class="button">Go Back to Shopping Cart</a>
+</div>
 </body>
 </html>

@@ -2,6 +2,7 @@ package sg.nus.edu.shopping.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +13,7 @@ import sg.nus.edu.shopping.model.*;
 import sg.nus.edu.shopping.service.CustomerImplementation;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class CheckoutController {
@@ -27,8 +26,6 @@ public class CheckoutController {
     private PurchaseRecordInterface pRService;
     @Autowired
     private OrderDetailInterface oService;
-    @Autowired
-    private ShoppingCartInterface scService;
     @Autowired
     private ProductInterface pService;
 
@@ -49,18 +46,31 @@ public class CheckoutController {
         this.oService = oServiceImpl;
     }
     @Autowired
-    public void setShoppingCartService(ShoppingCartInterface scServiceImpl) {
-        this.scService = scServiceImpl;
-    }
-    @Autowired
     public void setProductService(ProductInterface pServiceImpl) {this.pService = pServiceImpl;}
 
     @GetMapping("/7haven/checkout")
     public String checkout(HttpSession sessionObj, Model model) {
-        String customerName = (String) sessionObj.getAttribute("username");
+        String customerId = (String) sessionObj.getAttribute("customerId");
 
-        Customer customer = cService.searchUserByUserName(customerName);
-        List<ShoppingCart> cartList = cartService.getCartByCustomerUsername(customerName);
+        Customer customer = cService.findById(customerId);
+        List<ShoppingCart> cartList = cartService.getCartByCustomerId(customerId);
+
+        // 检查每个商品的数量是否小于等于库存数量
+        for (ShoppingCart cart : cartList) {
+            Product product = cart.getProduct();
+
+            // 检查库存是否足够
+            if (cart.getProductQty() > product.getStockAvailable()) {
+                model.addAttribute("productImagePath",product.getCoverImagePath());
+                model.addAttribute("productName", product.getName());
+                model.addAttribute("requiredQty", cart.getProductQty());
+                model.addAttribute("availableStock", product.getStockAvailable());
+
+                // 如果库存不足，跳转到库存错误页面
+                return "stockError";
+            }
+        }
+
         double totalPrice = cartList.stream()
                 .mapToDouble(cart -> cart.getProduct().getPrice() * cart.getProductQty())
                 .sum();
@@ -78,30 +88,14 @@ public class CheckoutController {
                        HttpSession sessionObj, Model model) {
 
         // 获取当前用户的购物车信息
-        String username = (String) sessionObj.getAttribute("username");
-        List<ShoppingCart> carts = cartService.getCartByCustomerUsername(username);
-
-        // 检查每个商品的数量是否小于等于库存数量
-        for (ShoppingCart cart : carts) {
-            Product product = cart.getProduct();
-
-            // 检查库存是否足够
-            if (cart.getProductQty() > product.getStockAvailable()) {
-                model.addAttribute("productName", product.getName());
-                model.addAttribute("requiredQty", cart.getProductQty());
-                model.addAttribute("availableStock", product.getStockAvailable());
-
-                // 如果库存不足，跳转到库存错误页面
-                return "stockError";
-            }
-        }
+        String customerId = (String) sessionObj.getAttribute("customerId");
+        List<ShoppingCart> carts = cartService.getCartByCustomerId(customerId);
 
         //generate orderDate
         LocalDate orderDate = LocalDate.now();
 
         //purchaseRecord
-        String customerName = (String) sessionObj.getAttribute("username");
-        Customer customer = cService.searchUserByUserName(customerName);
+        Customer customer = cService.findById(customerId);
         PurchaseRecord purchaseRecord = new PurchaseRecord();
         purchaseRecord.setCustomer(customer);
         purchaseRecord.setOrderDate(orderDate);
@@ -130,7 +124,10 @@ public class CheckoutController {
         }
 
         //delete cart
-        scService.clearCartByCustomer(customer);
+        cartService.clearCartByCustomer(customer);
+
+        PurchaseRecord purchaseRecord1 = pRService.findLastPurchaseRecordByCustomerName(customer.getUserName());
+        model.addAttribute("purchaseRecord", purchaseRecord1);
 
         return "paymentSuccessfully";
     }

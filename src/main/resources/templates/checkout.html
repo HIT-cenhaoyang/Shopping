@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Checkout Page</title>
-	<link rel="stylesheet" th:href="@{/styles/homepagestyle.css}" />
+    <link rel="stylesheet" type="text/css" href="/styles/homepagestyle.css">
+    <link rel="stylesheet" type="text/css" href="/styles/checkoutstyle.css">
     <script>
         // 显示所有支付方式
         function showAllPaymentDetails() {
@@ -75,105 +76,245 @@
         function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
+
+        function simulatePayment() {
+            // 创建遮罩层
+            let overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            overlay.style.zIndex = '1000';
+
+            // 创建支付弹窗
+            let paymentBox = document.createElement('div');
+            paymentBox.style.position = 'fixed';
+            paymentBox.style.top = '50%';
+            paymentBox.style.left = '50%';
+            paymentBox.style.transform = 'translate(-50%, -50%)';
+            paymentBox.style.backgroundColor = '#ffffff';
+            paymentBox.style.padding = '30px';
+            paymentBox.style.borderRadius = '10px';
+            paymentBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+            paymentBox.style.textAlign = 'center';
+            paymentBox.style.zIndex = '1100';
+
+            // 添加旋转动画
+            let spinner = document.createElement('div');
+            spinner.style.width = '50px';
+            spinner.style.height = '50px';
+            spinner.style.border = '5px solid #f3f3f3';
+            spinner.style.borderTop = '5px solid #333';
+            spinner.style.borderRadius = '50%';
+            spinner.style.animation = 'spin 1s linear infinite';
+            spinner.style.margin = '0 auto 20px';
+
+            // 添加文字
+            let text = document.createElement('p');
+            text.innerText = 'Processing payment...';
+
+            paymentBox.appendChild(spinner);
+            paymentBox.appendChild(text);
+            overlay.appendChild(paymentBox);
+            document.body.appendChild(overlay);
+
+            // 模拟支付等待 2 秒钟
+            setTimeout(function () {
+                // 模拟随机支付成功或失败
+                let isSuccess = Math.random() > 0.5; // 50% 成功率
+                //document.body.removeChild(paymentBox); // 移除支付弹窗
+                if (isSuccess) {
+                    document.body.removeChild(overlay); // 移除遮罩层
+                    document.getElementById('checkoutForm').submit();
+                } else {
+                    let errorBox = document.createElement('div');
+                    errorBox.style.position = 'fixed';
+                    errorBox.style.top = '50%';
+                    errorBox.style.left = '50%';
+                    errorBox.style.transform = 'translate(-50%, -50%)';
+                    errorBox.style.backgroundColor = '#ffffff';
+                    errorBox.style.padding = '30px';
+                    errorBox.style.borderRadius = '10px';
+                    errorBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                    errorBox.style.textAlign = 'center';
+                    errorBox.style.zIndex = '1100';
+
+                    // 创建红色圆圈和白色错号
+                    let errorIcon = document.createElement('div');
+                    errorIcon.style.width = '60px';
+                    errorIcon.style.height = '60px';
+                    errorIcon.style.backgroundColor = '#d9534f'; // 红色背景
+                    errorIcon.style.borderRadius = '50%';
+                    errorIcon.style.position = 'relative';
+                    errorIcon.style.margin = '0 auto 20px';
+
+                    let cross1 = document.createElement('div');
+                    cross1.style.position = 'absolute';
+                    cross1.style.top = '50%';
+                    cross1.style.left = '50%';
+                    cross1.style.width = '4px';
+                    cross1.style.height = '30px';
+                    cross1.style.backgroundColor = '#ffffff'; // 白色错号
+                    cross1.style.transform = 'translate(-50%, -50%) rotate(45deg)';
+
+                    let cross2 = document.createElement('div');
+                    cross2.style.position = 'absolute';
+                    cross2.style.top = '50%';
+                    cross2.style.left = '50%';
+                    cross2.style.width = '4px';
+                    cross2.style.height = '30px';
+                    cross2.style.backgroundColor = '#ffffff'; // 白色错号
+                    cross2.style.transform = 'translate(-50%, -50%) rotate(-45deg)';
+
+                    errorIcon.appendChild(cross1);
+                    errorIcon.appendChild(cross2);
+
+                    // 添加文字
+                    let errorText = document.createElement('p');
+                    errorText.innerText = 'Payment failed. Please try again.';
+
+                    // 添加关闭按钮
+                    let closeButton = document.createElement('button');
+                    closeButton.innerText = 'Close';
+                    closeButton.style.marginTop = '20px';
+                    closeButton.onclick = function () {
+                        document.body.removeChild(overlay); // 移除遮罩层和错误提示框
+                    };
+
+                    errorBox.appendChild(errorIcon);
+                    errorBox.appendChild(errorText);
+                    errorBox.appendChild(closeButton);
+                    overlay.appendChild(errorBox);
+                }
+            }, 2000);  // 模拟等待时间
+        }
+
+        // 添加旋转动画的 CSS 样式
+        let style = document.createElement('style');
+        style.innerHTML = `
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+`;
+        document.head.appendChild(style);
+
     </script>
 </head>
 
 <body>
-	<div th:replace="fragments :: header"></div>
-<form th:action="@{/cartPage}" method="post">
-    <input type="submit" value="return to cart"/>
-</form>
+<div th:insert="~{fragments :: header}"></div>
+<a href="/7haven/cart">
+    <button type="button" class="a-button">Return to Cart</button>
+</a>
+<h1>CHECK OUT</h1>
 <h3>Recipient's Information</h3>
-<form th:action="@{/submitOrder}" method="post">
+<form id="checkoutForm" th:action="@{/submitOrder}" method="post">
     <div>
         <p id="userNameDisplay">
-            Username: <span id="userNameText" th:text="${customer.userName}"></span>
-            <button type="button" onclick="editField('userName')">Edit</button>
+            Recipient's name: <span id="userNameText" th:text="${customer.userName}"></span>
+            <button type="button" class="a-button" onclick="editField('userName')">Edit</button>
         </p>
         <div id="userNameEdit" style="display: none;">
             <input type="text" id="userNameInput" th:value="${customer.userName}"/>
-            <button type="button" onclick="saveField('userName')">Save</button>
-            <button type="button" onclick="cancelEdit('userName')">Cancel</button>
+            <button type="button" class="a-button" onclick="saveField('userName')">Save</button>
+            <button type="button" class="a-button" onclick="cancelEdit('userName')">Cancel</button>
         </div>
     </div>
     <div>
         <p id="addressDisplay">
             Address: <span id="addressText" th:text="${customer.address}"></span>
-            <button type="button" onclick="editField('address')">Edit</button>
+            <button type="button" class="a-button" onclick="editField('address')">Edit</button>
         </p>
         <div id="addressEdit" style="display: none;">
             <input type="text" id="addressInput" th:value="${customer.address}"/>
-            <button type="button" onclick="saveField('address')">Save</button>
-            <button type="button" onclick="cancelEdit('address')">Cancel</button>
+            <button type="button" class="a-button" onclick="saveField('address')">Save</button>
+            <button type="button" class="a-button" onclick="cancelEdit('address')">Cancel</button>
         </div>
     </div>
     <div>
         <p id="phoneNumberDisplay">
             Phone: <span id="phoneNumberText" th:text="${customer.phoneNumber}"></span>
-            <button type="button" onclick="editField('phoneNumber')">Edit</button>
+            <button type="button" class="a-button" onclick="editField('phoneNumber')">Edit</button>
         </p>
         <div id="phoneNumberEdit" style="display: none;">
             <input type="text" id="phoneNumberInput" th:value="${customer.phoneNumber}"/>
-            <button type="button" onclick="saveField('phoneNumber')">Save</button>
-            <button type="button" onclick="cancelEdit('phoneNumber')">Cancel</button>
+            <button type="button" class="a-button" onclick="saveField('phoneNumber')">Save</button>
+            <button type="button" class="a-button" onclick="cancelEdit('phoneNumber')">Cancel</button>
         </div>
     </div>
     <!-- 隐藏字段，用于存储编辑后的值 -->
-    <input type="hidden" id="hiddenUserName" name="recipientName" th:value="${customer.userName}" />
-    <input type="hidden" id="hiddenAddress" name="recipientAddress" th:value="${customer.address}" />
-    <input type="hidden" id="hiddenPhoneNumber" name="recipientPhone" th:value="${customer.phoneNumber}" />
-    <br>
-    <h3>Shopping Cart</h3>
+    <input type="hidden" id="hiddenUserName" name="recipientName" th:value="${customer.userName}"/>
+    <input type="hidden" id="hiddenAddress" name="recipientAddress" th:value="${customer.address}"/>
+    <input type="hidden" id="hiddenPhoneNumber" name="recipientPhone" th:value="${customer.phoneNumber}"/>
 
-    <table>
+    <br>
+
+    <h3>Shopping Cart</h3>
+    <table class="shopping-cart-table">
         <tr>
             <th>Img</th>
             <th>Product</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th>Subtotal</th>
         </tr>
         <tr th:each="c : ${cart}">
             <td class="cover-image-container">
                 <img th:src="${c.product.coverImagePath}" class="product-image" alt="Product Image"/>
             </td>
             <td th:text="${c.product.name}"></td>
-            <td th:text="${c.product.price}"></td>
+            <td class="red-text" th:text="'$' + ${#numbers.formatDecimal(c.product.price, 1,'COMMA', 2, 'POINT')}"></td>
             <td th:text="${c.productQty}"></td>
+            <td class="red-text" th:text="'$'+${#numbers.formatDecimal(c.productQty * c.product.price,1,'COMMA', 2, 'POINT')}"></td>
         </tr>
         <tr>
-            <td colspan="3"><b>Total Price of All Products</b></td>
-            <td th:text="${totalPrice}"></td>
+            <td style="text-align: right;" colspan="4"><b>Total Price of All Products</b></td>
+            <td class="total-price" th:text="'$' + ${#numbers.formatDecimal(totalPrice, 1,'COMMA', 2, 'POINT')}"></td>
         </tr>
     </table>
+
+
     <br>
-    <!-- 初始展示第一个 PaymentDetail 的银行卡号 -->
-    <div th:if="${customer.paymentDetails.size() > 0}">
-        <h2>Selected Payment Method</h2>
-        <p>Card Number: <span id="selectedCardNumber" th:attr="data-cardnumber=${customer.paymentDetails[0].cardNumber}"></span></p>
-    </div>
+    <div class="selected-payment-method">
+        <!-- 初始展示第一个 PaymentDetail 的银行卡号 -->
+        <div th:if="${customer.paymentDetails.size() > 0}">
+            <h2>Selected Payment Method</h2>
+            <p>Card Number: <span id="selectedCardNumber"
+                                  th:attr="data-cardnumber=${customer.paymentDetails[0].cardNumber}"></span></p>
+        </div>
 
-    <!-- 展示按钮，点击展示所有 PaymentDetail -->
-    <button type="button" id="showButton" onclick="showAllPaymentDetails()">Show All Payment Methods</button>
+        <!-- 展示按钮，点击展示所有 PaymentDetail -->
+        <button type="button" class="a-button" id="showButton" onclick="showAllPaymentDetails()">Show All Payment
+            Methods
+        </button>
 
-    <!-- 隐藏的所有 PaymentDetail 列表，只展示银行卡号 -->
-    <div id="allPaymentDetails" style="display: none;">
-        <h2>All Payment Methods</h2>
-        <ul>
-            <li th:each="paymentDetail : ${customer.paymentDetails}">
-                <p>Card Number: <span class="maskedCardNumber" th:attr="data-cardnumber=${paymentDetail.cardNumber}"></span></p>
-                <!-- 使用 data-* 属性传递银行卡号 -->
-                <button type="button" th:attr="data-cardNumber=${paymentDetail.cardNumber}"
-                        onclick="selectPaymentDetail(this.getAttribute('data-cardNumber'))">
-                    Select This Card
-                </button>
-            </li>
-        </ul>
+        <!-- 隐藏的所有 PaymentDetail 列表，只展示银行卡号 -->
+        <div id="allPaymentDetails" style="display: none;">
+            <h2>All Payment Methods</h2>
+            <ul>
+                <li th:each="paymentDetail : ${customer.paymentDetails}">
+                    <p>Card Number: <span class="maskedCardNumber"
+                                          th:attr="data-cardnumber=${paymentDetail.cardNumber}"></span></p>
+                    <!-- 使用 data-* 属性传递银行卡号 -->
+                    <button type="button" class="a-button" th:attr="data-cardNumber=${paymentDetail.cardNumber}"
+                            onclick="selectPaymentDetail(this.getAttribute('data-cardNumber'))">
+                        Select This Card
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${customer.paymentDetails.size() > 0}">
+            <!-- 隐藏字段，用于存储选中的银行卡号 -->
+            <input type="hidden" id="selectedCardNumberInput" name="cardNumber"
+                   th:value="${customer.paymentDetails[0].cardNumber}"/>
+        </div>
     </div>
-	<div th:if="${customer.paymentDetails.size() > 0}">
-    	<!-- 隐藏字段，用于存储选中的银行卡号 -->
-    	<input type="hidden" id="selectedCardNumberInput" name="cardNumber" th:value="${customer.paymentDetails[0].cardNumber}" />
-	</div>
-    <input type="submit" value="payment"/>
+    <div class="payment-button">
+        <input type="button" value="payment" class="submit-button" onclick="simulatePayment()"/>
+    </div>
 </form>
 </body>
 
