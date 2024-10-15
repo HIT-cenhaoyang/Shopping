@@ -51,10 +51,10 @@ public class CheckoutController {
 
     @GetMapping("/7haven/checkout")
     public String checkout(HttpSession sessionObj, Model model) {
-        String customerName = (String) sessionObj.getAttribute("username");
+        String customerId = (String) sessionObj.getAttribute("customerId");
 
-        Customer customer = cService.searchUserByUserName(customerName);
-        List<ShoppingCart> cartList = cartService.getCartByCustomerUsername(customerName);
+        Customer customer = cService.findById(customerId);
+        List<ShoppingCart> cartList = cartService.getCartByCustomerId(customerId);
         double totalPrice = cartList.stream()
                 .mapToDouble(cart -> cart.getProduct().getPrice() * cart.getProductQty())
                 .sum();
@@ -72,8 +72,8 @@ public class CheckoutController {
                        HttpSession sessionObj, Model model) {
 
         // 获取当前用户的购物车信息
-        String username = (String) sessionObj.getAttribute("username");
-        List<ShoppingCart> carts = cartService.getCartByCustomerUsername(username);
+        String customerId = (String) sessionObj.getAttribute("customerId");
+        List<ShoppingCart> carts = cartService.getCartByCustomerId(customerId);
 
         // 检查每个商品的数量是否小于等于库存数量
         for (ShoppingCart cart : carts) {
@@ -94,8 +94,7 @@ public class CheckoutController {
         LocalDate orderDate = LocalDate.now();
 
         //purchaseRecord
-        String customerName = (String) sessionObj.getAttribute("username");
-        Customer customer = cService.searchUserByUserName(customerName);
+        Customer customer = cService.findById(customerId);
         PurchaseRecord purchaseRecord = new PurchaseRecord();
         purchaseRecord.setCustomer(customer);
         purchaseRecord.setOrderDate(orderDate);
@@ -126,7 +125,7 @@ public class CheckoutController {
         //delete cart
         cartService.clearCartByCustomer(customer);
 
-        PurchaseRecord purchaseRecord1 = pRService.findLastPurchaseRecordByCustomerName(username);
+        PurchaseRecord purchaseRecord1 = pRService.findLastPurchaseRecordByCustomerName(customer.getUserName());
         model.addAttribute("purchaseRecord", purchaseRecord1);
 
         return "paymentSuccessfully";
