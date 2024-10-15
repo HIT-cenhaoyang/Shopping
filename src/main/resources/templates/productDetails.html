@@ -226,7 +226,7 @@
 	<div class="review-section">
 		<h3>Reviews</h3>
 		<div th:each="review : ${reviews}">
-			<p><strong th:text="${review.customer.name}">Customer Name</strong></p>
+			<p><strong th:text="${review.customer.userName}">Customer Name</strong></p>
 			<p th:text="${review.comment}">This is a review comment.</p>
 			<hr>
 		</div>
