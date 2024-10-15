@@ -61,6 +61,7 @@ public class CheckoutController {
 
             // 检查库存是否足够
             if (cart.getProductQty() > product.getStockAvailable()) {
+                model.addAttribute("productImagePath",product.getCoverImagePath());
                 model.addAttribute("productName", product.getName());
                 model.addAttribute("requiredQty", cart.getProductQty());
                 model.addAttribute("availableStock", product.getStockAvailable());
