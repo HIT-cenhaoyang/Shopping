@@ -60,7 +60,7 @@
                         </a>
                     </td>
                     <td th:text="${detail.productQty}"></td>
-                    <td th:text="${detail.product.price}"></td>
+                    <td th:text="'$'+${#numbers.formatDecimal(detail.product.price,1,2)}"></td>
                     <td class="cover-image-container">
                         <!-- 商品图片点击跳转 -->
                         <a th:href="@{/product/{id}(id=${detail.product.productId})}">
