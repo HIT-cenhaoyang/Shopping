@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,6 +71,18 @@ public class ProductController {
         this.categoryInt = categoryImp;
     }
 
+    @GetMapping("/filterProducts")
+    public ResponseEntity<List<Product>> filterProducts(@RequestParam(required = false) Double minPrice,
+                                                        @RequestParam(required = false) Double maxPrice) {
+        if (minPrice == null) {
+            minPrice = 0.0;
+        }
+        if (maxPrice == null) {
+            maxPrice = Double.MAX_VALUE;
+        }
+        List<Product> products = productInt.filterProductsByPrice(minPrice, maxPrice);
+        return ResponseEntity.ok(products);
+    }
 
     @GetMapping("/products")
     public String showProducts(@RequestParam(value = "category", required = false) Integer categoryId,

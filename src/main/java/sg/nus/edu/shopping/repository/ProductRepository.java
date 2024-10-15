@@ -24,4 +24,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> searchProductsByKeyword(@Param("keyword") String keyword, Pageable pageable);
     @Query("SELECT p FROM Product p WHERE p.category = :category")
     Page<Product> getProductByCategory(@Param("category") Category category, Pageable pageable);
+
+    List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
 }

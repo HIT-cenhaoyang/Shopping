@@ -96,4 +96,9 @@ public class ProductImplementation implements ProductInterface {
     public void saveProduct(Product product) {
         productRepo.save(product);
     }
+
+    @Override
+    public List<Product> filterProductsByPrice(Double minPrice, Double maxPrice) {
+        return productRepo.findByPriceBetween(minPrice, maxPrice);
+    }
 }

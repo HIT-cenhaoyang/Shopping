@@ -118,15 +118,15 @@
 
 		<div class="price-filter">
 			<label for="min-price">Min Price:</label>
-			<input type="number" id="min-price" name="min-price" min="0" step="0.01">
+			<input type="number" id="min-price" name="min-price" min="0" step="10.00">
 			<label for="max-price">Max Price:</label>
-			<input type="number" id="max-price" name="max-price" min="0" step="0.01">
+			<input type="number" id="max-price" name="max-price" min="0" step="10.00">
 			<button id="filter-button">Filter</button>
 		</div>
 
 
 		<!-- 产品展示 -->
-		<div class="products-container">
+		<div class="products-container" id="product-list">
 			<div th:each="product : ${products}" class="product">
 				<a th:href="@{/product/{id}(id=${product.productId})}">
 					<img th:src="@{|${product.coverImagePath}|}" alt="product image">
@@ -138,38 +138,38 @@
 
 		<div class="pagination">
 			<a th:if="${currentPage > 1} and ${categoryId != null}"
-			   th:href="@{/products(page=${currentPage - 1}, size=10, category=${categoryId})}">&laquo; Previous</a>
+			   th:href="@{/products(page=${currentPage - 1}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}">&laquo; Previous</a>
 			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword == null}"
-			   th:href="@{/products(page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
+			   th:href="@{/products(page=${currentPage - 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">&laquo; Previous</a>
 			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword != null}"
-			   th:href="@{/products/search(keyword=${keyword}, page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
+			   th:href="@{/products/search(keyword=${keyword}, page=${currentPage - 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">&laquo; Previous</a>
 
 			<span th:if="${totalPages != null}" th:each="i : ${#numbers.sequence(1, totalPages)}"
 				  th:classappend="${i == currentPage} ? 'active'">
-        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId})}"
+        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}"
 		   th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10)}"
+        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}"
 		   th:text="${i}"></a>
         <a th:if="${categoryId == null} and ${keyword != null}"
-		   th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
+		   th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
     </span>
 
 			<span th:if="${totalPages == null}" th:each="i : ${#numbers.sequence(1, 1)}"
 				  th:classappend="${i == currentPage} ? 'active'">
-        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId})}"
+        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}"
 		   th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10)}"
+        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}"
 		   th:text="${i}"></a>
         <a th:if="${categoryId == null} and ${keyword != null}"
-		   th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
+		   th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
     </span>
 
 			<a th:if="${currentPage < totalPages} and ${categoryId != null}"
-			   th:href="@{/products(page=${currentPage + 1}, size=10, category=${categoryId})}">Next &raquo;</a>
+			   th:href="@{/products(page=${currentPage + 1}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}">Next &raquo;</a>
 			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword == null}"
-			   th:href="@{/products(page=${currentPage + 1}, size=10)}">Next &raquo;</a>
+			   th:href="@{/products(page=${currentPage + 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">Next &raquo;</a>
 			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword != null}"
-			   th:href="@{/products/search(keyword=${keyword}, page=${currentPage + 1}, size=10)}">Next &raquo;</a>
+			   th:href="@{/products/search(keyword=${keyword}, page=${currentPage + 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">Next &raquo;</a>
 		</div>
 
 	</section>
@@ -229,19 +229,27 @@
 			const minPrice = parseFloat(document.getElementById('min-price').value) || 0;
 			const maxPrice = parseFloat(document.getElementById('max-price').value) || Infinity;
 
-			const items = document.querySelectorAll('.product');
+			fetch(`/filterProducts?minPrice=${minPrice}&maxPrice=${maxPrice}`)
+					.then(response => response.json())
+					.then(data => {
+						const productList = document.getElementById('product-list');
+						productList.innerHTML = ''; // 清空当前产品列表
 
-			items.forEach(item => {
-				const price = parseFloat(item.querySelector('.price').textContent.replace('$', ''));
-				if (price >= minPrice && price <= maxPrice) {
-					item.style.display = 'block';
-				} else {
-					item.style.display = 'none';
-				}
-			});
+						data.forEach(product => {
+							const productDiv = document.createElement('div');
+							productDiv.className = 'product';
+							productDiv.innerHTML = `
+                        <a href="/product/${product.productId}">
+                            <img src="${product.coverImagePath}" alt="product image">
+                        </a>
+                        <h2 style="color: #333;" class="product-name">${product.name}</h2>
+                        <p class="price">$${product.price.toFixed(2)}</p>
+                    `;
+							productList.appendChild(productDiv);
+						});
+					})
+					.catch(error => console.error('Error:', error));
 		});
-
-
 	</script>
 </body>
 
