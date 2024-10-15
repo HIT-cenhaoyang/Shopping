@@ -2,6 +2,7 @@ package sg.nus.edu.shopping.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +13,7 @@ import sg.nus.edu.shopping.model.*;
 import sg.nus.edu.shopping.service.CustomerImplementation;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class CheckoutController {
@@ -55,6 +54,23 @@ public class CheckoutController {
 
         Customer customer = cService.findById(customerId);
         List<ShoppingCart> cartList = cartService.getCartByCustomerId(customerId);
+
+        // 检查每个商品的数量是否小于等于库存数量
+        for (ShoppingCart cart : cartList) {
+            Product product = cart.getProduct();
+
+            // 检查库存是否足够
+            if (cart.getProductQty() > product.getStockAvailable()) {
+                model.addAttribute("productImagePath",product.getCoverImagePath());
+                model.addAttribute("productName", product.getName());
+                model.addAttribute("requiredQty", cart.getProductQty());
+                model.addAttribute("availableStock", product.getStockAvailable());
+
+                // 如果库存不足，跳转到库存错误页面
+                return "stockError";
+            }
+        }
+
         double totalPrice = cartList.stream()
                 .mapToDouble(cart -> cart.getProduct().getPrice() * cart.getProductQty())
                 .sum();
@@ -74,21 +90,6 @@ public class CheckoutController {
         // 获取当前用户的购物车信息
         String customerId = (String) sessionObj.getAttribute("customerId");
         List<ShoppingCart> carts = cartService.getCartByCustomerId(customerId);
-
-        // 检查每个商品的数量是否小于等于库存数量
-        for (ShoppingCart cart : carts) {
-            Product product = cart.getProduct();
-
-            // 检查库存是否足够
-            if (cart.getProductQty() > product.getStockAvailable()) {
-                model.addAttribute("productName", product.getName());
-                model.addAttribute("requiredQty", cart.getProductQty());
-                model.addAttribute("availableStock", product.getStockAvailable());
-
-                // 如果库存不足，跳转到库存错误页面
-                return "stockError";
-            }
-        }
 
         //generate orderDate
         LocalDate orderDate = LocalDate.now();

@@ -13,4 +13,5 @@ public interface AdminInterface {
 	Optional<Admin> findAdminByUserName(String userName);
     public void saveProduct(Product product);
     public List<Product> findAllProducts();
+    public String findMaxAdminId();
 }

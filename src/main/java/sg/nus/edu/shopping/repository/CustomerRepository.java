@@ -29,4 +29,7 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
     //Author: xu zhiye
 	@Query("Select c from Customer as c where c.email =:userEmail")
 	public ArrayList<Customer> searchUserByUserEmail(@Param("userEmail") String userEmail);
+
+    @Query("SELECT MAX(c.id) FROM Customer c")
+    String findMaxCustomerId();
 }

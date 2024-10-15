@@ -23,4 +23,6 @@ public interface CustomerInterface {
 	Optional<Customer> findByUserName(String userName);
 	List<Customer> findByBirthDateMonth(int month);
 
+	//Author: Cen Haoyang
+	String findMaxCustomerId();
 }
