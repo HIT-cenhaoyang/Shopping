@@ -46,7 +46,7 @@ public class OrderDetail {
     }
     public double getOrderSubTotal() {
         double subTotal = product.getPrice() * productQty;
-        return subTotal;
+        return  subTotal;
     }
 
 
