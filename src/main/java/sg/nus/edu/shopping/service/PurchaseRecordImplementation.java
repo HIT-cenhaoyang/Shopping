@@ -67,4 +67,10 @@ public class PurchaseRecordImplementation implements PurchaseRecordInterface {
     public  List<PurchaseRecord> findByCustomer(Customer customer){
         return purchaseRecordRepo.findByCustomer(customer);
     }
+
+    @Override
+    @Transactional
+    public PurchaseRecord findLastPurchaseRecordByCustomerName(String customerName){
+        return purchaseRecordRepo.findLatestPurchaseRecordByCustomer(customerName);
+    }
 }

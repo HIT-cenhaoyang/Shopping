@@ -28,8 +28,6 @@ public class CheckoutController {
     @Autowired
     private OrderDetailInterface oService;
     @Autowired
-    private ShoppingCartInterface scService;
-    @Autowired
     private ProductInterface pService;
 
     @Autowired
@@ -47,10 +45,6 @@ public class CheckoutController {
     @Autowired
     public void setOrderService(OrderDetailInterface oServiceImpl) {
         this.oService = oServiceImpl;
-    }
-    @Autowired
-    public void setShoppingCartService(ShoppingCartInterface scServiceImpl) {
-        this.scService = scServiceImpl;
     }
     @Autowired
     public void setProductService(ProductInterface pServiceImpl) {this.pService = pServiceImpl;}
@@ -130,7 +124,10 @@ public class CheckoutController {
         }
 
         //delete cart
-        scService.clearCartByCustomer(customer);
+        cartService.clearCartByCustomer(customer);
+
+        PurchaseRecord purchaseRecord1 = pRService.findLastPurchaseRecordByCustomerName(username);
+        model.addAttribute("purchaseRecord", purchaseRecord1);
 
         return "paymentSuccessfully";
     }

@@ -17,4 +17,5 @@ public interface PurchaseRecordInterface {
     List<PurchaseRecord> searchPurchaseRecordByCustomer(Customer customer);
     void savePurchaseRecord(PurchaseRecord purchaseRecord);
     List<PurchaseRecord> findByCustomer(Customer customer);
+    PurchaseRecord findLastPurchaseRecordByCustomerName(String customerName);
 }
