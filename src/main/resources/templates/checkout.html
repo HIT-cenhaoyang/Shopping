@@ -76,6 +76,131 @@
         function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
+
+        function simulatePayment() {
+            // 创建遮罩层
+            let overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            overlay.style.zIndex = '1000';
+
+            // 创建支付弹窗
+            let paymentBox = document.createElement('div');
+            paymentBox.style.position = 'fixed';
+            paymentBox.style.top = '50%';
+            paymentBox.style.left = '50%';
+            paymentBox.style.transform = 'translate(-50%, -50%)';
+            paymentBox.style.backgroundColor = '#ffffff';
+            paymentBox.style.padding = '30px';
+            paymentBox.style.borderRadius = '10px';
+            paymentBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+            paymentBox.style.textAlign = 'center';
+            paymentBox.style.zIndex = '1100';
+
+            // 添加旋转动画
+            let spinner = document.createElement('div');
+            spinner.style.width = '50px';
+            spinner.style.height = '50px';
+            spinner.style.border = '5px solid #f3f3f3';
+            spinner.style.borderTop = '5px solid #333';
+            spinner.style.borderRadius = '50%';
+            spinner.style.animation = 'spin 1s linear infinite';
+            spinner.style.margin = '0 auto 20px';
+
+            // 添加文字
+            let text = document.createElement('p');
+            text.innerText = 'Processing payment...';
+
+            paymentBox.appendChild(spinner);
+            paymentBox.appendChild(text);
+            overlay.appendChild(paymentBox);
+            document.body.appendChild(overlay);
+
+            // 模拟支付等待 2 秒钟
+            setTimeout(function () {
+                // 模拟随机支付成功或失败
+                let isSuccess = Math.random() > 0.5; // 50% 成功率
+                //document.body.removeChild(paymentBox); // 移除支付弹窗
+                if (isSuccess) {
+                    document.body.removeChild(overlay); // 移除遮罩层
+                    document.getElementById('checkoutForm').submit();
+                } else {
+                    let errorBox = document.createElement('div');
+                    errorBox.style.position = 'fixed';
+                    errorBox.style.top = '50%';
+                    errorBox.style.left = '50%';
+                    errorBox.style.transform = 'translate(-50%, -50%)';
+                    errorBox.style.backgroundColor = '#ffffff';
+                    errorBox.style.padding = '30px';
+                    errorBox.style.borderRadius = '10px';
+                    errorBox.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                    errorBox.style.textAlign = 'center';
+                    errorBox.style.zIndex = '1100';
+
+                    // 创建红色圆圈和白色错号
+                    let errorIcon = document.createElement('div');
+                    errorIcon.style.width = '60px';
+                    errorIcon.style.height = '60px';
+                    errorIcon.style.backgroundColor = '#d9534f'; // 红色背景
+                    errorIcon.style.borderRadius = '50%';
+                    errorIcon.style.position = 'relative';
+                    errorIcon.style.margin = '0 auto 20px';
+
+                    let cross1 = document.createElement('div');
+                    cross1.style.position = 'absolute';
+                    cross1.style.top = '50%';
+                    cross1.style.left = '50%';
+                    cross1.style.width = '4px';
+                    cross1.style.height = '30px';
+                    cross1.style.backgroundColor = '#ffffff'; // 白色错号
+                    cross1.style.transform = 'translate(-50%, -50%) rotate(45deg)';
+
+                    let cross2 = document.createElement('div');
+                    cross2.style.position = 'absolute';
+                    cross2.style.top = '50%';
+                    cross2.style.left = '50%';
+                    cross2.style.width = '4px';
+                    cross2.style.height = '30px';
+                    cross2.style.backgroundColor = '#ffffff'; // 白色错号
+                    cross2.style.transform = 'translate(-50%, -50%) rotate(-45deg)';
+
+                    errorIcon.appendChild(cross1);
+                    errorIcon.appendChild(cross2);
+
+                    // 添加文字
+                    let errorText = document.createElement('p');
+                    errorText.innerText = 'Payment failed. Please try again.';
+
+                    // 添加关闭按钮
+                    let closeButton = document.createElement('button');
+                    closeButton.innerText = 'Close';
+                    closeButton.style.marginTop = '20px';
+                    closeButton.onclick = function () {
+                        document.body.removeChild(overlay); // 移除遮罩层和错误提示框
+                    };
+
+                    errorBox.appendChild(errorIcon);
+                    errorBox.appendChild(errorText);
+                    errorBox.appendChild(closeButton);
+                    overlay.appendChild(errorBox);
+                }
+            }, 2000);  // 模拟等待时间
+        }
+
+        // 添加旋转动画的 CSS 样式
+        let style = document.createElement('style');
+        style.innerHTML = `
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+`;
+        document.head.appendChild(style);
+
     </script>
 </head>
 
@@ -86,7 +211,7 @@
 </a>
 <h1>CHECK OUT</h1>
 <h3>Recipient's Information</h3>
-<form th:action="@{/submitOrder}" method="post">
+<form id="checkoutForm" th:action="@{/submitOrder}" method="post">
     <div>
         <p id="userNameDisplay">
             Recipient's name: <span id="userNameText" th:text="${customer.userName}"></span>
@@ -188,7 +313,7 @@
         </div>
     </div>
     <div class="payment-button">
-        <input type="submit" value="payment" class="submit-button"/>
+        <input type="button" value="payment" class="submit-button" onclick="simulatePayment()"/>
     </div>
 </form>
 </body>
