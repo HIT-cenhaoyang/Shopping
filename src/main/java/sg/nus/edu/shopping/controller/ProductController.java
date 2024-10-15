@@ -96,10 +96,10 @@ public class ProductController {
         if (categoryId != null) {
             Category category = categoryInt.findByCategoryId(categoryId);
             productPage = productInt.getProductByCategory(category, pageable);
-            model.addAttribute("categoryId", categoryId); // 添加 categoryId 到模型
+            model.addAttribute("categoryId", categoryId);
         } else {
             productPage = productInt.getProducts(pageable);
-            model.addAttribute("pageName", "mainPage"); // 添加 pageName 属性
+            model.addAttribute("pageName", "mainPage");
         }
 
         if (page == 1 && "mainPage".equals(model.getAttribute("pageName"))) {
@@ -109,21 +109,20 @@ public class ProductController {
             List<String> hotProductImages = new ArrayList<>();
             if (imageFiles != null) {
                 for (File imageFile : imageFiles) {
-                    hotProductImages.add("/images/hotProducts/" + imageFile.getName()); // 拼接图片的路径
+                    hotProductImages.add("/images/hotProducts/" + imageFile.getName());
                 }
             }
 
-            // 添加到 model 中传递给前端
             model.addAttribute("hotProducts", hotProductImages);
             model.addAttribute("currentPage", 1);
             model.addAttribute("pageName", "mainPage");
         }
 
-        model.addAttribute("products", productPage.getContent()); // 当前页的产品
-        model.addAttribute("currentPage", page); // 当前页码
+        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("currentPage", page);
         int totalPages = productPage.getTotalPages() > 0 ? productPage.getTotalPages() : 1;
         model.addAttribute("totalPages", totalPages);
-        model.addAttribute("totalItems", productPage.getTotalElements()); // 总产品数量
+        model.addAttribute("totalItems", productPage.getTotalElements());
 		return "homePage";
 	}
     @GetMapping("/products/search")

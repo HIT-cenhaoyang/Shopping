@@ -109,7 +109,7 @@
 					<img th:src="@{|${imageUrl}|}" alt="Hot Product">
 				</div>
 			</div>
-			<!-- 小圆点显示，悬浮在图片上 -->
+
 			<div class="carousel-dots">
 		<span th:each="hotProduct, indexStat : ${hotProducts}" class="dot"
 			  th:classappend="${indexStat.index == 0} ? 'active' : ''"></span>
@@ -125,7 +125,6 @@
 		</div>
 
 
-		<!-- 产品展示 -->
 		<div class="products-container" id="product-list">
 			<div th:each="product : ${products}" class="product">
 				<a th:href="@{/product/{id}(id=${product.productId})}">
@@ -136,40 +135,27 @@
 			</div>
 		</div>
 
+
 		<div class="pagination">
-			<a th:if="${currentPage > 1} and ${categoryId != null}"
-			   th:href="@{/products(page=${currentPage - 1}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}">&laquo; Previous</a>
-			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword == null}"
-			   th:href="@{/products(page=${currentPage - 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">&laquo; Previous</a>
-			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword != null}"
-			   th:href="@{/products/search(keyword=${keyword}, page=${currentPage - 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">&laquo; Previous</a>
+			<a th:if="${currentPage > 1} and ${categoryId != null}" th:href="@{/products(page=${currentPage - 1}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}">&laquo; Previous</a>
+			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${currentPage - 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">&laquo; Previous</a>
+			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword != null}" th:href="@{/products/search(keyword=${keyword}, page=${currentPage - 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">&laquo; Previous</a>
 
-			<span th:if="${totalPages != null}" th:each="i : ${#numbers.sequence(1, totalPages)}"
-				  th:classappend="${i == currentPage} ? 'active'">
-        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}"
-		   th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}"
-		   th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword != null}"
-		   th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
-    </span>
+			<span th:if="${totalPages != null}" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">
+        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword != null}" th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
+    		</span>
 
-			<span th:if="${totalPages == null}" th:each="i : ${#numbers.sequence(1, 1)}"
-				  th:classappend="${i == currentPage} ? 'active'">
-        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}"
-		   th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}"
-		   th:text="${i}"></a>
-        <a th:if="${categoryId == null} and ${keyword != null}"
-		   th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
-    </span>
+			<span th:if="${totalPages == null}" th:each="i : ${#numbers.sequence(1, 1)}" th:classappend="${i == currentPage} ? 'active'">
+        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword != null}" th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}" th:text="${i}"></a>
+    		</span>
 
-			<a th:if="${currentPage < totalPages} and ${categoryId != null}"
-			   th:href="@{/products(page=${currentPage + 1}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}">Next &raquo;</a>
-			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword == null}"
-			   th:href="@{/products(page=${currentPage + 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">Next &raquo;</a>
-			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword != null}"
-			   th:href="@{/products/search(keyword=${keyword}, page=${currentPage + 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">Next &raquo;</a>
+			<a th:if="${currentPage < totalPages} and ${categoryId != null}" th:href="@{/products(page=${currentPage + 1}, size=10, category=${categoryId}, minPrice=${minPrice}, maxPrice=${maxPrice})}">Next &raquo;</a>
+			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${currentPage + 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">Next &raquo;</a>
+			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword != null}" th:href="@{/products/search(keyword=${keyword}, page=${currentPage + 1}, size=10, minPrice=${minPrice}, maxPrice=${maxPrice})}">Next &raquo;</a>
 		</div>
 
 	</section>
@@ -186,34 +172,32 @@
 
 			function updateCarousel() {
 				const slideWidth = carouselSlide.clientWidth;
-				carouselSlide.style.transition = 'transform 0.5s ease-in-out'; // 正常过渡
+				carouselSlide.style.transition = 'transform 0.5s ease-in-out';
 				carouselSlide.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 
-				// 更新小圆点的状态
 				dots.forEach(dot => dot.classList.remove('active'));
 				dots[currentIndex].classList.add('active');
 			}
 
-			// 无缝过渡到第一张
+
 			function seamlessTransition() {
 				const slideWidth = carouselSlide.clientWidth;
-				carouselSlide.style.transition = 'none'; // 立即跳转，不要过渡效果
-				carouselSlide.style.transform = `translateX(0)`; // 回到第一张
-				currentIndex = 0; // 重置索引
+				carouselSlide.style.transition = 'none';
+				carouselSlide.style.transform = `translateX(0)`;
+				currentIndex = 0;
 			}
 
-			// 下一张图片
+
 			function showNextSlide() {
 				currentIndex++;
 				if (currentIndex >= totalSlides) {
-					// 如果超出最后一张，延迟0.5秒后无缝跳转到第一张
 					setTimeout(seamlessTransition, 500);
 				} else {
 					updateCarousel();
 				}
 			}
 
-			// 点击切换到指定图片
+
 			dots.forEach((dot, index) => {
 				dot.addEventListener('click', () => {
 					currentIndex = index;
@@ -221,7 +205,6 @@
 				});
 			});
 
-			// 每5秒自动切换图片
 			setInterval(showNextSlide, 5000);
 		});
 
@@ -233,7 +216,7 @@
 					.then(response => response.json())
 					.then(data => {
 						const productList = document.getElementById('product-list');
-						productList.innerHTML = ''; // 清空当前产品列表
+						productList.innerHTML = '';
 
 						data.forEach(product => {
 							const productDiv = document.createElement('div');
