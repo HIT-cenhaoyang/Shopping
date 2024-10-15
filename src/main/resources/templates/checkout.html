@@ -266,13 +266,13 @@
                 <img th:src="${c.product.coverImagePath}" class="product-image" alt="Product Image"/>
             </td>
             <td th:text="${c.product.name}"></td>
-            <td class="red-text" th:text="'$' + ${#numbers.formatDecimal(c.product.price, 1, 2)}"></td>
+            <td class="red-text" th:text="'$' + ${#numbers.formatDecimal(c.product.price, 1,'COMMA', 2, 'POINT')}"></td>
             <td th:text="${c.productQty}"></td>
-            <td class="red-text" th:text="'$'+${#numbers.formatDecimal(c.productQty * c.product.price,1,2)}"></td>
+            <td class="red-text" th:text="'$'+${#numbers.formatDecimal(c.productQty * c.product.price,1,'COMMA', 2, 'POINT')}"></td>
         </tr>
         <tr>
             <td style="text-align: right;" colspan="4"><b>Total Price of All Products</b></td>
-            <td class="total-price" th:text="'$' + ${#numbers.formatDecimal(totalPrice, 1, 2)}"></td>
+            <td class="total-price" th:text="'$' + ${#numbers.formatDecimal(totalPrice, 1,'COMMA', 2, 'POINT')}"></td>
         </tr>
     </table>
 

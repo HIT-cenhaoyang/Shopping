@@ -35,7 +35,7 @@
         <td th:text="${order.recipientPhone}"></td>
         <td th:text="${order.paymentMethod}"></td>
         <td th:text="${order.orderId}"></td>
-        <td th:text="${order.total}"></td>
+        <td th:text="'$'+${#numbers.formatDecimal(order.total,1,'COMMA', 2, 'POINT')}"></td>
         <td>
             <table class="table table-sm table-striped">
                 <thead>
@@ -60,7 +60,7 @@
                         </a>
                     </td>
                     <td th:text="${detail.productQty}"></td>
-                    <td th:text="'$'+${#numbers.formatDecimal(detail.product.price,1,2)}"></td>
+                    <td th:text="'$'+${#numbers.formatDecimal(detail.product.price,1,'COMMA', 2, 'POINT')}"></td>
                     <td class="cover-image-container">
                         <!-- 商品图片点击跳转 -->
                         <a th:href="@{/product/{id}(id=${detail.product.productId})}">
