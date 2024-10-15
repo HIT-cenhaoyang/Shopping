@@ -120,8 +120,7 @@ public class ProductController {
                                  Model model) {
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Product> productPage = productRepository.searchProductsByKeyword(keyword, pageable);
-        List<Product> products = productInt.searchProductsByKeyword(keyword);
-        if (products.isEmpty()) {
+        if (productPage.isEmpty()) {
             model.addAttribute("message", "No products found");
         }
         model.addAttribute("products", productPage.getContent());

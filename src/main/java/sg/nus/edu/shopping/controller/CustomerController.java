@@ -75,7 +75,9 @@ public class CustomerController {
             @RequestParam("email") String email,
             @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("address") String address,
+			@RequestParam("BankName") String BankName,
 			@RequestParam("CardNumber") String CardNumber,
+			@RequestParam("ExpiryDate") String ExpiryDate,
             Model model
     ) {
         //make sure the username is unique
@@ -109,8 +111,8 @@ public class CustomerController {
         cusregister.saveCustomer(customer);
 
 		paymentDetail.setCardNumber(CardNumber);
-		paymentDetail.setBankName("DBS");
-		paymentDetail.setExpiryDate("2023-12-12");
+		paymentDetail.setBankName(BankName);
+		paymentDetail.setExpiryDate(ExpiryDate);
 		paymentDetail.setHolderName(name);
 		paymentDetail.setPayment_customer(customer);
 		paymentService.savePaymentDetails(paymentDetail);

@@ -138,38 +138,38 @@
 
 		<div class="pagination">
 			<a th:if="${currentPage > 1} and ${categoryId != null}"
-				th:href="@{products(page=${currentPage - 1}, size=10, category=${categoryId})}">&laquo; Previous</a>
+			   th:href="@{/products(page=${currentPage - 1}, size=10, category=${categoryId})}">&laquo; Previous</a>
 			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword == null}"
-				th:href="@{/products(page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
+			   th:href="@{/products(page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
 			<a th:if="${currentPage > 1} and ${categoryId == null} and ${keyword != null}"
-				th:href="@{/products/search(keyword=${keyword}, page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
+			   th:href="@{/products/search(keyword=${keyword}, page=${currentPage - 1}, size=10)}">&laquo; Previous</a>
 
 			<span th:if="${totalPages != null}" th:each="i : ${#numbers.sequence(1, totalPages)}"
-				th:classappend="${i == currentPage} ? 'active'">
-				<a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId})}"
-					th:text="${i}"></a>
-				<a th:if="${categoryId == null} and ${keyword == null}" th:href="@{products(page=${i}, size=10)}"
-					th:text="${i}"></a>
-				<a th:if="${categoryId == null} and ${keyword != null}"
-					th:href="@{products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
-			</span>
+				  th:classappend="${i == currentPage} ? 'active'">
+        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId})}"
+		   th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10)}"
+		   th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword != null}"
+		   th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
+    </span>
 
 			<span th:if="${totalPages == null}" th:each="i : ${#numbers.sequence(1, 1)}"
-				th:classappend="${i == currentPage} ? 'active'">
-				<a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId})}"
-					th:text="${i}"></a>
-				<a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10)}"
-					th:text="${i}"></a>
-				<a th:if="${categoryId == null} and ${keyword != null}"
-					th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
-			</span>
+				  th:classappend="${i == currentPage} ? 'active'">
+        <a th:if="${categoryId != null}" th:href="@{/products(page=${i}, size=10, category=${categoryId})}"
+		   th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword == null}" th:href="@{/products(page=${i}, size=10)}"
+		   th:text="${i}"></a>
+        <a th:if="${categoryId == null} and ${keyword != null}"
+		   th:href="@{/products/search(keyword=${keyword}, page=${i}, size=10)}" th:text="${i}"></a>
+    </span>
 
 			<a th:if="${currentPage < totalPages} and ${categoryId != null}"
-				th:href="@{/products(page=${currentPage + 1}, size=10, category=${categoryId})}">Next &raquo;</a>
+			   th:href="@{/products(page=${currentPage + 1}, size=10, category=${categoryId})}">Next &raquo;</a>
 			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword == null}"
-				th:href="@{/products(page=${currentPage + 1}, size=10)}">Next &raquo;</a>
+			   th:href="@{/products(page=${currentPage + 1}, size=10)}">Next &raquo;</a>
 			<a th:if="${currentPage < totalPages} and ${categoryId == null} and ${keyword != null}"
-				th:href="@{/products/search(keyword=${keyword}, page=${currentPage + 1}, size=10)}">Next &raquo;</a>
+			   th:href="@{/products/search(keyword=${keyword}, page=${currentPage + 1}, size=10)}">Next &raquo;</a>
 		</div>
 
 	</section>
