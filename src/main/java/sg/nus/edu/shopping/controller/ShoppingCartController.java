@@ -18,22 +18,22 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Autowired
-    private ProductInterface productInt; // 产品服务接口，获取产品信息
+    private ProductInterface productInt; 
 
     @Autowired
-    private ShoppingCartInterface shoppingCartInt; // 购物车服务接口，管理购物车
+    private ShoppingCartInterface shoppingCartInt;
     
     @Autowired
     private CustomerInterface customerService;
 
-    /* 获取所有产品的 API Hannah: this method is in product rest controller.
+    /* this method is in product rest controller.
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return productInt.findAllProducts();
     }
     */
 
-    // 添加产品到购物车的 API
+    //add product to shopping cart
     @PostMapping("/cart/add")
     public String addProductToCart(@RequestBody AddToCartRequest request) {
         try {
@@ -84,9 +84,9 @@ public class ShoppingCartController {
         }
     }
 
-    // Data Transfer Object 类 接收从客户端传递的数据
+    // receive data
     public static class AddToCartRequest {
-        private String customerId; // 添加 customerId 字段
+        private String customerId; 
         private int productId;
         private int quantity;
 
