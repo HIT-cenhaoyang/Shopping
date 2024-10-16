@@ -10,42 +10,42 @@
 
         window.addEventListener('pageshow', function(event) {
             if (event.persisted) {
-                // 页面从缓存中加载时刷新页面
+                // Refresh the page when it loads from the cache
                 window.location.reload();
             }
         });
 
-        // 显示所有支付方式
+        // Show all payment methods
         function showAllPaymentDetails() {
             document.getElementById("allPaymentDetails").style.display = "block";
             document.getElementById("showButton").style.display = "none";
         }
 
-        // 更新选中的银行卡号
+        // Update the selected bank card number
         function selectPaymentDetail(cardNumber) {
-            console.log(cardNumber); // 检查是否获取到了正确的银行卡号
-            // 使用掩码后的版本更新页面上选中的卡号，只显示最后四位
+            console.log(cardNumber); // Check that you have obtained the correct bank card number
+            // The selected card number on the version update page with the mask is displayed only with the last four digits
             const maskedNumber = "**** **** **** " + cardNumber.slice(-4);
             document.getElementById("selectedCardNumber").textContent = maskedNumber;
-            // 更新隐藏的 input 字段值
+            // Update hidden input field values
             document.getElementById("selectedCardNumberInput").value = cardNumber;
         }
 
-        // 使用 JavaScript 处理银行卡号，只显示最后四个字符
+        // displayed only with the last four digits
         function maskCardNumber(cardNumber) {
             return "**** **** **** " + cardNumber.slice(-4);
         }
 
-        // 页面加载完成后，将所有卡号显示为最后四位
+        // When the page loads, all card numbers are displayed as the last four digits
         document.addEventListener("DOMContentLoaded", function () {
-            // 初始展示第一个银行卡号
+            // Initially display the first bank card number
             const firstCardNumberElement = document.getElementById("selectedCardNumber");
             if (firstCardNumberElement) {
                 const originalCardNumber = firstCardNumberElement.getAttribute("data-cardnumber");
                 firstCardNumberElement.textContent = maskCardNumber(originalCardNumber);
             }
 
-            // 处理所有银行卡号列表
+            // Process list of all bank card numbers
             const cardElements = document.querySelectorAll(".maskedCardNumber");
             cardElements.forEach(function (cardElement) {
                 const originalCardNumber = cardElement.getAttribute("data-cardnumber");
@@ -53,40 +53,40 @@
             });
         });
 
-        // 切换编辑状态的函数
+        // A function to switch the editing state
         function editField(field) {
             document.getElementById(field + "Display").style.display = "none";
             document.getElementById(field + "Edit").style.display = "block";
         }
 
-        // 保存编辑内容并更新隐藏的表单字段值
+        // Save the edits and update the hidden form field values
         function saveField(field) {
             const inputElement = document.getElementById(field + "Input");
             const newValue = inputElement.value;
 
-            // 更新显示的文本内容
+            // Update the displayed text content
             document.getElementById(field + "Text").textContent = newValue;
 
-            // 更新隐藏的表单字段值
+            // Update hidden form field values
             document.getElementById("hidden" + capitalizeFirstLetter(field)).value = newValue;
 
-            // 退出编辑模式
+            // Exit edit mode
             cancelEdit(field);
         }
 
-        // 取消编辑
+        // cancel edit
         function cancelEdit(field) {
             document.getElementById(field + "Edit").style.display = "none";
             document.getElementById(field + "Display").style.display = "block";
         }
 
-        // 辅助函数：首字母大写
+        // capitalize First Letter
         function capitalizeFirstLetter(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
         function simulatePayment() {
-            // 创建遮罩层
+            // Create the mask layer
             let overlay = document.createElement('div');
             overlay.style.position = 'fixed';
             overlay.style.top = '0';
@@ -96,7 +96,7 @@
             overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
             overlay.style.zIndex = '1000';
 
-            // 创建支付弹窗
+            // Create a payment popup
             let paymentBox = document.createElement('div');
             paymentBox.style.position = 'fixed';
             paymentBox.style.top = '50%';
@@ -109,7 +109,7 @@
             paymentBox.style.textAlign = 'center';
             paymentBox.style.zIndex = '1100';
 
-            // 添加旋转动画
+            // Add rotation animation
             let spinner = document.createElement('div');
             spinner.style.width = '50px';
             spinner.style.height = '50px';
@@ -119,7 +119,7 @@
             spinner.style.animation = 'spin 1s linear infinite';
             spinner.style.margin = '0 auto 20px';
 
-            // 添加文字
+            // Add text
             let text = document.createElement('p');
             text.innerText = 'Processing payment...';
 
@@ -128,13 +128,13 @@
             overlay.appendChild(paymentBox);
             document.body.appendChild(overlay);
 
-            // 模拟支付等待 2 秒钟
+            // Simulated payment wait 2 seconds
             setTimeout(function () {
-                // 模拟随机支付成功或失败
-                let isSuccess = Math.random() > 0.5; // 50% 成功率
-                //document.body.removeChild(paymentBox); // 移除支付弹窗
+                // Simulate random payment success or failure
+                let isSuccess = Math.random() > 0.5; // 50% success rate
+                //document.body.removeChild(paymentBox); // Remove the payment popup
                 if (isSuccess) {
-                    document.body.removeChild(overlay); // 移除遮罩层
+                    document.body.removeChild(overlay); // Remove the mask layer
                     document.getElementById('checkoutForm').submit();
                 } else {
                     let errorBox = document.createElement('div');
@@ -149,11 +149,11 @@
                     errorBox.style.textAlign = 'center';
                     errorBox.style.zIndex = '1100';
 
-                    // 创建红色圆圈和白色错号
+                    // Create red circle and white error number
                     let errorIcon = document.createElement('div');
                     errorIcon.style.width = '60px';
                     errorIcon.style.height = '60px';
-                    errorIcon.style.backgroundColor = '#d9534f'; // 红色背景
+                    errorIcon.style.backgroundColor = '#d9534f';
                     errorIcon.style.borderRadius = '50%';
                     errorIcon.style.position = 'relative';
                     errorIcon.style.margin = '0 auto 20px';
@@ -164,7 +164,7 @@
                     cross1.style.left = '50%';
                     cross1.style.width = '4px';
                     cross1.style.height = '30px';
-                    cross1.style.backgroundColor = '#ffffff'; // 白色错号
+                    cross1.style.backgroundColor = '#ffffff';
                     cross1.style.transform = 'translate(-50%, -50%) rotate(45deg)';
 
                     let cross2 = document.createElement('div');
@@ -173,22 +173,22 @@
                     cross2.style.left = '50%';
                     cross2.style.width = '4px';
                     cross2.style.height = '30px';
-                    cross2.style.backgroundColor = '#ffffff'; // 白色错号
+                    cross2.style.backgroundColor = '#ffffff';
                     cross2.style.transform = 'translate(-50%, -50%) rotate(-45deg)';
 
                     errorIcon.appendChild(cross1);
                     errorIcon.appendChild(cross2);
 
-                    // 添加文字
+                    // add text
                     let errorText = document.createElement('p');
                     errorText.innerText = 'Payment failed. Please try again.';
 
-                    // 添加关闭按钮
+                    // add close button
                     let closeButton = document.createElement('button');
                     closeButton.innerText = 'Close';
                     closeButton.style.marginTop = '20px';
                     closeButton.onclick = function () {
-                        document.body.removeChild(overlay); // 移除遮罩层和错误提示框
+                        document.body.removeChild(overlay);
                     };
 
                     errorBox.appendChild(errorIcon);
@@ -196,10 +196,10 @@
                     errorBox.appendChild(closeButton);
                     overlay.appendChild(errorBox);
                 }
-            }, 2000);  // 模拟等待时间
+            }, 2000);  // simulate waiting time
         }
 
-        // 添加旋转动画的 CSS 样式
+        // Add CSS styles for rotating animations
         let style = document.createElement('style');
         style.innerHTML = `
     @keyframes spin {
@@ -253,7 +253,7 @@
             <button type="button" class="a-button" onclick="cancelEdit('phoneNumber')">Cancel</button>
         </div>
     </div>
-    <!-- 隐藏字段，用于存储编辑后的值 -->
+    <!-- hidden -->
     <input type="hidden" id="hiddenUserName" name="recipientName" th:value="${customer.userName}"/>
     <input type="hidden" id="hiddenAddress" name="recipientAddress" th:value="${customer.address}"/>
     <input type="hidden" id="hiddenPhoneNumber" name="recipientPhone" th:value="${customer.phoneNumber}"/>
@@ -287,26 +287,26 @@
 
     <br>
     <div class="selected-payment-method">
-        <!-- 初始展示第一个 PaymentDetail 的银行卡号 -->
+        <!-- Initially display the first PaymentDetail bank card number -->
         <div th:if="${customer.paymentDetails.size() > 0}">
             <h2>Selected Payment Method</h2>
             <p>Card Number: <span id="selectedCardNumber"
                                   th:attr="data-cardnumber=${customer.paymentDetails[0].cardNumber}"></span></p>
         </div>
 
-        <!-- 展示按钮，点击展示所有 PaymentDetail -->
+        <!-- Show button, click Show all PaymentDetail -->
         <button type="button" class="a-button" id="showButton" onclick="showAllPaymentDetails()">Show All Payment
             Methods
         </button>
 
-        <!-- 隐藏的所有 PaymentDetail 列表，只展示银行卡号 -->
+        <!-- Hidden list of all PaymentDetail, showing only bank card numbers -->
         <div id="allPaymentDetails" style="display: none;">
             <h2>All Payment Methods</h2>
             <ul>
                 <li th:each="paymentDetail : ${customer.paymentDetails}">
                     <p>Card Number: <span class="maskedCardNumber"
                                           th:attr="data-cardnumber=${paymentDetail.cardNumber}"></span></p>
-                    <!-- 使用 data-* 属性传递银行卡号 -->
+                    <!-- Pass the bank card number using the data-* attribute -->
                     <button type="button" class="a-button" th:attr="data-cardNumber=${paymentDetail.cardNumber}"
                             onclick="selectPaymentDetail(this.getAttribute('data-cardNumber'))">
                         Select This Card
@@ -315,7 +315,7 @@
             </ul>
         </div>
         <div th:if="${customer.paymentDetails.size() > 0}">
-            <!-- 隐藏字段，用于存储选中的银行卡号 -->
+            <!-- hidden store -->
             <input type="hidden" id="selectedCardNumberInput" name="cardNumber"
                    th:value="${customer.paymentDetails[0].cardNumber}"/>
         </div>

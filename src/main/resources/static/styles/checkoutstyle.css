@@ -38,20 +38,18 @@ button:hover, input[type="submit"]:hover {
     background-color: #555555;
 }
 
-/* 初始按钮样式 */
 button.a-button {
-    background-color: #333333; /* 默认底色 */
-    color: #f4f4f4; /* 默认文字颜色 */
+    background-color: #333333;
+    color: #f4f4f4;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
 }
 
-/* 鼠标悬停时的样式 */
 button.a-button:hover {
-    background-color: #4285f4; /* 鼠标悬停时底色 */
-    color: #ffffff; /* 鼠标悬停时文字颜色 */
+    background-color: #4285f4;
+    color: #ffffff;
 }
 
 
@@ -159,10 +157,9 @@ button[type="button"] {
     margin-left: 10px;
 }
 
-/* 初始提交按钮样式 */
 input[type="button"].submit-button {
-    background-color: #333333; /* 默认底色 */
-    color: #f4f4f4; /* 默认文字颜色 */
+    background-color: #333333;
+    color: #f4f4f4;
     border: none;
     padding: 15px 30px;
     font-size: 1.2em;
@@ -170,10 +167,9 @@ input[type="button"].submit-button {
     border-radius: 5px;
 }
 
-/* 鼠标悬停时的样式 */
 input[type="button"].submit-button:hover {
-    background-color: #4285f4; /* 鼠标悬停时底色 */
-    color: #ffffff; /* 鼠标悬停时文字颜色 */
+    background-color: #4285f4;
+    color: #ffffff;
 }
 
 .selected-payment-method {

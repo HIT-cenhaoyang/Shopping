@@ -59,18 +59,18 @@ public class CheckoutController {
             return "redirect:/7haven/cart";
         }
 
-        // 检查每个商品的数量是否小于等于库存数量
+        // Check that the quantity of each item is less than or equal to the quantity in stock
         for (ShoppingCart cart : cartList) {
             Product product = cart.getProduct();
 
-            // 检查库存是否足够
+            // Check if the inventory is sufficient
             if (cart.getProductQty() > product.getStockAvailable()) {
                 model.addAttribute("productImagePath",product.getCoverImagePath());
                 model.addAttribute("productName", product.getName());
                 model.addAttribute("requiredQty", cart.getProductQty());
                 model.addAttribute("availableStock", product.getStockAvailable());
 
-                // 如果库存不足，跳转到库存错误页面
+                // If you are out of stock, go to the Stock error page
                 return "stockError";
             }
         }
@@ -91,7 +91,7 @@ public class CheckoutController {
                        @RequestParam("cardNumber") String cardNumber,
                        HttpSession sessionObj, Model model) {
 
-        // 获取当前用户的购物车信息
+        // Gets shopping cart information for the current user
         String customerId = (String) sessionObj.getAttribute("customerId");
         List<ShoppingCart> carts = cartService.getCartByCustomerId(customerId);
 
@@ -120,11 +120,11 @@ public class CheckoutController {
         }
         oService.saveAllOrderDetail(orderDetails);
 
-        // 扣减库存数量
+        // Subtract inventory quantity
         for (ShoppingCart cart : carts) {
             Product product = cart.getProduct();
             product.setStockAvailable(product.getStockAvailable() - cart.getProductQty());
-            pService.saveProduct(product);  // 更新产品库存
+            pService.saveProduct(product);  // update stock
         }
 
         //delete cart

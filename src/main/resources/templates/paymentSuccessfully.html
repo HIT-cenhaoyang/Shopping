@@ -2,18 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Payment Success</title>
-    <!-- 引入静态 CSS 文件 -->
     <link rel="stylesheet" type="text/css" href="/styles/homepagestyle.css">
     <link rel="stylesheet" type="text/css" href="/styles/paymentsuccessfullystyle.css">
 </head>
 
 <body>
 <div th:replace="top :: header"></div>
-<!-- 成功消息 -->
+
 <h1 class="success-message">Payment Successfully!</h1>
 <p>Thank you for your payment. Your transaction was completed successfully.</p>
 
-<!-- 订单概要 -->
 <div class="order-summary">
     <h2>Order Summary</h2>
     <p><strong>Order Number:</strong> <span th:text="${purchaseRecord.orderId}"></span></p>
@@ -25,13 +23,11 @@
     <p><strong>Phone Number:</strong> <span th:text="${purchaseRecord.recipientPhone}"></span></p>
 </div>
 
-<!-- 按钮区 -->
 <div class="buttons">
     <a href="/products" class="button">Continue Shopping</a>
     <a href="/7haven/purchase/history" class="button">View My Orders</a>
 </div>
 
-<!-- 联系方式 -->
 <div class="contact-info">
     <h3>Need Help?</h3>
     <p>If you have any questions about your order, please contact us:</p>
