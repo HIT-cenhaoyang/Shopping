@@ -1,4 +1,4 @@
-/* 全局样式 */
+/* Global Style */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #ffffff;
@@ -15,7 +15,7 @@ h1, h4 {
     margin-bottom: 20px;
 }
 
-/* 主表格样式 */
+/* Master table style */
 .table {
     width: 100%;
     margin-bottom: 20px;
@@ -39,7 +39,7 @@ h1, h4 {
     background-color: #fff;
 }
 
-/* 子表格样式 (商品信息) */
+/* Subtable style (Product information) */
 .table-sm {
     width: 100%;
     margin-top: 10px;
@@ -57,7 +57,7 @@ h1, h4 {
     font-weight: bold;
 }
 
-/* 图片样式 */
+/* Picture Style */
 .product-image {
     width: 80px;
     height: 80px;
@@ -66,12 +66,12 @@ h1, h4 {
     transition: transform 0.3s ease;
 }
 
-/* 图片悬停效果 */
+/* Image hover effect */
 .product-image:hover {
     transform: scale(1.05);
 }
 
-/* 按钮样式 */
+/* Button style */
 button, .btn-comment {
     background-color: #ff9800;
     color: #ffffff;
@@ -87,7 +87,7 @@ button:hover, .btn-comment:hover {
     transform: scale(1.05);
 }
 
-/* 居中显示返回按钮 */
+/* Displays the back button in the center */
 .center-button {
     text-align: center;
     margin-top: 20px;
@@ -108,7 +108,7 @@ button:hover, .btn-comment:hover {
     transform: scale(1.05);
 }
 
-/* 响应式设计 */
+/* Responsive design */
 @media (max-width: 768px) {
     .table-bordered, .table-sm {
         width: 100%;
@@ -123,7 +123,7 @@ button:hover, .btn-comment:hover {
     button, .btn-comment {
         padding: 5px;
     }
-    /* 针对Order Detail表头的样式 */
+    /* Style for the Order Detail table header */
     .table-sm thead th[colspan="7"] {
         background-color: #f0f0f0;
         font-size: 1.2rem;

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Purchase Records</title>
-    <!-- 引用自定义样式文件 -->
+    <!-- Reference a custom style file -->
     <link rel="stylesheet" type="text/css" href="/styles/homepagestyle.css">
     <link rel="stylesheet" type="text/css" href="/styles/purchaserecord.css">
-    <!-- 引用 Google 字体（可选） -->
+    <!-- Referencing Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -27,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <!-- 遍历 Customer 中的 Orders 列表 -->
+    <!-- Iterate through the list of Orders in the Customer -->
     <tr th:each="order : ${purchaseRecordsPage.content}">
         <td th:text="${order.orderDate}"></td>
         <td th:text="${order.recipientName}"></td>
@@ -51,7 +51,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- 遍历 Order 中的 OrderDetails 列表 -->
+                <!-- Iterate over the list of OrderDetails in Order -->
                 <tr th:each="detail : ${order.orderDetails}">
                     <td>
                         <!-- 商品名称点击跳转 -->
@@ -68,7 +68,7 @@
                         </a>
                     </td>
 
-                    <!-- 使用 form 表单和 POST 方法发送评论请求 -->
+                    <!-- Use the form form and the POST method to send comment requests -->
                     <td>
                         <form th:action="@{/7haven/product/review}" method="post">
                             <input type="hidden" name="productId" th:value="${detail.product.productId}">
