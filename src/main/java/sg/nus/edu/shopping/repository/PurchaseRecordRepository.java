@@ -4,19 +4,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import sg.nus.edu.shopping.model.OrderDetail;
 import sg.nus.edu.shopping.model.Customer;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import sg.nus.edu.shopping.model.Category;
-import sg.nus.edu.shopping.model.Customer;
 import sg.nus.edu.shopping.model.PurchaseRecord;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 

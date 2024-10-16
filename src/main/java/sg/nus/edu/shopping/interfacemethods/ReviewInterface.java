@@ -1,6 +1,5 @@
 package sg.nus.edu.shopping.interfacemethods;
 
-import org.springframework.data.repository.query.Param;
 import sg.nus.edu.shopping.model.Review;
 
 import java.util.List;
