@@ -1,5 +1,7 @@
 package sg.nus.edu.shopping.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import sg.nus.edu.shopping.model.OrderDetail;
@@ -34,4 +36,6 @@ public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, 
 
     @Query("SELECT p FROM PurchaseRecord p LEFT JOIN FETCH p.orderDetails WHERE p.customer.userName = :customerName AND p.orderId = (SELECT MAX(p2.orderId) FROM PurchaseRecord p2 WHERE p2.customer.userName = :customerName)")
     PurchaseRecord findLatestPurchaseRecordByCustomer(@Param("customerName") String customerName);
+
+    Page<PurchaseRecord> findAllByOrderByOrderIdDesc(Pageable pageable);
 }

@@ -77,6 +77,6 @@ public class PurchaseRecordImplementation implements PurchaseRecordInterface {
     }
 
     public Page<PurchaseRecord> getAllPurchaseRecords(Pageable pageable) {
-        return purchaseRecordRepo.findAll(pageable);
+        return purchaseRecordRepo.findAllByOrderByOrderIdDesc(pageable);
     }
 }
