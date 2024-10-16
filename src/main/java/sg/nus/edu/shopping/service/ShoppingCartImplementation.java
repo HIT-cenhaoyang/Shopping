@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+//Author: Hannah, Xu Zhiye
 public class ShoppingCartImplementation implements ShoppingCartInterface {
     @Autowired
     private ShoppingCartRepository shoppingCartRepo;

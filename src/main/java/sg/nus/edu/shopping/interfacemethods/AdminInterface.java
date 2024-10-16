@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+// Author: Cen HaoYang
 public interface AdminInterface {
 
 	Optional<Admin> findAdminByUserName(String userName);

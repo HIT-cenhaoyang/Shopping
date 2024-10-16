@@ -9,7 +9,7 @@ import sg.nus.edu.shopping.model.Customer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+//Author: Xu Zhiye, Cen Haoyang
 public interface CustomerRepository extends JpaRepository<Customer, String> {
     boolean existsByUserName(String userName);
 

@@ -23,6 +23,8 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
+
+//Author: Cen Haoyang
 public class ProductRestController {
     @Autowired
     private ProductInterface productInt;

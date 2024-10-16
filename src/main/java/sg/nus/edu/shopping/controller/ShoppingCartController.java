@@ -15,6 +15,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+
+//Author: Deng Jingyu, Xu Zhiye
 public class ShoppingCartController {
 
     @Autowired
@@ -26,12 +28,6 @@ public class ShoppingCartController {
     @Autowired
     private CustomerInterface customerService;
 
-    /* this method is in product rest controller.
-    @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        return productInt.findAllProducts();
-    }
-    */
 
     //add product to shopping cart
     @PostMapping("/cart/add")

@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+//Author: Liu Zheyi, Hannah
 public class PurchaseRecordImplementation implements PurchaseRecordInterface {
     @Autowired
     private PurchaseRecordRepository purchaseRecordRepo;

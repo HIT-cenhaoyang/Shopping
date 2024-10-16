@@ -15,12 +15,15 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
+
+//Author: Hannah
 public class CategoryRestController {
     @Autowired
     private CategoryInterface categoryInt;
     @Autowired
     private ProductInterface productInt;
 
+    // method to retrieve categories can request parameters through categoryId/categoryName/productId
     @GetMapping("/categories")
     public ResponseEntity<List<Category>> getCategories(
             @RequestParam(required = false) Integer categoryId,

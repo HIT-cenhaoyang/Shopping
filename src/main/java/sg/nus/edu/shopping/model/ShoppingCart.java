@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
+//Author: Liu Zheyi
 public class ShoppingCart {
 
     @Id

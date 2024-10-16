@@ -6,6 +6,7 @@ import sg.nus.edu.shopping.model.Product;
 import java.util.List;
 import java.util.Optional;
 
+// Author: Hannah
 public interface CategoryInterface {
     Category findByCategoryId(Integer categoryId);
     Category createCategory(String categoryName);

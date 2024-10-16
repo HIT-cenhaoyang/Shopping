@@ -7,6 +7,7 @@ import java.util.List;
 
 
 @Entity
+//Author: Cen Haoyang, Hannah
 public class OrderDetail {
 
     @Id

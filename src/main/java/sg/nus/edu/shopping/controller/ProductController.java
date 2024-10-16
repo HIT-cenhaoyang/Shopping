@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+
+//Author: Xu Ziyi, Htet Inzali
 public class ProductController {
 	//BPC Update
 	@Autowired

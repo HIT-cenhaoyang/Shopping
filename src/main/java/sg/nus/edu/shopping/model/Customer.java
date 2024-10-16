@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+//Author: Cen Haoyang, Liu Zheyi
 public class Customer {
     @Id
     @GeneratedValue(generator = "customer-id-generator")

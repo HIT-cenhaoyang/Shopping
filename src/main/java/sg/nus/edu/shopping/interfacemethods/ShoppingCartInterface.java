@@ -4,7 +4,7 @@ import sg.nus.edu.shopping.model.ShoppingCart;
 
 import java.util.List;
 
-
+//Author: Hannah, Xu Zhiye
 public interface ShoppingCartInterface {
     List<ShoppingCart> getCartByCustomerId(String customerId);
     List<ShoppingCart> getCartByCustomerUsername(String username);

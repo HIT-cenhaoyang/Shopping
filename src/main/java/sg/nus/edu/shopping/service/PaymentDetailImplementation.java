@@ -9,6 +9,7 @@ import sg.nus.edu.shopping.repository.PaymentDetailRepository;
 
 @Service
 @Transactional
+//Author: Xu Ziyi
 public class PaymentDetailImplementation implements PaymentInterface {
 
         @Autowired

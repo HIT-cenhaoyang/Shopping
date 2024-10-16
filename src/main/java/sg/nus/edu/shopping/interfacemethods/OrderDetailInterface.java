@@ -9,6 +9,7 @@ import sg.nus.edu.shopping.repository.OrderDetailRepository;
 import java.util.List;
 import java.util.Optional;
 
+//Author: Hannah, Liu Zheyi
 public interface OrderDetailInterface{
 
     void saveAllOrderDetail(List<OrderDetail> detail);

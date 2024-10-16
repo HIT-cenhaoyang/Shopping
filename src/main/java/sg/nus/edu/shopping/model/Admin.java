@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+//Author: Cen Haoyang
 public class Admin {
     @Id
     @Column(unique = true)

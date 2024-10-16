@@ -3,6 +3,7 @@ package sg.nus.edu.shopping.model;
 import jakarta.persistence.*;
 
 @Entity
+//Author: Liu Zheyi, Zhao Yiran
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+//Author: Cen Haoyang, Hannah
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

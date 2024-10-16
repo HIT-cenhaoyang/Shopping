@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+//Author: Xu Ziyi, Hannah
 public interface ProductInterface {
 
     List<Product> findAllProducts();

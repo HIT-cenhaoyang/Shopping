@@ -5,7 +5,7 @@ import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 
 import java.util.List;
-
+//Author: Hannah
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
     Category findByCategoryName(String categoryName);
     Category findByCategoryId(int categoryId);

@@ -7,6 +7,7 @@ import jakarta.persistence.ManyToOne;
 
 
 @Entity
+//Author: Cen Haoyang
 public class PaymentDetail {
 
     @Id

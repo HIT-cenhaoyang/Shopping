@@ -3,7 +3,7 @@ package sg.nus.edu.shopping.interfacemethods;
 import sg.nus.edu.shopping.model.ProductImage;
 
 import java.util.List;
-
+//Author: Hannah
 public interface ProductImageInterface {
     void addProductImage(int productId, ProductImage productImage);
     ProductImage getCoverImage(int productId);

@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-
+//Author: Liu Zheyi
 public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, Integer> {
     List<PurchaseRecord> findAll();
 

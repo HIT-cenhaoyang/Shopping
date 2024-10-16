@@ -19,6 +19,7 @@ import sg.nus.edu.shopping.interfacemethods.*;
 import sg.nus.edu.shopping.model.*;
 
 @Controller
+//Author: Xu Zhiye, Zhao Yiran
 public class PurchaseRecordController {
     @Autowired
     private CustomerInterface cService;

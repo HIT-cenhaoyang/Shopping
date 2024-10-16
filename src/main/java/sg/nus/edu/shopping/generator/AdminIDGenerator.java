@@ -10,6 +10,7 @@ import sg.nus.edu.shopping.service.AdminImplementation;
 import java.io.Serializable;
 
 @Component
+//Author: Cen Haoyang
 public class AdminIDGenerator implements IdentifierGenerator {
     private static int counter = 1;
 

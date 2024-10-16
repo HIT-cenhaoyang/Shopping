@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+//Author: Liu Zheyi, Hannah
 public interface PurchaseRecordInterface {
 
     List<PurchaseRecord> findAllOrders();

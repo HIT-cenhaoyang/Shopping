@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+//Author: Hannah
 public class CategoryImplementation implements CategoryInterface {
     @Autowired
     private CategoryRepository categoryRepo;

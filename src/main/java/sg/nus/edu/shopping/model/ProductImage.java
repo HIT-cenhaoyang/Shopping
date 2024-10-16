@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
+//Author: Hannah
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)

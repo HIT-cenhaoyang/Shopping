@@ -7,7 +7,7 @@ import org.springframework.validation.Validator;
 
 import sg.nus.edu.shopping.model.Customer;
 
-
+//Author: Xu Zhiye
 @Component
 public class CustomerValidator implements Validator {
 

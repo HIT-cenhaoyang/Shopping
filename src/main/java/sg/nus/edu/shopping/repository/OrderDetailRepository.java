@@ -9,6 +9,7 @@ import sg.nus.edu.shopping.model.PurchaseRecord;
 import java.util.List;
 import java.util.Optional;
 
+//Author: Hannah
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
     Optional<OrderDetail> findByOrderDetailId (int id);
     List<OrderDetail> findAll();

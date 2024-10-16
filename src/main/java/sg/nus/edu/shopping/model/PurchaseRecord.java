@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+//Author: Liu Zheyi
 public class PurchaseRecord {
 
     @Id

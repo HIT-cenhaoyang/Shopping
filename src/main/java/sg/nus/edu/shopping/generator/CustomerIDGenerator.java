@@ -10,6 +10,7 @@ import sg.nus.edu.shopping.service.CustomerImplementation;
 import java.io.Serializable;
 
 @Component
+//Author: Cen Haoyang
 public class CustomerIDGenerator implements IdentifierGenerator {
     private static int counter = 1;
 

@@ -10,7 +10,7 @@ import sg.nus.edu.shopping.model.Category;
 import sg.nus.edu.shopping.model.Product;
 import java.util.List;
 import java.util.Optional;
-
+//Author: Xu Ziyi, Hannah
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> findBySku (String sku);
     Optional<Product> findByProductId(int productId);

@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+//Author: Hannah, Xu Ziyi
 public class ProductImplementation implements ProductInterface {
     @Autowired
     private ProductRepository productRepo;

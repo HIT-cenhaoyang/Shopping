@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+//Author: Hannah
 public class ProductImageImplementation implements ProductImageInterface {
     @Autowired
     private ProductImageRepository productImageRepo;

@@ -25,6 +25,8 @@ import sg.nus.edu.shopping.service.CustomerValidator;
 import java.time.LocalDate;
 
 @Controller
+
+//Author: Xu Zhiye, Xu Ziyi
 public class CustomerController {
 
     @Autowired

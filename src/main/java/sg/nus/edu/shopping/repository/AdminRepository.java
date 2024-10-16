@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import sg.nus.edu.shopping.model.Admin;
 
 @Repository
+//Author: Cen Haoyang
 public interface AdminRepository extends JpaRepository<Admin, String> {
 	Optional<Admin> findAdminByUserName(String userName);
 

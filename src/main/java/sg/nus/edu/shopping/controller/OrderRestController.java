@@ -17,6 +17,8 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
+
+//Author: Hannah
 public class OrderRestController {
     @Autowired
     private PurchaseRecordInterface orderInt;
@@ -55,51 +57,4 @@ public class OrderRestController {
            return new ResponseEntity<>(orderResult, HttpStatus.OK);
        }
     }
-/*
-    @GetMapping("/orders/{orderId}")
-    public ResponseEntity<PurchaseRecord> findOrderById(@PathVariable("orderId") int id){
-        Optional<PurchaseRecord> optOrder= orderInt.findByPurchaseRecordId(id);
-        if (optOrder.isPresent()) {
-           PurchaseRecord order = optOrder.get();
-           return new ResponseEntity<>(order, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/orders/customer/{customerId}")
-    public ResponseEntity<List<PurchaseRecord>> findOrdersByCustomerId(@PathVariable("customerId") String id){
-        List<PurchaseRecord> orderListByCust = orderInt.findByCustomerId(id);
-        if (!orderListByCust.isEmpty()) {
-            return new ResponseEntity<>(orderListByCust, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/orders/date/{date}")
-    public ResponseEntity<List<PurchaseRecord>> findOrdersByDate(@PathVariable("date") LocalDate date){
-        List<PurchaseRecord> orderListByDate = orderInt.findByDate(date);
-        if (!orderListByDate.isEmpty()) {
-            return new ResponseEntity<>(orderListByDate, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/orders/product/{productId}")
-    public ResponseEntity<List<PurchaseRecord>> findOrdersByProduct(@PathVariable("productId") int id) {
-        Optional<Product> optProduct = productInt.findByProductId(id);
-        if (optProduct.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Product product = optProduct.get();
-        List<PurchaseRecord> orderListByProduct = orderInt.findByProduct(product);
-        if (!orderListByProduct.isEmpty()) {
-            return new ResponseEntity<>(orderListByProduct, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-    */
 }

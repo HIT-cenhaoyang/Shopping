@@ -7,7 +7,7 @@ import sg.nus.edu.shopping.model.Product;
 import sg.nus.edu.shopping.model.ProductImage;
 
 import java.util.List;
-
+//Author: Hannah, Xu Ziyi
 public interface ProductImageRepository extends JpaRepository<ProductImage, Integer> {
     List<ProductImage> findByProduct(Product product);
     ProductImage findByImageId(int imageId);

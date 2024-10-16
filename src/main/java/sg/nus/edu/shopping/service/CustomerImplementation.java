@@ -15,6 +15,7 @@ import sg.nus.edu.shopping.repository.PaymentDetailRepository;
 
 @Service
 @Transactional
+//Author: Xu Zhiye, Xu Ziyi
 public class CustomerImplementation implements CustomerInterface{
 	@Autowired
 	CustomerRepository customerRepo;
