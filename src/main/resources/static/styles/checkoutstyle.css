@@ -14,24 +14,7 @@ h1{
 }
 
 h2, h3 {
-    color: #333333;
-}
-
-/* Container styling for the recipient's information and payment method */
-div {
-    margin-bottom: 20px;
-}
-
-/* Styling for buttons */
-button, input[type="submit"] {
-    background-color: #333333;
-    color: #f4f4f4;
-    border: none;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
+    color: #464646;
 }
 
 button:hover, input[type="submit"]:hover {
@@ -39,7 +22,7 @@ button:hover, input[type="submit"]:hover {
 }
 
 button.a-button {
-    background-color: #333333;
+    background-color: #464646;
     color: #f4f4f4;
     border: none;
     padding: 10px 20px;
@@ -48,7 +31,7 @@ button.a-button {
 }
 
 button.a-button:hover {
-    background-color: #4285f4;
+    background-color: #333333;
     color: #ffffff;
 }
 
@@ -79,7 +62,7 @@ input[type="text"] {
 }
 
 .shopping-cart-table th {
-    background-color: #333333;
+    background-color: #464646;
     color: #f4f4f4;
 }
 
@@ -106,7 +89,7 @@ input[type="text"] {
 
 /* Button for showing all payment methods */
 #showButton {
-    background-color: #333333;
+    background-color: #464646;
     color: #f4f4f4;
     border: none;
     padding: 10px 20px;
@@ -115,7 +98,7 @@ input[type="text"] {
 }
 
 #showButton:hover {
-    background-color: #4285f4;
+    background-color: #333333;
     color: #ffffff;
 }
 
@@ -149,7 +132,7 @@ form div {
 /* Selected payment method section */
 #selectedCardNumber {
     font-weight: bold;
-    color: #333333;
+    color: #464646;
 }
 
 /* Edit button styles */
@@ -158,7 +141,7 @@ button[type="button"] {
 }
 
 input[type="button"].submit-button {
-    background-color: #333333;
+    background-color: #464646;
     color: #f4f4f4;
     border: none;
     padding: 15px 30px;
@@ -168,7 +151,7 @@ input[type="button"].submit-button {
 }
 
 input[type="button"].submit-button:hover {
-    background-color: #4285f4;
+    background-color: #333333;
     color: #ffffff;
 }
 

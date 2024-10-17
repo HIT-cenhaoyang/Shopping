@@ -76,18 +76,18 @@
         .btn {
             display: inline-block;
             padding: 12px 20px;
-            margin: 15px 10px 0 0;
             text-decoration: none;
             color: #ffffff;
-            background-color: #007bff;
+            background-color: #484848;
             border-radius: 5px;
             font-weight: bold;
             transition: background-color 0.3s ease;
             font-family: 'Com_Sem', cursive;
+            margin-bottom: 20px;
         }
 
         .btn:hover {
-            background-color: #0056b3;
+            background-color: #333333;
         }
 
         .quantity-controls {
@@ -101,7 +101,7 @@
             height: 30px;
             border: none;
             font-size: 18px;
-            background-color: #007bff;
+            background-color: #474747;
             color: #ffffff;
             border-radius: 50%;
             cursor: pointer;
@@ -110,7 +110,7 @@
         }
 
         .quantity-controls button:hover {
-            background-color: #0056b3;
+            background-color: #333333;
         }
 
         .quantity-controls input[type="number"] {
@@ -128,7 +128,7 @@
             margin: 0;
         }
 
-        .container {
+        .containerBody {
             text-align: center;
             margin-top: 30px;
         }
@@ -162,7 +162,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="containerBody">
     <a th:href="@{/7haven/purchase/history}" class="btn">Retrieve Purchase Records</a>
     <a th:href="@{/products}" class="btn">Continue Shopping</a>
     <a href="" onclick="history.go(-1); return false;" class="btn">Back</a>
