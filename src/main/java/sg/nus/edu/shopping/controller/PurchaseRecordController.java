@@ -63,7 +63,7 @@ public class PurchaseRecordController {
 
         //pageable
         Pageable pageable = PageRequest.of(page, 5);
-        Page<PurchaseRecord> purchaseRecordsPage = purchaseRecordService.getAllPurchaseRecords(pageable);
+        Page<PurchaseRecord> purchaseRecordsPage = purchaseRecordService.getAllPurchaseRecordsByCustomerDesc(customerId,pageable);
 
         model.addAttribute("purchaseRecordsPage", purchaseRecordsPage);
 		

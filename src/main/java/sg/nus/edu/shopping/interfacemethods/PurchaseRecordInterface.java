@@ -21,5 +21,5 @@ public interface PurchaseRecordInterface {
     void savePurchaseRecord(PurchaseRecord purchaseRecord);
     List<PurchaseRecord> findByCustomer(Customer customer);
     PurchaseRecord findLastPurchaseRecordByCustomerName(String customerName);
-    Page<PurchaseRecord> getAllPurchaseRecords(Pageable pageable);
+    Page<PurchaseRecord> getAllPurchaseRecordsByCustomerDesc(String customerId, Pageable pageable);
 }

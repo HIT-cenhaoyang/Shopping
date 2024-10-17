@@ -77,7 +77,9 @@ public class PurchaseRecordImplementation implements PurchaseRecordInterface {
         return purchaseRecordRepo.findLatestPurchaseRecordByCustomer(customerName);
     }
 
-    public Page<PurchaseRecord> getAllPurchaseRecords(Pageable pageable) {
-        return purchaseRecordRepo.findAllByOrderByOrderIdDesc(pageable);
+    @Override
+    @Transactional
+    public Page<PurchaseRecord> getAllPurchaseRecordsByCustomerDesc(String customerId, Pageable pageable) {
+        return purchaseRecordRepo.findByCustomerCustomerIdOrderByOrderIdDesc(customerId, pageable);
     }
 }

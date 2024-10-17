@@ -32,5 +32,6 @@ public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, 
     @Query("SELECT p FROM PurchaseRecord p LEFT JOIN FETCH p.orderDetails WHERE p.customer.userName = :customerName AND p.orderId = (SELECT MAX(p2.orderId) FROM PurchaseRecord p2 WHERE p2.customer.userName = :customerName)")
     PurchaseRecord findLatestPurchaseRecordByCustomer(@Param("customerName") String customerName);
 
-    Page<PurchaseRecord> findAllByOrderByOrderIdDesc(Pageable pageable);
+    @Query("SELECT p FROM PurchaseRecord p WHERE p.customer.id = :customerId ORDER BY p.orderId DESC")
+    Page<PurchaseRecord> findByCustomerCustomerIdOrderByOrderIdDesc(@Param("customerId")String customerId, Pageable pageable);
 }
