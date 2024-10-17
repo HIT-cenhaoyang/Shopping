@@ -26,4 +26,16 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> getProductByCategory(@Param("category") Category category, Pageable pageable);
 
     List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
+
+    @Query("SELECT p FROM Product p WHERE p.isLive = true")
+    Page<Product> findByIsLiveTrue(Pageable pageable);
+    @Query("SELECT p FROM Product p WHERE p.category = :category AND p.isLive = true")
+    Page<Product> findByCategoryAndIsLiveTrue(Category category, Pageable pageable);
+
+    @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword% AND p.isLive = true")
+    Page<Product> searchLiveProductsByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
+    @Query("SELECT p FROM Product p WHERE p.price BETWEEN :minPrice AND :maxPrice AND p.isLive = true")
+    List<Product> filterLiveProductsByPrice(@Param("minPrice") Double minPrice, @Param("maxPrice") Double maxPrice);
+
 }

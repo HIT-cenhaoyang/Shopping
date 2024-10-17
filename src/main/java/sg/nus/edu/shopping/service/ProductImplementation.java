@@ -102,4 +102,19 @@ public class ProductImplementation implements ProductInterface {
     public List<Product> filterProductsByPrice(Double minPrice, Double maxPrice) {
         return productRepo.findByPriceBetween(minPrice, maxPrice);
     }
+
+    @Override
+    public Page<Product> getLiveProducts(Pageable pageable) {
+        return productRepo.findByIsLiveTrue(pageable);
+    }
+
+    @Override
+    public Page<Product> getLiveProductsByCategory(Category category, Pageable pageable) {
+        return productRepo.findByCategoryAndIsLiveTrue(category, pageable);
+    }
+
+    @Override
+    public List<Product> filterLiveProductsByPrice(Double minPrice, Double maxPrice) {
+        return productRepo.filterLiveProductsByPrice(minPrice, maxPrice);
+    }
 }

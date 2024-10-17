@@ -24,5 +24,8 @@ public interface ProductInterface {
     Optional<Product> getProductBySku(String sku);
     void saveProduct(Product product);
     List<Product> filterProductsByPrice(Double minPrice, Double maxPrice);
+    Page<Product> getLiveProducts(Pageable pageable);
+    Page<Product> getLiveProductsByCategory(Category category, Pageable pageable);
+    List<Product> filterLiveProductsByPrice(Double minPrice, Double maxPrice);
 
 }

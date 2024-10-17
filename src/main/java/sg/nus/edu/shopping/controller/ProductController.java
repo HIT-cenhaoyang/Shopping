@@ -82,7 +82,7 @@ public class ProductController {
         if (maxPrice == null) {
             maxPrice = Double.MAX_VALUE;
         }
-        List<Product> products = productInt.filterProductsByPrice(minPrice, maxPrice);
+        List<Product> products = productInt.filterLiveProductsByPrice(minPrice, maxPrice);
         return ResponseEntity.ok(products);
     }
 
@@ -97,10 +97,10 @@ public class ProductController {
         Page<Product> productPage;
         if (categoryId != null) {
             Category category = categoryInt.findByCategoryId(categoryId);
-            productPage = productInt.getProductByCategory(category, pageable);
+            productPage = productInt.getLiveProductsByCategory(category, pageable);
             model.addAttribute("categoryId", categoryId);
         } else {
-            productPage = productInt.getProducts(pageable);
+            productPage = productInt.getLiveProducts(pageable);
             model.addAttribute("pageName", "mainPage");
         }
 
@@ -133,7 +133,7 @@ public class ProductController {
                                  @RequestParam(defaultValue = "10") int size,
                                  Model model) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Product> productPage = productRepository.searchProductsByKeyword(keyword, pageable);
+        Page<Product> productPage = productRepository.searchLiveProductsByKeyword(keyword, pageable);
         if (productPage.isEmpty()) {
             model.addAttribute("message", "No products found");
         }
