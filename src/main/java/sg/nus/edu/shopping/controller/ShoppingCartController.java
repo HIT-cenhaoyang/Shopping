@@ -49,13 +49,8 @@ public class ShoppingCartController {
     public List<ShoppingCart> getShoppingCartList(HttpSession sessionObj){
     	
         String customerId = (String) sessionObj.getAttribute("customerId");
-
-        Customer customer = customerService.findById(customerId);
-    	List<ShoppingCart> cartList = shoppingCartInt.getCartByCustomerUsername(customer.getUserName());
+    	List<ShoppingCart> cartList = shoppingCartInt.getCartByCustomerId(customerId);
     	
-    	cartList.forEach(cart -> {
-    		System.out.println(cart.getProduct().getName() +" count: "+cart.getProductQty());
-    	});
     	 return cartList;
     }
     
