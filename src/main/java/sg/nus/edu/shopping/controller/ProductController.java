@@ -148,8 +148,8 @@ public class ProductController {
 
     @GetMapping("/7haven/cart")
     public String cart(HttpSession sessionObj, Model model) {
-    	String customerName = (String) sessionObj.getAttribute("username");
-    	List<ShoppingCart> cartList = cartService.getCartByCustomerUsername(customerName);
+    	String customerId = (String) sessionObj.getAttribute("customerId");
+    	List<ShoppingCart> cartList = cartService.getCartByCustomerId(customerId);
 
         model.addAttribute("cart", cartList);
         return "cartPage";
