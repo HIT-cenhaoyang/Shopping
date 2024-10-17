@@ -40,11 +40,9 @@ import java.util.Optional;
 
 //Author: Xu Ziyi, Htet Inzali
 public class ProductController {
-	//BPC Update
 	@Autowired
 	private ReviewImplementation reviewService;
-	
-	//BPC Update
+
 	@Autowired
     private CustomerRepository customerRepo; // To get the logged-in customer
 
@@ -179,7 +177,6 @@ public class ProductController {
 
     }
 
-	//BPC Update
 	@PostMapping("/reviews/add")
 	public String addReview(@RequestParam("productId") int productId, @RequestParam("comment") String comment, HttpSession session, Model model) {
 	    Customer customer = getLoggedInCustomer(session); // Get logged-in customer from session
@@ -200,7 +197,6 @@ public class ProductController {
 	    return "redirect:/product/" + productId;
 	}
 
-	//BPC Update
 	private Customer getLoggedInCustomer(HttpSession session) {
 	    String customerId = (String) session.getAttribute("loggedInCustomerId");
 	    if (customerId != null) {
