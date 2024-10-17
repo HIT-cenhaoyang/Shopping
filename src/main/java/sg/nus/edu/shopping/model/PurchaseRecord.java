@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-//Author: Liu Zheyi
+//Author: Liu Zheyi, Hannah
 public class PurchaseRecord {
 
     @Id
@@ -113,13 +113,5 @@ public class PurchaseRecord {
             orderTotal+= orderDetail.getOrderSubTotal();
         }
         return orderTotal;
-    }
-
-    public double getTotal() {
-        double total = 0;
-        for (OrderDetail orderDetail : orderDetails) {
-            total += orderDetail.getOrderSubTotal();
-        }
-        return total;
     }
 }

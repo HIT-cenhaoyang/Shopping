@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 //Author: Xu Zhiye
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Integer> {
-    //List<ShoppingCart> findByProductId(int productId);
     List<ShoppingCart> findByCustomerId(String customerId);
     List<ShoppingCart> findByCustomerUserName(String username);
     ShoppingCart getByCartId(int cartId);

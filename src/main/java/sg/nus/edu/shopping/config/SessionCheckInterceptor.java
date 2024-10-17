@@ -7,7 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+//Author: Xu Zhiye
 @Component
 public class SessionCheckInterceptor implements HandlerInterceptor {
 	@Override

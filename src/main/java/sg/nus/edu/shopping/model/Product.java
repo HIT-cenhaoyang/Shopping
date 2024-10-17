@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 
 @Entity
-//Author: Xu Ziyi, Cen Haoyang, Hannah. Liu Zheyi
+//Author: Xu Ziyi, Cen Haoyang, Hannah, Liu Zheyi
 public class Product{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

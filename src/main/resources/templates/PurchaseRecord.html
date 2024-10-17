@@ -37,7 +37,7 @@
         <td th:text="${order.recipientPhone}"></td>
         <td th:text="${order.paymentMethod}"></td>
         <td th:text="${order.orderId}"></td>
-        <td th:text="'$'+${#numbers.formatDecimal(order.total,1,'COMMA', 2, 'POINT')}"></td>
+        <td th:text="'$'+${#numbers.formatDecimal(order.orderTotal,1,'COMMA', 2, 'POINT')}"></td>
         <td>
             <table class="table table-sm table-striped">
                 <thead>

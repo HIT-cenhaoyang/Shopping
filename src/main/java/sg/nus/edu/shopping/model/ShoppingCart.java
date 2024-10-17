@@ -26,7 +26,7 @@ public class ShoppingCart {
 
     public ShoppingCart(Product product, Customer customer, int ProductQty) {
         this.product = product;
-        this.setCustomer(customer);
+        this.customer = customer;
         this.productQty = ProductQty;
     }
 
