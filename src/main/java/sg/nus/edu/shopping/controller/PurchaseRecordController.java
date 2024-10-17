@@ -78,7 +78,7 @@ public class PurchaseRecordController {
     }
     
     @PostMapping("/7haven/product/review/submit")
-    public String reviewSubmit(@RequestParam("starValue") int starValue,@RequestParam("reviewContent")String content,@Param("productId")int productId, HttpSession sessionObj, Model model){
+    public String reviewSubmit(@RequestParam("starValue") String starValue,@RequestParam("reviewContent")String content,@Param("productId")int productId, HttpSession sessionObj, Model model){
         Product product = pService.findByProductId(productId).orElse(null);
         model.addAttribute("product",product);
         String customerName = (String) sessionObj.getAttribute("username");
@@ -86,7 +86,7 @@ public class PurchaseRecordController {
         review.setCustomer(cService.findByUserName(customerName).orElse(null));
         review.setProduct(pService.findByProductId(productId).orElse(null));
         review.setComment(content);
-        review.setStar(starValue);
+        review.setStar(Integer.parseInt(starValue));
         rService.saveReview(review);
         return "redirect:/7haven/purchase/history";
 

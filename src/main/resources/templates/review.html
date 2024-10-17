@@ -14,7 +14,7 @@
     <form th:action="@{/7haven/product/review/submit}" method="post">
         <!-- The hidden field is used to pass productId -->
         <input type="hidden" name="productId" th:value="${product.productId}">
-        <input type="hidden" name="starValue" id="starValue" value="">
+        <input type="hidden" name="starValue" id="starValue" value="5">
 
         <!-- Star rating -->
         <label>Product Score:</label>
