@@ -221,11 +221,11 @@ public class CustomerController {
 		return "login";
 	}
 
-	//Author: xu zhiye
-	@GetMapping("/7haven/display/profile/{userId}")
-	public String displayProfile(Model model, @PathVariable String userId) {
-		Customer dataU = cusregister.findById(userId);
-
+	
+	@GetMapping("/7haven/display/profile")
+	public String displayProfile(Model model, HttpSession sessionObj) {
+		String customerId = (String) sessionObj.getAttribute("customerId");
+		Customer dataU = cusregister.findById(customerId);
 		model.addAttribute("user", dataU);
 		return "profilePage";
 	}
