@@ -81,9 +81,9 @@ public class PurchaseRecordController {
     public String reviewSubmit(@RequestParam("starValue") String starValue,@RequestParam("reviewContent")String content,@Param("productId")int productId, HttpSession sessionObj, Model model){
         Product product = pService.findByProductId(productId).orElse(null);
         model.addAttribute("product",product);
-        String customerName = (String) sessionObj.getAttribute("username");
+        String customerId = (String) sessionObj.getAttribute("customerId");
         Review review=new Review();
-        review.setCustomer(cService.findByUserName(customerName).orElse(null));
+        review.setCustomer(cService.findById(customerId));
         review.setProduct(pService.findByProductId(productId).orElse(null));
         review.setComment(content);
         review.setStar(Integer.parseInt(starValue));

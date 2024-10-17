@@ -1,12 +1,11 @@
 /* Global Style */
-body {
+.container {
     font-family: 'Roboto', sans-serif;
     background-color: #ffffff;
     color: #333333;
-    margin: 0;
     padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    margin-left: 150px;
+    margin-right: 150px;
 }
 
 h1, h4 {

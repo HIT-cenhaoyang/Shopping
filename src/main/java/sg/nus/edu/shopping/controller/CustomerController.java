@@ -232,7 +232,7 @@ public class CustomerController {
 
 	//Author: xu zhiye
 	@PostMapping("/7haven/update/profile")
-	public String updateProfile(Customer user, Model model) {
+	public String updateProfile(Customer user, Model model, HttpSession sessionObj) {
 		// find by ID from database
 		Customer dataU = cusregister.findById(user.getCustomerId());
 
@@ -246,6 +246,7 @@ public class CustomerController {
 			user.getPaymentDetails().forEach(pd -> {
 				pd.setPayment_customer(user);
 			});
+			sessionObj.setAttribute("username", user.getUserName());
 			cusregister.saveCustomer(user);
 			return "redirect:/products";
 		}
